@@ -6,13 +6,14 @@ export const metadata: Metadata = {
   title: "Liko - Blog Details page",
 };
 
-export default function BlogDetailsPage({params}:{params:{id:string}}) {
-  const blog = [...blog_data].find((blog) => blog.id === Number(params.id));
+export default async function BlogDetailsPage({params}:{params:Promise<{id:string}>}) {
+  const { id } = await params;
+  const blog = [...blog_data].find((blog) => blog.id === Number(id));
   return blog ? (
     <BlogDetailsMain blog={blog} />
   ) : (
     <div className="text-center pt-100">
-      Blog not found with id: {params.id}
+      Blog not found with id: {id}
     </div>
   );
 }
