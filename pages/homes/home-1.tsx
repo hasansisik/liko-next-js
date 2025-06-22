@@ -19,16 +19,10 @@ import HeaderOne from "@/layouts/headers/header-one";
 import HeroBannerOne from "@/components/hero-banner/hero-banner-one";
 
 import ServiceOne from "@/components/service/service-one";
-import ServiceSix from "@/components/service/service-six";
-
-import ProjectTwo from "@/components/project/project-two";
-
+import VideOne from "@/components/video/video-one";
 import TeamOne from "@/components/team/team-one";
 import FooterOne from "@/layouts/footers/footer-one";
 
-// images
-import shape_1 from "@/assets/img/home-01/footer/footer-circle-shape-1.png";
-import shape_2 from "@/assets/img/home-01/footer/footer-circle-shape-2.png";
 
 // animation
 import { videoAnimOne } from "@/utils/video-anim";
@@ -44,7 +38,6 @@ import HeroBannerTwo from "@/components/hero-banner/hero-banner-two";
 import AboutOne from "@/components/about/about-one";
 import { instagramAnim } from "@/utils/instagram-anim";
 import FaqAreaTwo from "@/components/faq/faq-area-2";
-import BlogClassicArea from "@/components/blog/blog-classic-area";
 import BlogOne from "@/components/blog/blog-one";
 
 const HomeMain = () => {
@@ -67,15 +60,16 @@ const HomeMain = () => {
 
   useGSAP(() => {
     const timer = setTimeout(() => {
+      videoAnimOne();
       // portfolio image wrap
       gsap.timeline({
         scrollTrigger: {
-          trigger: ".tp-project-full-img-wrap",
-          start: "top 65",
-          end: "bottom 0%",
-          pin: ".tp-project-full-img",
-          pinSpacing: false,
-        },
+           trigger: ".tp-project-full-img-wrap",
+           start: "top 65",
+           end: "bottom 0%",
+           pin: ".tp-project-full-img",
+           pinSpacing: false,
+        }
       });
       // team marquee
       teamMarqueAnim();
@@ -102,6 +96,12 @@ const HomeMain = () => {
           <main>
             <HeroBannerTwo />
             <HeroBannerOne />
+            <VideOne />
+            <div className="tp-brand-area">
+              <div className="tp-brand-brd-top tp-brand-ptb">
+                {/* Brand area spacing simulation */}
+              </div>
+            </div>
             <ServiceOne />
             <AboutOne />
             <TeamOne />
