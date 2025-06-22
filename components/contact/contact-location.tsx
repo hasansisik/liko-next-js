@@ -21,7 +21,7 @@ const location_data = [
 
 const ContactLocation = () => {
   return (
-    <div className="cn-contact-info-area">
+    <div className="cn-contact-info-area mb-10">
       <div className="container container-1840">
         <div className="cn-contact-info-bg black-bg">
           {location_data.map((item) => (

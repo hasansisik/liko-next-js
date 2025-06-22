@@ -11,7 +11,7 @@ import Wrapper from "@/layouts/wrapper";
 import HeaderEleven from "@/layouts/headers/header-eleven";
 import ContactTwo from "@/components/contact/contact-two";
 import ContactLocation from "@/components/contact/contact-location";
-import FooterTwo from "@/layouts/footers/footer-two";
+import FooterOne from "@/layouts/footers/footer-one";
 // animation
 import { charAnimation } from "@/utils/title-animation";
 
@@ -68,7 +68,7 @@ const ContactMain = () => {
             </main>
 
             {/* footer area */}
-            <FooterTwo topCls="" whiteFooter={true} />
+            <FooterOne />
             {/* footer area */}
           </div>
         </div>

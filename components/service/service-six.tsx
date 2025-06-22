@@ -66,7 +66,7 @@ const service_data = [
 
 export default function ServiceSix() {
   return (
-    <div className="sv-service-area project-panel-area-2">
+    <div className="sv-service-area project-panel-area-2 mb-50">
       <div className="container-fluid p-0">
         {service_data.map((item) => (
           <div key={item.id} className="sv-service-item project-panel-2">
