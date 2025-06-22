@@ -10,17 +10,7 @@ export default function BlogSidebar() {
   const rc_posts = [...blog_classic.filter((b) => b.img)].slice(0, 3);
   return (
     <div className="sidebar__wrapper">
-      <div className="sidebar__widget mb-45">
-        <div className="sidebar__author text-center">
-          <div className="sidebar__author-thumb">
-            <Image src={avatar} alt="avatar" style={{ height: "auto" }} />
-          </div>
-          <div className="sidebar__author-content">
-            <h4 className="sidebar__author-title">Mark Hopkins</h4>
-            <p>Lorem ipsum dolor consectetur adipiscing elit.</p>
-          </div>
-        </div>
-      </div>
+   
       <div className="sidebar__widget mb-65">
         <div className="sidebar__widget-content">
           <div className="sidebar__search">

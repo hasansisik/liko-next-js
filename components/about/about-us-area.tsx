@@ -12,49 +12,20 @@ export default function AboutUsArea() {
   return (
     <div className="ab-about-area ab-about-mt pb-90 z-index-5">
       <div className="container container-1480">
-        <div className="ab-about-thumb-wrap mb-180">
-          <div className="row align-items-end">
-            <div className="col-xl-6 col-lg-6 col-md-6">
-              <div className="ab-about-left-thumb">
-                <Image
-                  data-speed=".7"
-                  src={ab_1}
-                  alt="about-img"
-                  style={{ height: "auto" }}
-                />
-              </div>
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6">
-              <div className="ab-about-right-thumb p-relative">
-                <Image
-                  data-speed="1.1"
-                  className="inner-img z-index-5"
-                  src={ab_2}
-                  alt="about-img"
-                  style={{ height: "auto" }}
-                />
-                <Image
-                  data-speed="0.9"
-                  src={ab_3}
-                  alt="about-img"
-                  style={{ height: "auto" }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="about-info" className="row">
+
+        <div id="about-info" className="row mt-200">
           <div className="col-xxl-9">
             <div className="ab-about-content p-relative">
               <span>
                 <Hand />
-                Hi!
+                Welcome!
               </span>
               <p className="tp-dropcap tp_fade_bottom">
-                We are a creative studio that specializes in providing
-                high-quality design and branding solutions to businesses and
-                individuals. Our team is composed of talented designers,
-                developers, and marketers.!
+                We are a modern dental clinic dedicated to providing exceptional 
+                oral healthcare services in a comfortable and caring environment. 
+                Our experienced team of dental professionals is committed to helping 
+                you achieve and maintain optimal oral health with the latest 
+                technology and personalized treatment plans.
               </p>
             </div>
           </div>
@@ -65,8 +36,8 @@ export default function AboutUsArea() {
               <div className="col-xl-5 col-lg-5 col-md-4 mb-40">
                 <div className="ab-about-category-title-box p-relative">
                   <h4 className="ab-about-category-title">
-                    Something <br />
-                    <span>WHAT I DO</span>
+                    Our <br />
+                    <span>SERVICES</span>
                   </h4>
                   <Image
                     className="ab-about-shape-1 d-none d-md-block"
@@ -80,21 +51,21 @@ export default function AboutUsArea() {
                   <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
                     <div className="ab-about-category-list category-space-1 tp_fade_bottom">
                       <ul>
-                        <li>Art direction</li>
-                        <li>Branding</li>
-                        <li>Content Production</li>
-                        <li>User Interface Design</li>
-                        <li>Animation</li>
+                        <li>General Dentistry</li>
+                        <li>Cosmetic Dentistry</li>
+                        <li>Teeth Whitening</li>
+                        <li>Dental Implants</li>
+                        <li>Root Canal Treatment</li>
                       </ul>
                     </div>
                   </div>
                   <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
                     <div className="ab-about-category-list category-space-2 tp_fade_bottom">
                       <ul>
-                        <li>Brand Identity</li>
-                        <li>User Interface</li>
-                        <li>User Experience</li>
-                        <li>Responsive Design</li>
+                        <li>Orthodontics</li>
+                        <li>Periodontal Care</li>
+                        <li>Oral Surgery</li>
+                        <li>Preventive Care</li>
                       </ul>
                     </div>
                   </div>

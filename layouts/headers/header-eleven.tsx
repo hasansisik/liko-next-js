@@ -57,19 +57,6 @@ export default function HeaderEleven({transparent=false,cls=''}: IProps) {
                 <div className="tp-inner-header-right-action text-end">
                   <ul>
                     <li>
-                      <div className="tp-inner-cart">
-                        <a
-                          onClick={() => setOpenCartMini(true)}
-                          className="cartmini-open-btn pointer"
-                        >
-                          <span className="p-relative">
-                            <Cart />
-                            <i>0</i>
-                          </span>
-                        </a>
-                      </div>
-                    </li>
-                    <li>
                       <div className="tp-inner-bar tp-header-bar">
                         <button onClick={()=> setOpenOffCanvas(true)} className="tp-offcanvas-open-btn">
                           <span></span>
@@ -85,9 +72,7 @@ export default function HeaderEleven({transparent=false,cls=''}: IProps) {
         </div>
       </header>
 
-      {/* cart mini */}
-      <CartOffcanvas openCartMini={openCartMini} setOpenCartMini={setOpenCartMini} />
-      {/* cart mini */}
+
 
       {/* off canvas */}
       <MobileOffcanvas openOffcanvas={openOffCanvas} setOpenOffcanvas={setOpenOffCanvas} />

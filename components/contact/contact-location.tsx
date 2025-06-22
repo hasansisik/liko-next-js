@@ -1,42 +1,22 @@
 import React from "react";
 import Image from "next/image";
 // images
-import location_1 from "@/assets/img/inner-contact/contact/info-1.jpg";
-import location_2 from "@/assets/img/inner-contact/contact/info-2.jpg";
-import location_3 from "@/assets/img/inner-contact/contact/info-3.jpg";
+import location_1 from "@/assets/img/home-01/tr.jpg";
+
 
 // data
 const location_data = [
   {
     id: 1,
     img: location_1,
-    country: "France",
-    time: "12:00 pm GMT+2",
-    location_title: "Base Create",
-    address: "Base Creative, 43 Appleton <br /> Lane, 3287 Hamilton",
-    phone: "(+91) 76001726",
-    email: "Hello@contact.com",
+    country: "Istanbul",
+    time: "12:00 pm GMT+3",
+    location_title: "Birim Ajans Clinic",
+    address: "Birim Studio, 43 Appleton <br /> Lane, 3287 Istanbul",
+    phone: "(+90) 532 123 45 67",
+    email: "info@birimajans.com",
   },
-  {
-    id: 2,
-    img: location_2,
-    country: "Germany",
-    time: "11:00 pm GMT+2",
-    location_title: "Base Create",
-    address: "Base Creative, 43 Appleton <br /> Lane, 3287 Hamilton",
-    phone: "(+91) 76001726",
-    email: "Hello@contact.com",
-  },
-  {
-    id: 3,
-    img: location_3,
-    country: "New Zealand",
-    time: "10:00 pm GMT+2",
-    location_title: "Base Create",
-    address: "Base Creative, 43 Appleton <br /> Lane, 3287 Hamilton",
-    phone: "(+91) 76001726",
-    email: "Hello@contact.com",
-  },
+
 ];
 
 const ContactLocation = () => {
@@ -50,7 +30,7 @@ const ContactLocation = () => {
                 <div className="col-xl-7">
                   <div className="cn-contact-left d-flex flex-wrap align-items-center">
                     <div className="cn-contact-info-thumb">
-                      <Image src={item.img} alt="image" style={{ height: "auto" }} />
+                      <Image src={item.img} alt="image" style={{ height: "auto" , borderRadius:"10px"}} />
                     </div>
                     <div className="cn-contact-left-info">
                       <h4 className="cn-contact-left-title">{item.country}</h4>

@@ -13,7 +13,7 @@ export default function AboutUsHero() {
   return (
     <div
       className="ab-inner-hero-area ab-inner-hero-bg p-relative"
-      style={{backgroundImage: "url(/assets/img/inner-about/hero/hero-1.jpg)"}}
+      style={{backgroundImage: "url(/assets/img/home-01/hero/dentist-2.jpg)"}}
     >
       <div className="breadcurmb-site d-none">
         <h6>About Us</h6>
@@ -35,27 +35,12 @@ export default function AboutUsHero() {
               data-stagger="0.08"
             >
               <span className="ab-inner-hero-subtitle">
-                Digital <br /> creative agency
+                Professional <br /> dental care
               </span>
               <h1 className="ab-inner-hero-title tp-char-animation">
-                Building Digital Presence
+                Creating Healthy Smiles
               </h1>
-              <p>Digital experiences with maximum emotional impact</p>
-            </div>
-          </div>
-        </div>
-        <div className="row justify-content-end">
-          <div className="col-xl-5 col-lg-8">
-            <div
-              className="ab-inner-hero-content"
-              data-lag="0.2"
-              data-stagger="0.08"
-            >
-              <p>
-                Liko develops, designs & delivers websites & creative campaigns
-                that drive results,
-              </p>
-               <a className="tp-btn-white-sm border-style" href="#">Our Story</a>
+              <p>Comprehensive dental care with personalized treatment approach</p>
             </div>
           </div>
         </div>

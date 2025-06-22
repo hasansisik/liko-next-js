@@ -2,9 +2,10 @@
 import React, { CSSProperties } from 'react';
 import Image from 'next/image';
 // images
-import ab_1 from '@/assets/img/home-02/about/ab-1.jpg';
-import ab_2 from '@/assets/img/home-02/about/ab-2.jpg';
-import ab_3 from '@/assets/img/home-02/about/ab-s.jpg';
+import ab_1 from '@/assets/img/home-01/ab-1.jpg';
+import ab_2 from '@/assets/img/home-01/ab-2.jpg';
+import ab_3 from '@/assets/img/home-01/ab-3.jpg';
+import ab_4 from '@/assets/img/home-01/ab-4.jpg';
 
 // img style
 const imgStyle:CSSProperties = {
@@ -116,7 +117,7 @@ const AboutOne = () => {
           <div className="col-xl-6 col-lg-6 col-md-6">
             <div className="tp-about-2-thumb-box p-relative">
               <div className="tp-about-2-thumb-main">
-                <Image src={ab_1} alt="ab-img" style={imgStyle} />
+                <Image src={ab_4} alt="ab-img" style={imgStyle} />
               </div>
             </div>
           </div>
