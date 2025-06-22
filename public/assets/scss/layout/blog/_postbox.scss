@@ -655,7 +655,7 @@
                 font-weight: 400;
                 color: #707072;
             }
-            &::focus{
+            &:focus{
                 border-color: var(--tp-common-black);
             }
         }
@@ -671,7 +671,7 @@
                 font-weight: 400;
                 color: #707072;
             }
-            &::focus{
+            &:focus{
                 border-color: var(--tp-common-black);
             }
         }
