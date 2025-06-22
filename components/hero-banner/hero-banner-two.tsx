@@ -1,9 +1,9 @@
-'use client';
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Leaf } from "../svg";
-import hero_bg from "@/assets/img/home-02/hero/hero-bg-1.jpg";
+import hero_bg from "@/assets/img/home-01/hero/dentist-1.jpg";
 
 const HeroBannerTwo = () => {
   return (
@@ -18,27 +18,19 @@ const HeroBannerTwo = () => {
                 </div>
                 <div className="tp-hero-2-content-wrap p-relative">
                   <div className="tp-hero-2-title-box">
-                    <h2 className="tp-hero-2-title text-1 z-index-5">
-                      Fashion
+                    <h2 className="tp-hero-2-title text-1 z-index-5 ">
+                      Excellence 
                     </h2>
                     <h2 className="tp-hero-2-title text-2">
-                      <span>& Branding</span>
+                      <span> in Aesthetics & Health</span>
                     </h2>
                   </div>
                   <div className="tp-hero-2-content">
                     <p>
-                      Bringing Your Fashion {"Brand's"} Unique Identity to Life
-                      Through Strategic Marketing and Advertising.
+                      Rediscover your beauty with our {"Clinic's"} team of
+                      experts, personalized solutions, and the latest
+                      technology.
                     </p>
-                    <Link
-                      className="tp-btn-white"
-                      href="/portfolio-grid-col-3-fullwidth"
-                    >
-                      View More
-                      <span>
-                        <Leaf />
-                      </span>
-                    </Link>
                   </div>
                 </div>
               </div>

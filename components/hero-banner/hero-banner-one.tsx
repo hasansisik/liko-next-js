@@ -31,10 +31,7 @@ const HeroBannerOne = () => {
               <div className="tp-hero-title-box text-center p-relative">
                 <h1 className="tp-hero-title tp_fade_bottom">
                   <span className="p-relative">
-                    Creative
-                    <span className="tp-hero-subtitle d-none d-lg-block ">
-                      Hello <br /> People! We’re
-                    </span>
+                  Transform
                     <span className="tp-hero-shape-2 d-none d-md-block">
                       <Image
                         src="/assets/img/home-01/hero/hero-shape-1-1.png"
@@ -45,27 +42,24 @@ const HeroBannerOne = () => {
                     </span>
                   </span>
                   <br />
-                  Digital
+                  Travel
                   <span className="tp-hero-title-img">
                     <Image
                       className="tp-zoom-img"
-                      src="/assets/img/home-01/hero/hero-1-1.png"
+                      src="/assets/img/home-01/hero/dentist-2.jpg"
                       alt="hero-img"
                       width={270}
                       height={160}
-                      style={{ height: "auto" }}
+                      style={{ height: "auto", borderRadius: "300px"}}
                     />
                   </span>
-                  Studio
+                  Smile
                 </h1>
               </div>
             </div>
             <div className="tp-hero-content tp_fade_bottom">
-              <p>
-                <span></span>
-                Global digital design studio partnering with brands and
-                businesses that create exceptional experiences. We are design
-                and development agency based in Netherland.
+              <p className="text-center">
+                Experience world-class dental care while enjoying the beauty of Turkey. Trusted by thousands of international patients for safe, affordable, and aesthetic treatments
               </p>
             </div>
           </div>
