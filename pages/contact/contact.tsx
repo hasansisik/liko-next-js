@@ -14,6 +14,8 @@ import ContactLocation from "@/components/contact/contact-location";
 import FooterOne from "@/layouts/footers/footer-one";
 // animation
 import { charAnimation } from "@/utils/title-animation";
+import FooterTwo from "@/layouts/footers/footer-two";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const ContactMain = () => {
   useScrollSmooth();
@@ -28,7 +30,7 @@ const ContactMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne transparent={true} color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
@@ -68,7 +70,7 @@ const ContactMain = () => {
             </main>
 
             {/* footer area */}
-            <FooterOne />
+            <FooterTwo />
             {/* footer area */}
           </div>
         </div>

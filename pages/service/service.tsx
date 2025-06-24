@@ -20,6 +20,7 @@ import FooterTwo from "@/layouts/footers/footer-two";
 // animation
 import { charAnimation, fadeAnimation } from "@/utils/title-animation";
 import { servicePanel } from "@/utils/panel-animation";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const ServiceMain = () => {
   useScrollSmooth();
@@ -36,7 +37,7 @@ const ServiceMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne   transparent={true} color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">

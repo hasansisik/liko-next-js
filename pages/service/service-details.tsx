@@ -15,6 +15,7 @@ import BigText from "@/components/big-text";
 import FooterTwo from "@/layouts/footers/footer-two";
 // animation
 import { charAnimation, titleAnimation } from "@/utils/title-animation";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const ServiceDetailsMain = () => {
   useScrollSmooth();
@@ -30,7 +31,7 @@ const ServiceDetailsMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne transparent={true} color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
@@ -39,10 +40,6 @@ const ServiceDetailsMain = () => {
             {/* service details area */}
             <ServiceDetailsArea />
             {/* service details area */}
-
-            {/* line image slider  */}
-            <LineImgSlider />
-            {/* line image slider  */}
 
             {/* big text */}
             <BigText />

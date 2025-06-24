@@ -14,6 +14,7 @@ import FooterTwo from "@/layouts/footers/footer-two";
 import { charAnimation } from "@/utils/title-animation";
 import BlogModern from "@/components/blog/blog-modern-area";
 import BigText from "@/components/big-text";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const BlogModernMain = () => {
   useScrollSmooth();
@@ -28,7 +29,7 @@ const BlogModernMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne transparent={true} color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">

@@ -3,7 +3,6 @@ import Image from "next/image";
 
 // image
 import ser_hero from "@/assets/img/inner-service/hero/hero-1.jpg";
-import ser_hero_shape from "@/assets/img/inner-service/hero/hero-shape-1.jpg";
 
 export default function ServiceHero() {
   return (
@@ -32,12 +31,7 @@ export default function ServiceHero() {
                   style={{height:"auto"}}
                 />
               </div>
-              <Image
-                className="sv-hero-thumb-shape d-none d-lg-block"
-                src={ser_hero_shape}
-                alt="ser_hero-shape"
-                style={{height:"auto"}}
-              />
+
             </div>
           </div>
         </div>

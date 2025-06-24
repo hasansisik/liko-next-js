@@ -16,6 +16,8 @@ import BlogDetailsBreadcrumb from "@/components/blog/details/blog-details-breadc
 import BlogDetailsRelatedPosts from "@/components/blog/details/blog-details-related-posts";
 // animation
 import { charAnimation } from "@/utils/title-animation";
+import HeaderOne from "@/layouts/headers/header-one";
+import FooterTwo from "@/layouts/footers/footer-two";
 
 // prop type
 type IProps = {
@@ -35,7 +37,7 @@ const BlogDetailsMain = ({ blog }: IProps) => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven transparent={true} />
+      <HeaderOne transparent={true} color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
@@ -55,7 +57,7 @@ const BlogDetailsMain = ({ blog }: IProps) => {
           </main>
 
           {/* footer area */}
-          <FooterOne />
+          <FooterTwo />
           {/* footer area */}
         </div>
       </div>

@@ -10,9 +10,10 @@ import { ArrowRight } from 'lucide-react';
 // prop type
 type IProps = {
   transparent?: boolean;
+  color?: 'black' | 'white';
 };
 
-const HeaderOne = ({ transparent = false }: IProps) => {
+const HeaderOne = ({ transparent = false, color }: IProps) => {
   const {sticky,headerRef,headerFullWidth} = useSticky();
   const [openOffCanvas, setOpenOffCanvas] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -39,7 +40,15 @@ const HeaderOne = ({ transparent = false }: IProps) => {
                 <div className="tp-header-logo">
                   <Link href="/">
                     <Image
-                      src={sticky ? "/assets/img/logo/logo.png" : "/assets/img/logo/logo-white.png"}
+                      src={
+                        sticky 
+                          ? "/assets/img/logo/logo.png" 
+                          : color === 'black' 
+                            ? "/assets/img/logo/logo.png"
+                            : color === 'white'
+                              ? "/assets/img/logo/logo-white.png"
+                              : "/assets/img/logo/logo-white.png"
+                      }
                       alt="logo"
                       width={sticky ? 120 : 150}
                       height={sticky ? 40 : 50}
@@ -52,7 +61,7 @@ const HeaderOne = ({ transparent = false }: IProps) => {
                 <div className="tp-header-menu header-main-menu">
                   <nav className="tp-main-menu-content">
                     {/* header menus */}
-                    <HeaderMenus onOpenDialog={() => setOpenDialog(true)} isSticky={sticky} />
+                    <HeaderMenus onOpenDialog={() => setOpenDialog(true)} isSticky={sticky} color={color} />
                     {/* header menus */}
                   </nav>
                 </div>
@@ -61,11 +70,23 @@ const HeaderOne = ({ transparent = false }: IProps) => {
                 <div className="tp-header-bar">
                   <button className="tp-offcanvas-open-btn" onClick={() => setOpenOffCanvas(true)}>
                     <span style={{ 
-                      backgroundColor: sticky ? '#333' : 'white',
+                      backgroundColor: sticky 
+                        ? '#333' 
+                        : color === 'black' 
+                          ? '#333'
+                          : color === 'white'
+                            ? 'white'
+                            : 'white',
                       transition: 'background-color 0.3s ease'
                     }}></span>
                     <span style={{ 
-                      backgroundColor: sticky ? '#333' : 'white',
+                      backgroundColor: sticky 
+                        ? '#333' 
+                        : color === 'black' 
+                          ? '#333'
+                          : color === 'white'
+                            ? 'white'
+                            : 'white',
                       transition: 'background-color 0.3s ease'
                     }}></span>
                   </button>

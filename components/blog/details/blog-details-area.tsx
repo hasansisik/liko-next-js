@@ -150,9 +150,6 @@ export default function BlogDetailsArea() {
                   </div>
                 </div>
               </div>
-              {/* blog details author */}
-              <BlogDetailsAuthor />
-              {/* blog details author */}
 
               {/* blog details navigation */}
               <BlogDetailsNavigation />
