@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { Leaf } from "../svg";
+import ContactFormDental from "../form/contact-form-dental";
 
 const HeroBannerTwo = () => {
   return (
@@ -109,125 +110,12 @@ const HeroBannerTwo = () => {
                   transform: 'translateY(-50%)',
                   zIndex: 10
                 }}>
-                  <div className="tp-hero-2-form-box" style={{
-                    background: 'white',
-                    padding: 'clamp(20px, 5vw, 25px)',
-                    borderRadius: '10px',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                    width: '500px',
-                    maxWidth: '90vw'
-                  }}>
-                    <div className="tp-hero-2-form-header" style={{ marginBottom: '20px' }}>
-                      <h3 className="tp-hero-2-form-title" style={{
-                        fontSize: '24px',
-                        fontWeight: 'bold',
-                        marginBottom: '10px',
-                        color: '#333'
-                      }}>Let&apos;s Talk Teeth!</h3>
-                      <div className="tp-hero-2-form-status" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginBottom: '5px'
-                      }}>
-                        <span className="tp-hero-2-status-dot" style={{
-                          width: '8px',
-                          height: '8px',
-                          backgroundColor: '#4CAF50',
-                          borderRadius: '50%',
-                          marginRight: '8px'
-                        }}></span>
-                        <span className="tp-hero-2-status-text" style={{
-                          color: '#4CAF50',
-                          fontSize: '14px',
-                          fontWeight: '500'
-                        }}>Online now</span>
-                      </div>
-                      <p className="tp-hero-2-form-response" style={{
-                        fontSize: '12px',
-                        color: '#666',
-                        margin: '0'
-                      }}>avg. response time: 3 minutes</p>
-                    </div>
-                    
-                    <form className="tp-hero-2-form">
-                      <div className="tp-hero-2-form-input" style={{ marginBottom: '15px' }}>
-                        <input 
-                          type="text" 
-                          placeholder="Name*" 
-                          required 
-                          style={{
-                            width: '100%',
-                            padding: '12px',
-                            border: '1px solid #ddd',
-                            borderRadius: '5px',
-                            fontSize: '14px'
-                          }}
-                        />
-                      </div>
-                      
-                      <div className="tp-hero-2-form-phone" style={{
-                        display: 'flex',
-                        marginBottom: '20px'
-                      }}>
-                        <div className="tp-hero-2-phone-prefix" style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          padding: '12px',
-                          border: '1px solid #ddd',
-                          borderRight: 'none',
-                          borderRadius: '5px 0 0 5px',
-                          backgroundColor: '#f8f9fa',
-                          minWidth: '80px'
-                        }}>
-                          <span className="tp-hero-2-flag" style={{ marginRight: '5px' }}>🇹🇷</span>
-                          <span style={{ fontSize: '14px' }}>+90</span>
-                        </div>
-                        <input 
-                          type="tel" 
-                          placeholder="Phone Number*" 
-                          required 
-                          style={{
-                            flex: 1,
-                            padding: '12px',
-                            border: '1px solid #ddd',
-                            borderRadius: '0 5px 5px 0',
-                            fontSize: '14px'
-                          }}
-                        />
-                      </div>
-                      
-                      <button type="submit" className="tp-hero-2-form-btn" style={{
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: '#000',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        fontWeight: '500',
-                        cursor: 'pointer',
-                        marginBottom: '15px'
-                      }}>
-                        Send →
-                      </button>
-                    
-                      
-                      <Link href="#" className="tp-hero-2-whatsapp-btn" style={{
-                        display: 'block',
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: '#25D366',
-                        color: 'white',
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        fontWeight: '500'
-                      }}>
-                       Chat on WhatsApp
-                      </Link>
-                    </form>
-                  </div>
+                  <ContactFormDental 
+                    style={{
+                      width: '500px',
+                      maxWidth: '90vw'
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -242,126 +130,12 @@ const HeroBannerTwo = () => {
           zIndex: 10
         }}>
           <div className="col-12" style={{ padding: 'clamp(15px, 5vw, 20px)' }}>
-            <div className="tp-hero-2-form-box" style={{
-              background: 'white',
-              padding: '25px',
-              borderRadius: '10px',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-              width: '100%',
-              maxWidth: 'min(90vw, 500px)',
-              margin: '0 auto'
-            }}>
-              <div className="tp-hero-2-form-header" style={{ marginBottom: '20px' }}>
-                <h3 className="tp-hero-2-form-title" style={{
-                  fontSize: '24px',
-                  fontWeight: 'bold',
-                  marginBottom: '10px',
-                  color: '#333'
-                }}>Let&apos;s Talk Teeth!</h3>
-                <div className="tp-hero-2-form-status" style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '5px'
-                }}>
-                  <span className="tp-hero-2-status-dot" style={{
-                    width: '8px',
-                    height: '8px',
-                    backgroundColor: '#4CAF50',
-                    borderRadius: '50%',
-                    marginRight: '8px'
-                  }}></span>
-                  <span className="tp-hero-2-status-text" style={{
-                    color: '#4CAF50',
-                    fontSize: '14px',
-                    fontWeight: '500'
-                  }}>Online now</span>
-                </div>
-                <p className="tp-hero-2-form-response" style={{
-                  fontSize: '12px',
-                  color: '#666',
-                  margin: '0'
-                }}>avg. response time: 3 minutes</p>
-              </div>
-              
-              <form className="tp-hero-2-form">
-                <div className="tp-hero-2-form-input" style={{ marginBottom: '15px' }}>
-                  <input 
-                    type="text" 
-                    placeholder="Name*" 
-                    required 
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      border: '1px solid #ddd',
-                      borderRadius: '5px',
-                      fontSize: '14px'
-                    }}
-                  />
-                </div>
-                
-                <div className="tp-hero-2-form-phone" style={{
-                  display: 'flex',
-                  marginBottom: '20px'
-                }}>
-                  <div className="tp-hero-2-phone-prefix" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px',
-                    border: '1px solid #ddd',
-                    borderRight: 'none',
-                    borderRadius: '5px 0 0 5px',
-                    backgroundColor: '#f8f9fa',
-                    minWidth: '80px'
-                  }}>
-                    <span className="tp-hero-2-flag" style={{ marginRight: '5px' }}>🇹🇷</span>
-                    <span style={{ fontSize: '14px' }}>+90</span>
-                  </div>
-                  <input 
-                    type="tel" 
-                    placeholder="Phone Number*" 
-                    required 
-                    style={{
-                      flex: 1,
-                      padding: '12px',
-                      border: '1px solid #ddd',
-                      borderRadius: '0 5px 5px 0',
-                      fontSize: '14px'
-                    }}
-                  />
-                </div>
-                
-                <button type="submit" className="tp-hero-2-form-btn" style={{
-                  width: '100%',
-                  padding: '12px',
-                  backgroundColor: '#000',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  marginBottom: '15px'
-                }}>
-                  Send →
-                </button>
-              
-                
-                <Link href="#" className="tp-hero-2-whatsapp-btn" style={{
-                  display: 'block',
-                  width: '100%',
-                  padding: '12px',
-                  backgroundColor: '#25D366',
-                  color: 'white',
-                  textAlign: 'center',
-                  textDecoration: 'none',
-                  borderRadius: '5px',
-                  fontSize: '16px',
-                  fontWeight: '500'
-                }}>
-                 Chat on WhatsApp
-                </Link>
-              </form>
-            </div>
+            <ContactFormDental 
+              style={{
+                maxWidth: 'min(90vw, 500px)',
+                margin: '0 auto'
+              }}
+            />
           </div>
         </div>
         

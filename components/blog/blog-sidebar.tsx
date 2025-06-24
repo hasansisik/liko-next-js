@@ -5,12 +5,12 @@ import banner from "@/assets/img/inner-blog/blog-sidebar/banner/banner.jpg";
 import { Search } from "../svg";
 import { blog_classic } from "@/data/blog-data";
 import Link from "next/link";
+import ContactFormDental from "../form/contact-form-dental";
 
 export default function BlogSidebar() {
   const rc_posts = [...blog_classic.filter((b) => b.img)].slice(0, 3);
   return (
     <div className="sidebar__wrapper">
-   
       <div className="sidebar__widget mb-65">
         <div className="sidebar__widget-content">
           <div className="sidebar__search">
@@ -23,6 +23,20 @@ export default function BlogSidebar() {
               </div>
             </form>
           </div>
+        </div>
+      </div>
+      {/* Dental Contact Form */}
+      <div className="sidebar__widget mb-65">
+        <div className="sidebar__widget-content">
+          <ContactFormDental
+            title="Get Dental Consultation"
+            subtitle="Available now"
+            responseTime="Quick response guaranteed"
+            style={{
+              maxWidth: "100%",
+              boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+            }}
+          />
         </div>
       </div>
       <div className="sidebar__widget mb-65">
@@ -89,13 +103,7 @@ export default function BlogSidebar() {
           </div>
         </div>
       </div>
-      <div className="sidebar__widget mb-65">
-        <div className="sidebar__widget-content">
-          <div className="sidebar__banner-img">
-            <Image src={banner} alt="banner" style={{ height: "auto" }} />
-          </div>
-        </div>
-      </div>
+
       <div className="sidebar__widget mb-65">
         <h3 className="sidebar__widget-title">Follow Us</h3>
         <div className="sidebar__widget-content">

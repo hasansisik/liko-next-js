@@ -37,7 +37,7 @@ const BlogDetailsMain = ({ blog }: IProps) => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderOne transparent={true} color="black"/>
+      <HeaderOne transparent={true} color="white"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
