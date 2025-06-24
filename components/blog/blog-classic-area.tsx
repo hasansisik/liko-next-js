@@ -11,6 +11,7 @@ import { Quote, QuoteTwo } from "../svg";
 import usePagination from "@/hooks/use-pagination";
 import { IBlogDT } from "@/types/blog-d-t";
 import PaginationCom from "../ui/pagination";
+import { createSlug } from "@/utils/slug-utils";
 
 // slider setting
 const slider_setting: SwiperOptions = {
@@ -54,46 +55,60 @@ export default function BlogClassicArea({setIsVideoOpen,setVideoId}:IProps) {
           <div className="col-xxl-8 col-xl-8 col-lg-8">
             <div className="postbox__wrapper">
               {currentItems.map((item) => (
-                <article key={item.id} className="postbox__item mb-80">
-                  {!item.blogQuote && !item.blogQuoteTwo && !item.imgSlider && (
-                    <div className="postbox__thumb">
-                      <Link href={`/blog-details/${item.id}`}>
-                        <Image src={item.img!} alt="blog-img" />
+                <article key={item.id} className="postbox__item format-image mb-50 transition-3">
+                  {item.img && (
+                    <div className="postbox__thumb w-img">
+                      <Link href={`/blog-details/${createSlug(item.title)}`}>
+                        <Image
+                          src={item.img}
+                          alt="blog-img"
+                          style={{ height: "auto" }}
+                        />
                       </Link>
-                      {item.video && (
-                        <div className="postbox__play-btn">
-                          <a
-                            className="popup-video pointer"
-                            onClick={() => handleVideoModal(item.videoId!)}
-                          >
-                            <i className="fa-sharp fa-solid fa-play"></i>
-                          </a>
-                        </div>
-                      )}
+                    </div>
+                  )}
+                  {item.video && (
+                    <div className="postbox__thumb postbox__video w-img p-relative">
+                      <Image
+                        src={item.img!}
+                        alt="blog-img"
+                        style={{ height: "auto" }}
+                      />
+                      <button
+                        onClick={() => handleVideoModal(item.videoId!)}
+                        className="play-btn pulse-btn popup-video"
+                      >
+                        <i className="fas fa-play"></i>
+                      </button>
                     </div>
                   )}
                   {item.imgSlider && (
-                    <div className="postbox__thumb w-img">
-                      <div className="postbox__thumb-slider p-relative">
-                        <Swiper
-                          {...slider_setting}
-                          modules={[Navigation, Pagination]}
-                          className="swiper-container postbox__thumb-slider-active fix"
+                    <div className="postbox__thumb postbox__slider w-img p-relative">
+                      <div className="postbox__slider-nav">
+                        <button
+                          type="button"
+                          className="postbox__slider-button-next"
                         >
-                          {item.images &&
-                            item.images.map((src, i) => (
-                              <SwiperSlide key={i}>
-                                <Image src={src} alt="" />
-                              </SwiperSlide>
-                            ))}
-                        </Swiper>
-                        <div className="postbox__slider-arrow-wrap d-none d-sm-block">
-                          <button className="postbox-arrow-prev">
-                            <i className="fa-sharp fa-solid fa-arrow-left"></i>
-                          </button>
-                          <button className="postbox-arrow-next">
-                            <i className="fa-sharp fa-solid fa-arrow-right"></i>
-                          </button>
+                          <i className="fal fa-angle-right"></i>
+                        </button>
+                        <button
+                          type="button"
+                          className="postbox__slider-button-prev"
+                        >
+                          <i className="fal fa-angle-left"></i>
+                        </button>
+                      </div>
+                      <div className="swiper-container postbox__slider">
+                        <div className="swiper-wrapper">
+                          {item.images?.map((img, i) => (
+                            <div key={i} className="swiper-slide">
+                              <Image
+                                src={img}
+                                alt="blog-img"
+                                style={{ height: "auto" }}
+                              />
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -106,13 +121,13 @@ export default function BlogClassicArea({setIsVideoOpen,setVideoId}:IProps) {
                         </span>
                       </div>
                       <h3 className="postbox__title">
-                        <Link href={`/blog-details/${item.id}`}>{item.title}</Link>
+                        <Link href={`/blog-details/${createSlug(item.title)}`}>{item.title}</Link>
                       </h3>
                       <div className="postbox__text">
                         <p>{item.desc}</p>
                       </div>
                       <div className="postbox__read-more">
-                        <Link href={`/blog-details/${item.id}`}
+                        <Link href={`/blog-details/${createSlug(item.title)}`}
                           className="tp-btn-border-lg"
                         >
                           read more
@@ -132,18 +147,12 @@ export default function BlogClassicArea({setIsVideoOpen,setVideoId}:IProps) {
                     </div>
                   )}
                   {item.blogQuote && (
-                    <div className="postbox__blockquote">
+                    <div className="postbox__quote">
                       <blockquote>
-                        <span className="postbox__blockquote-icon">
-                          <QuoteTwo />
-                        </span>
-                        <p>
-                          Lorem ipsum dolor sit amet, consetetur sadipscing
-                          elitr,uyam erat.!
-                        </p>
-                        <span className="postbox__blockquote-info">
-                          SEM SMITH, CREATIVE DIRECTOR
-                        </span>
+                        <p>{item.desc}</p>
+                        <footer>
+                          <cite>{item.title}</cite>
+                        </footer>
                       </blockquote>
                     </div>
                   )}

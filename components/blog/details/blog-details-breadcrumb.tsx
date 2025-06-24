@@ -1,7 +1,12 @@
 import React from "react";
 import Link from "next/link";
+import { IBlogDT } from "@/types/blog-d-t";
 
-export default function BlogDetailsBreadcrumb() {
+type IProps = {
+  blog: IBlogDT;
+};
+
+export default function BlogDetailsBreadcrumb({ blog }: IProps) {
   return (
     <div className="blog-details-area">
       <div
@@ -37,7 +42,7 @@ export default function BlogDetailsBreadcrumb() {
                     '--bs-breadcrumb-divider': "'/'",
                     '--bs-breadcrumb-divider-color': '#fff'
                   } as React.CSSProperties}>
-                    <Link href="/blog-modern" style={{
+                    <Link href="/blog" style={{
                       color: '#999',
                       textDecoration: 'none',
                       fontSize: '14px'
@@ -71,7 +76,7 @@ export default function BlogDetailsBreadcrumb() {
                   fontSize: '14px',
                   fontWeight: '500'
                 }}>
-                  Creative <i style={{ color: '#666' }}>. 01 Oct, 2022</i>
+                  {blog.category} <i style={{ color: '#666' }}>. {blog.date}</i>
                 </span>
                 <h1 className="blog-details-title tp-char-animation" style={{
                   color: '#fff',
@@ -81,7 +86,7 @@ export default function BlogDetailsBreadcrumb() {
                   marginTop: '15px',
                   marginBottom: '0'
                 }}>
-                  Cultivating Originality In Photography
+                  {blog.title}
                 </h1>
               </div>
             </div>

@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { IBlogDT } from "@/types/blog-d-t";
 import Link from "next/link";
+import { createSlug } from "@/utils/slug-utils";
 
 export default function BlogItem({ item }: { item: IBlogDT }) {
   return (
@@ -15,7 +16,7 @@ export default function BlogItem({ item }: { item: IBlogDT }) {
       <div className="tp-blog-content">
         <span>{item.category}</span>
         <h4 className="tp-blog-title-sm">
-          <Link href={`/blog-details/${item.id}`}>{item.title}</Link>
+          <Link href={`/blog-details/${createSlug(item.title)}`}>{item.title}</Link>
         </h4>
       </div>
     </div>

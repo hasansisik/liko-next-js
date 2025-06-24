@@ -44,11 +44,11 @@ const BlogDetailsMain = ({ blog }: IProps) => {
         <div id="smooth-content">
           <main>
             {/* blog details hero */}
-            <BlogDetailsBreadcrumb />
+            <BlogDetailsBreadcrumb blog={blog} />
             {/* blog details hero */}
 
             {/* blog details area */}
-            <BlogDetailsArea/>
+            <BlogDetailsArea blog={blog} />
             {/* blog details area */}
 
             {/* related posts */}
