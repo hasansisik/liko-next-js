@@ -1,52 +1,46 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { service_data } from "@/data/service-data";
 // images
 import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
 import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
 import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
+import s_4 from "@/assets/img/home-01/service/service-icon-4.png";
 
-const service_data = [
-  {
-    id: 1,
-    title: "Branding",
-    desc: "Branding is one of the most important ingredients for the success of any business.",
-    icon: s_2,
-  },
-  {
-    id: 2,
-    title: "Website design",
-    desc: "The perfect cocktail should still look and taste perfect no matter the size of the glass you serve it in.",
-    icon: s_1,
-  },
-  {
-    id: 3,
-    title: "Marketing",
-    desc: "We take that same approach with the apps & websites we create. you go there because of the overall experience.",
-    icon: s_3,
-  },
-];
+// Helper function to generate slug from title
+const generateSlug = (title: string) => {
+  return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+};
 
 // service items
 export function ServiceItems() {
   return (
     <div className="row">
       <div className="col-xxl-3"></div>
-      {service_data.map((item) => (
-        <div key={item.id} className="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
-          <div className="tp-service-5-item tp_fade_bottom space-1">
-            <div className="tp-service-4-icon">
-              <Image src={item.icon} alt="icon" />
-            </div>
-            <div className="tp-service-4-content">
-              <h4 className="tp-service-4-title-sm tp-text-black">
-                <Link href="/service">{item.title}</Link>
-              </h4>
-              <p>{item.desc}</p>
+      {service_data.slice(0, 3).map((item, index) => {
+        // Use different icons for each service
+        const icons = [s_2, s_1, s_3, s_4];
+        const icon = icons[index % icons.length];
+        
+        return (
+          <div key={item.id} className="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
+            <div className="tp-service-5-item tp_fade_bottom space-1">
+              <div className="tp-service-4-icon">
+                <Image src={icon} alt="icon" />
+              </div>
+              <div className="tp-service-4-content">
+                <h4 className="tp-service-4-title-sm tp-text-black">
+                  <Link href={`/service-details/${generateSlug(item.title)}`}>
+                    {item.title}
+                  </Link>
+                </h4>
+                <p>{item.shortDesc || item.desc}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -64,8 +58,8 @@ export default function ServiceFive() {
                   SERVICES
                 </span>
                 <span className="text-space"></span>
-                Nullam posuere rhoncus elementum. Nullam lacinia <br />
-                urna blandit iaculis sagittis
+                Expert dental care with modern technology and <br />
+                personalized treatment plans for your perfect smile
               </h4>
             </div>
           </div>

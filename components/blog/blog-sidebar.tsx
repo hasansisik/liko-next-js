@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { blog_lists } from "@/data/blog-data";
 import { createSlug } from "@/utils/slug-utils";
+import ContactFormDental from "../form/contact-form-dental";
 
 export default function BlogSidebar() {
   const rc_posts = [...blog_lists].slice(0, 3);
@@ -25,7 +26,29 @@ export default function BlogSidebar() {
           </div>
         </div>
       </div>
-      
+
+      {/* Dental Contact Form Section */}
+      <div className="sidebar__widget mb-65">
+        <div className="service-details__contact-form-wrap p-30">
+          <div className="text-center mb-30">
+            <h3 className="sidebar__widget-title mb-20">Ready to Get Started?</h3>
+            <p className="mb-0">Contact us today to discuss your treatment</p>
+          </div>
+          <ContactFormDental
+            title={`Book Your `}
+            subtitle="Expert available"
+            responseTime="Schedule within 24 hours"
+            showWhatsApp={false}
+            style={{
+              maxWidth: "100%",
+              margin: "0",
+              boxShadow: "none",
+              backgroundColor: "transparent",
+            }}
+          />
+        </div>
+      </div>
+
       <div className="sidebar__widget mb-65">
         <h3 className="sidebar__widget-title">Category</h3>
         <div className="sidebar__widget-content">
@@ -45,7 +68,7 @@ export default function BlogSidebar() {
           </ul>
         </div>
       </div>
-      
+
       <div className="sidebar__widget mb-65">
         <h3 className="sidebar__widget-title">Recent Post</h3>
         <div className="sidebar__widget-content">
@@ -71,7 +94,9 @@ export default function BlogSidebar() {
                     <span>{item.date}</span>
                   </div>
                   <h3 className="rc__post-title">
-                    <Link href={`/blog-details/${createSlug(item.title)}`}>{item.title}</Link>
+                    <Link href={`/blog-details/${createSlug(item.title)}`}>
+                      {item.title}
+                    </Link>
                   </h3>
                 </div>
               </div>
@@ -79,7 +104,7 @@ export default function BlogSidebar() {
           </div>
         </div>
       </div>
-      
+
       <div className="sidebar__widget mb-65">
         <h3 className="sidebar__widget-title">Tags</h3>
         <div className="sidebar__widget-content">

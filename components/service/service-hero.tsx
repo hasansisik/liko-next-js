@@ -7,15 +7,18 @@ import ser_hero from "@/assets/img/inner-service/hero/hero-1.jpg";
 export default function ServiceHero() {
   return (
     <div className="sv-hero-area sv-hero-ptb">
-      <div className="container container-1530">
+      <div className="container-fluid" style={{ 
+        padding: '0 clamp(20px, 6vw, 300px)',
+        maxWidth: '100%' 
+      }}>
         <div className="row">
           <div className="col-xl-10">
             <div className="sv-hero-title-box">
               <h4 className="sv-hero-title tp-char-animation">
-                Experience <br /> the best services.
+                Expert Dental <br /> Care Services
               </h4>
               <p className="tp_fade_bottom">
-                Fulfilled direction use continual set him propriety continued.
+                Transform your smile with our comprehensive dental treatments and modern technology.
               </p>
             </div>
           </div>
@@ -27,7 +30,7 @@ export default function ServiceHero() {
                 <Image
                   data-speed=".7"
                   src={ser_hero}
-                  alt="ser_hero-img"
+                  alt="dental-services-hero"
                   style={{height:"auto"}}
                 />
               </div>

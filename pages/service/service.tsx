@@ -58,9 +58,9 @@ const ServiceMain = () => {
                         Services
                       </span>
                       <h4 className="tp-service-5-title">
-                        We strongly believe that only design reinforced by{" "}
+                        We provide comprehensive dental care with{" "}
                         <br />
-                        strategy can provide real results.
+                        modern technology and personalized treatment plans.
                       </h4>
                     </div>
                   </div>
