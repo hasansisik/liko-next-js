@@ -85,7 +85,7 @@ export default function BlogDetailsBreadcrumb({ blog }: IProps) {
                     color: '#fff',
                     fontSize: '14px'
                   }}>
-                    Blog Details
+                    {blog.title}
                   </li>
                 </ol>
               </nav>

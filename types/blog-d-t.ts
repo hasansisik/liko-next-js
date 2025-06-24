@@ -1,5 +1,13 @@
 import { StaticImageData } from "next/image";
 
+export interface IBlogComment {
+  id: number;
+  name: string;
+  avatar: string;
+  date: string;
+  comment: string;
+}
+
 export interface IBlogDT {
   id: number;
   slug?: string;
@@ -20,4 +28,6 @@ export interface IBlogDT {
   content?: {
     htmlContent: string;
   };
+  comments?: IBlogComment[];
+  commentCount?: number;
 }

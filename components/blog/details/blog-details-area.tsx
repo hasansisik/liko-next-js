@@ -73,9 +73,11 @@ export default function BlogDetailsArea({ blog }: IProps) {
               {/* blog details navigation */}
 
               <div className="postbox__comment mb-100">
-                <h3 className="postbox__comment-title">3 Comments</h3>
+                <h3 className="postbox__comment-title">
+                  {blog.commentCount || 0} Comment{(blog.commentCount || 0) !== 1 ? 's' : ''}
+                </h3>
                 {/* blog details comments */}
-                <BlogDetailsComments />
+                <BlogDetailsComments blog={blog} />
                 {/* blog details comments */}
               </div>
 

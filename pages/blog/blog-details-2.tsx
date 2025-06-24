@@ -15,6 +15,7 @@ import BlogDetailsRelatedPosts from "@/components/blog/details/blog-details-rela
 // animation
 import { charAnimation } from "@/utils/title-animation";
 import BlogDetailsAreaTwo from "@/components/blog/details/blog-details-area-2";
+import { blog_data } from "@/data/blog-data";
 // image
 import blog_bg from "@/assets/img/inner-blog/blog-details-without-sidebar/blog-details-3.jpg";
 
@@ -27,6 +28,9 @@ const BlogDetailsTwoMain = () => {
     }, 100);
     return () => clearTimeout(timer);
   });
+
+  // Use first blog as default for this static page
+  const blog = blog_data[0];
 
   return (
     <Wrapper>
@@ -93,7 +97,7 @@ const BlogDetailsTwoMain = () => {
             {/* blog details hero */}
 
             {/* blog details area */}
-            <BlogDetailsAreaTwo />
+            <BlogDetailsAreaTwo blog={blog} />
             {/* blog details area */}
 
             {/* related posts */}

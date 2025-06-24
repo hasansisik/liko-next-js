@@ -32,7 +32,7 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
             backgroundColor: sticky ? 'white' : 'transparent',
             transition: 'background-color 0.3s ease',
             boxShadow: sticky ? '0 2px 10px rgba(0,0,0,0.1)' : 'none',
-            padding: '20px 0 0 0',
+            padding: '0',
             margin: '0'
           }}
         >
@@ -42,7 +42,7 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
           }}>
             <div className="row align-items-center justify-content-between" style={{ 
               margin: '0',
-              padding: '15px 0'
+              padding: '10px 0'
             }}>
               <div className="col-auto" style={{ padding: '0 20px' }}>
                 <div className="tp-header-logo">

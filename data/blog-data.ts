@@ -1,13 +1,5 @@
-import { IBlogDT } from "@/types/blog-d-t";
+import { IBlogDT, IBlogComment } from "@/types/blog-d-t";
 
-// blog images
-
-// home 5
-import blog_1 from "@/assets/img/home-05/blog/blog-1.jpg";
-import blog_2 from "@/assets/img/home-05/blog/blog-2.jpg";
-import blog_3 from "@/assets/img/home-05/blog/blog-3.jpg";
-import blog_4 from "@/assets/img/home-05/blog/blog-4.jpg";
-// blog modern 
 import b_m_1 from "@/assets/img/inner-blog/blog-standard/blog-1.jpg";
 import b_m_2 from "@/assets/img/inner-blog/blog-standard/blog-2.jpg";
 import b_m_3 from "@/assets/img/inner-blog/blog-standard/blog-3.jpg";
@@ -16,15 +8,6 @@ import b_m_5 from "@/assets/img/inner-blog/blog-standard/blog-5.jpg";
 import b_m_6 from "@/assets/img/inner-blog/blog-standard/blog-6.jpg";
 import b_m_7 from "@/assets/img/inner-blog/blog-standard/blog-7.jpg";
 
-// avatar
-import avatar from "@/assets/img/inner-blog/blog-sidebar/avatar/avata-1.jpg";
-
-// blog postbox img
-import blog_post_1 from '@/assets/img/inner-blog/blog-sidebar/sidebar-left-1.jpg';
-import blog_post_2 from '@/assets/img/inner-blog/blog-sidebar/sidebar-left-2.jpg';
-import blog_post_3 from '@/assets/img/inner-blog/blog-sidebar/sidebar-left-3.jpg';
-import blog_post_4 from '@/assets/img/inner-blog/blog-sidebar/sidebar-left-4.jpg';
-
 // blog list images
 import blog_list_1 from '@/assets/img/inner-blog/blog-right-sidebar/blog-1.jpg';
 import blog_list_2 from '@/assets/img/inner-blog/blog-right-sidebar/blog-2.jpg';
@@ -32,10 +15,6 @@ import blog_list_3 from '@/assets/img/inner-blog/blog-right-sidebar/blog-3.jpg';
 import blog_list_4 from '@/assets/img/inner-blog/blog-right-sidebar/blog-4.jpg';
 import blog_list_5 from '@/assets/img/inner-blog/blog-right-sidebar/blog-5.jpg';
 
-// detail images
-import details_thumb_1 from "@/assets/img/inner-blog/blog-details/blog-details-2.jpg";
-import details_thumb_2 from "@/assets/img/inner-blog/blog-details/blog-details-3.jpg";
-import details_thumb_3 from "@/assets/img/inner-blog/blog-details/blog-details-4.jpg";
 
 export const blog_data: IBlogDT[] = [
   {
@@ -46,6 +25,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Marketing',
     author: 'John Doe',
     desc: 'Exploring the fundamentals of memorable design that creates lasting impressions and drives business success.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -147,6 +150,23 @@ export const blog_data: IBlogDT[] = [
     category: 'Photography',
     author: 'John Doe',
     desc: 'Learn how to create stunning photographs with minimal equipment and maximum creativity.',
+    commentCount: 2,
+    comments: [
+      {
+        id: 1,
+        name: "Sarah Wilson",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "March 15, 2024 at 2:30 pm",
+        comment: "Great tips! I've been struggling with lighting in my home studio setup. This really helped me understand the basics.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mike Johnson",
+        date: "March 16, 2024 at 10:15 am",
+        comment: "Simple yet effective techniques. Sometimes less really is more in photography.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -248,6 +268,16 @@ export const blog_data: IBlogDT[] = [
     category: 'Business',
     author: 'John Doe',
     desc: 'Discover innovative business concepts that will shape the future of entrepreneurship and commerce.',
+    commentCount: 1,
+    comments: [
+      {
+        id: 1,
+        name: "Alex Chen",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "November 25, 2023 at 4:20 pm",
+        comment: "Fascinating insights into emerging business trends. The AI integration examples were particularly helpful for my startup.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -280,6 +310,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Branding',
     author: 'John Doe',
     desc: 'Signs that indicate your business might need a rebranding strategy and how to approach it effectively.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -314,6 +368,44 @@ export const blog_data: IBlogDT[] = [
     desc: 'An exciting journey through the desert landscape in search of hidden treasures and unforgettable experiences.',
     video: true,
     videoId: 'rVHxkxJM3rY',
+    commentCount: 5,
+    comments: [
+      {
+        id: 1,
+        name: "Adventure Seeker",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "May 12, 2023 at 6:45 am",
+        comment: "This looks absolutely incredible! I've always wanted to try desert exploration. Any tips for beginners?",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Desert Guide",
+        date: "May 12, 2023 at 8:30 am",
+        comment: "Start with shorter trips and always bring more water than you think you need. Safety first!",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Explorer Mike",
+        date: "May 13, 2023 at 3:15 pm",
+        comment: "The video was amazing! Those sunset shots were breathtaking.",
+      },
+      {
+        id: 4,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Travel Blogger",
+        date: "May 14, 2023 at 11:20 am",
+        comment: "Adding this to my bucket list. The treasure hunting aspect sounds so exciting!",
+      },
+      {
+        id: 5,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Photography Enthusiast",
+        date: "May 15, 2023 at 9:00 am",
+        comment: "Perfect combination of adventure and photography opportunities. Can't wait to plan my own desert expedition!",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -346,6 +438,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Branding',
     author: 'John Doe',
     desc: 'Transform your brand identity through powerful visual storytelling and strategic design choices.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -378,6 +494,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Community',
     author: 'John Doe',
     desc: 'Collaborating with local communities to create meaningful projects that drive positive social impact.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -410,6 +550,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Experience Design',
     author: 'John Doe',
     desc: 'Creating distinctive experiences that engage customers and build lasting brand loyalty.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -442,6 +606,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Creativity',
     author: 'John Doe',
     desc: 'Establishing creative processes and environments that foster innovation and artistic expression.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">
@@ -474,6 +662,30 @@ export const blog_data: IBlogDT[] = [
     category: 'Design',
     author: 'John Doe',
     desc: 'Creating memorable design solutions that leave lasting impressions and drive meaningful engagement.',
+    commentCount: 3,
+    comments: [
+      {
+        id: 1,
+        name: "John Doe",
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        date: "April 8, 2024 at 7:38 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 2,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-4.jpg",
+        name: "Mary Jane",
+        date: "May 10, 2024 at 8:40 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+      {
+        id: 3,
+        avatar: "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
+        name: "Nancy Doe",
+        date: "Feb 20, 2024 at 9:00 am",
+        comment: "Quisque est tortor, condimentum eget faucibus vel, condimentum quis felis. Nunc non orci augue. Pellentesque elementum gravida arcu.",
+      },
+    ],
     content: {
       htmlContent: `
         <div class="blog-details-top-text">

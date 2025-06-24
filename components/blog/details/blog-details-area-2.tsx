@@ -5,13 +5,18 @@ import BlogDetailsAuthor from "./blog-details-author";
 import BlogDetailsNavigation from "./blog-details-navigation";
 import BlogDetailsComments from "./blog-details-comments";
 import BlogReplyForm from "@/components/form/blog-reply-form";
+import { IBlogDT } from "@/types/blog-d-t";
 
 // images
 import details_thumb_1 from "@/assets/img/inner-blog/blog-details-without-sidebar/blog-details-1.jpg";
 import details_thumb_2 from "@/assets/img/inner-blog/blog-details-without-sidebar/blog-details-2.jpg";
 import details_thumb_3 from "@/assets/img/inner-blog/blog-details/blog-details-4.jpg";
 
-export default function BlogDetailsAreaTwo() {
+type IProps = {
+  blog: IBlogDT;
+};
+
+export default function BlogDetailsAreaTwo({ blog }: IProps) {
   return (
     <section className="postbox__area tp-blog-sidebar-sticky-area pt-120 pb-120">
       <div className="container">
@@ -21,27 +26,27 @@ export default function BlogDetailsAreaTwo() {
               <div className="row justify-content-center">
                 <div className="col-xl-8">
                   <div className="blog-details-top-text tp_fade_bottom">
-                    <p>
-                      The metaverse can be viewed as an evolution of today’s
-                      internet, which in turn evolved from passive media that we
-                      simply consumed. In the age of radio and television, the
-                      consumer’s only job was to listen and decide if they
-                      wanted to buy.{" "}
-                    </p>
+                                          <p>
+                        The metaverse can be viewed as an evolution of today&apos;s
+                        internet, which in turn evolved from passive media that we
+                        simply consumed. In the age of radio and television, the
+                        consumer&apos;s only job was to listen and decide if they
+                        wanted to buy.{" "}
+                      </p>
                   </div>
                   <div className="blog-details-left-content tp_fade_bottom">
-                    <p className="pb-40">
-                      The metaverse can be viewed as an evolution of today’s
-                      internet, which in turn evolved from passive media that we
-                      simply consumed. In the age of radio and television, the
-                      consumer’s only job was to listen and decide if they
-                      wanted to buy. While the internet added active
-                      participation and community-building, the metaverse adds
-                      total immersion and the power to co-create, trade, promote
-                      and even profit in ways never before imagined – bringing
-                      an entirely new level of complexity to the ways in which
-                      brands can interact with their target market.
-                    </p>
+                                          <p className="pb-40">
+                        The metaverse can be viewed as an evolution of today&apos;s
+                        internet, which in turn evolved from passive media that we
+                        simply consumed. In the age of radio and television, the
+                        consumer&apos;s only job was to listen and decide if they
+                        wanted to buy. While the internet added active
+                        participation and community-building, the metaverse adds
+                        total immersion and the power to co-create, trade, promote
+                        and even profit in ways never before imagined – bringing
+                        an entirely new level of complexity to the ways in which
+                        brands can interact with their target market.
+                      </p>
                     <h4 className="blog-details-left-title">
                       What is Lorem Ipsum?
                     </h4>
@@ -93,11 +98,11 @@ export default function BlogDetailsAreaTwo() {
                     <p>
                       But, like most politicians, he promised more than he could
                       deliver. Why not indeed! Daylight and everything. And then
-                      the battle’s not so bad? Hello, little man. I will destroy
-                      you! No, I’m Santa Claus! Kif might! Man, I’m sore all
+                      the battle&apos;s not so bad? Hello, little man. I will destroy
+                      you! No, I&apos;m Santa Claus! Kif might! Man, I&apos;m sore all
                       over. I feel like I just went ten rounds with mighty Thor.
-                      I found what I need. And it’s not friends, it’s things.
-                      Then we’ll go with that data file!
+                      I found what I need. And it&apos;s not friends, it&apos;s things.
+                      Then we&apos;ll go with that data file!
                     </p>
                   </div>
                   <div className="blog-details-blockquote tp_fade_bottom">
@@ -106,7 +111,7 @@ export default function BlogDetailsAreaTwo() {
                         <QuoteThree />
                       </span>
                       <p>
-                        {"Don't"} watch the clock; do what it does. keep going.
+                        Don&apos;t watch the clock; do what it does. keep going.
                       </p>
                       <span className="blockquote-info">Sam Levenson</span>
                     </blockquote>
@@ -186,9 +191,11 @@ export default function BlogDetailsAreaTwo() {
                   <BlogDetailsNavigation />
                   {/* blog details navigation */}
                   <div className="postbox__comment mb-100">
-                    <h3 className="postbox__comment-title">3 Comments</h3>
+                    <h3 className="postbox__comment-title">
+                      {blog.commentCount || 0} Comment{(blog.commentCount || 0) !== 1 ? 's' : ''}
+                    </h3>
                     {/* blog details comments */}
-                    <BlogDetailsComments />
+                    <BlogDetailsComments blog={blog} />
                     {/* blog details comments */}
                   </div>
                   <div className="tp-postbox-details-form">
