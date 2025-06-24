@@ -8,6 +8,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { ScrollDown } from "@/components/svg";
 import { blog_classic } from "@/data/blog-data";
 import { scroller } from "react-scroll";
+import { createSlug } from "@/utils/slug-utils";
 
 // slider setting
 const slider_setting: SwiperOptions = {
@@ -80,7 +81,7 @@ export default function BlogClassicSlider() {
                           <h4 className="blog-sidebar-slider-title tp-char-animation">
                             {item.title}
                           </h4>
-                          <Link href={`/blog-details/${item.id}`}
+                          <Link href={`/${createSlug(item.title)}`}
                             className="blog-sidebar-slider-link"
                           >
                             Read More

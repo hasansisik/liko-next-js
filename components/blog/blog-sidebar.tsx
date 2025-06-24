@@ -79,7 +79,7 @@ export default function BlogSidebar() {
                 className="rc__post mb-30 d-flex align-items-center"
               >
                 <div className="rc__post-thumb mr-20">
-                  <Link href={`/blog-details/${createSlug(item.title)}`}>
+                  <Link href={`/${createSlug(item.title)}`}>
                     <Image
                       src={item.img!}
                       alt="blog-img"
@@ -94,9 +94,9 @@ export default function BlogSidebar() {
                     <span>{item.date}</span>
                   </div>
                   <h3 className="rc__post-title">
-                    <Link href={`/blog-details/${createSlug(item.title)}`}>
-                      {item.title}
-                    </Link>
+                                    <Link href={`/${createSlug(item.title)}`}>
+                  {item.title}
+                </Link>
                   </h3>
                 </div>
               </div>

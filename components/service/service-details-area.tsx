@@ -174,12 +174,12 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
                 <span>Our Dental Services</span>
               </div>
               <div className="service-details__right-category">
-                <Link href="/service-details/hollywood-smile">Hollywood Smile</Link>
-                <Link href="/service-details/dental-veneers">Dental Veneers</Link>
-                <Link href="/service-details/dental-implants">Dental Implants</Link>
-                <Link href="/service-details/smile-makeover">Smile Makeover</Link>
-                <Link href="/service-details/zirconium-crowns">Zirconium Crowns</Link>
-                <Link href="/service-details/e-max-crowns">E-Max Crowns</Link>
+                <Link href="/hollywood-smile">Hollywood Smile</Link>
+                <Link href="/dental-veneers">Dental Veneers</Link>
+                <Link href="/dental-implants">Dental Implants</Link>
+                <Link href="/smile-makeover">Smile Makeover</Link>
+                <Link href="/zirconium-crowns">Zirconium Crowns</Link>
+                <Link href="/e-max-crowns">E-Max Crowns</Link>
               </div>
               <div className="service-details__right-text-box">
                 <h4>

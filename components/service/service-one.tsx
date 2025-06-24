@@ -54,7 +54,7 @@ const ServiceOne = () => {
                   </div>
                   <div className="tp-service-content">
                     <h4 className="tp-service-title-sm order-0">
-                      <Link href={`/service-details/${generateSlug(s.title)}`}>{s.title}</Link>
+                      <Link href={`/${generateSlug(s.title)}`}>{s.title}</Link>
                     </h4>
                     <p className="order-1">{s.shortDesc || s.desc}</p>
                   </div>

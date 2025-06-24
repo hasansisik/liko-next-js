@@ -121,13 +121,13 @@ export default function BlogClassicArea({setIsVideoOpen,setVideoId}:IProps) {
                         </span>
                       </div>
                       <h3 className="postbox__title">
-                        <Link href={`/blog-details/${createSlug(item.title)}`}>{item.title}</Link>
+                        <Link href={`/${createSlug(item.title)}`}>{item.title}</Link>
                       </h3>
                       <div className="postbox__text">
                         <p>{item.desc}</p>
                       </div>
                       <div className="postbox__read-more">
-                        <Link href={`/blog-details/${createSlug(item.title)}`}
+                        <Link href={`/${createSlug(item.title)}`}
                           className="tp-btn-border-lg"
                         >
                           read more

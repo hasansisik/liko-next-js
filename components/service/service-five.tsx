@@ -33,7 +33,7 @@ export function ServiceItems() {
               </div>
               <div className="tp-service-4-content">
                 <h4 className="tp-service-4-title-sm tp-text-black">
-                  <Link href={`/service-details/${generateSlug(item.title)}`}>
+                  <Link href={`/${generateSlug(item.title)}`}>
                     {item.title}
                   </Link>
                 </h4>

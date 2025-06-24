@@ -68,7 +68,7 @@ export default function ServiceSix() {
                       <div className="sv-service-btn">
                         <Link
                           className="tp-btn-zikzak zikzak-inner p-relative"
-                          href={`/service-details/${generateSlug(item.title)}`}
+                          href={`/${generateSlug(item.title)}`}
                         >
                           <span className="zikzak-content">
                             See <br /> Details

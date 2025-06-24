@@ -67,7 +67,7 @@ export default function BlogItem({ item }: { item: IBlogDT }) {
             lineHeight: '1.4'
           }}>
             <Link 
-              href={`/blog-details/${createSlug(item.title)}`}
+              href={`/${createSlug(item.title)}`}
               style={{ 
                 textDecoration: 'none',
                 color: 'inherit',
