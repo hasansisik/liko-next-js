@@ -17,10 +17,10 @@ export default function useScrollSmooth() {
       });
 
       ScrollSmoother.create({
-        smooth: 2,
+        smooth: 0.8,
         effects: true,
-        smoothTouch: 0.1,
-        normalizeScroll: false,
+        smoothTouch: 0.05,
+        normalizeScroll: true,
         ignoreMobileResize: true,
       });
     }

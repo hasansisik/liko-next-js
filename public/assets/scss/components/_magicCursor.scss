@@ -1,13 +1,12 @@
-
 body.tp-magic-cursor #magic-cursor {
-    display: block;
+    display: none !important;
 }
 
 #magic-cursor {
 	position: absolute;
-	display: none;
-	width: 10px;
-	height: 10px;
+	display: none !important;
+	width: 0;
+	height: 0;
 	pointer-events: none;
 	z-index: 99999;
 	opacity: 0;
@@ -23,6 +22,7 @@ body.tp-magic-cursor #magic-cursor {
 	justify-content: center;
     mix-blend-mode: difference;
 	color: transparent;
+	z-index: 99999;
 }
 
 
