@@ -27,16 +27,24 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
       <header className="tp-header-height" ref={headerRef}>
         <div
           id="header-sticky"
-          className={`tp-header-area tp-header-mob-space ${transparent ? 'tp-transparent' : ''} pl-60 pr-60 z-index-9 ${sticky?'header-sticky':''}`}
+          className={`tp-header-area tp-header-mob-space ${transparent ? 'tp-transparent' : ''} z-index-9 ${sticky?'header-sticky':''}`}
           style={{
             backgroundColor: sticky ? 'white' : 'transparent',
             transition: 'background-color 0.3s ease',
-            boxShadow: sticky ? '0 2px 10px rgba(0,0,0,0.1)' : 'none'
+            boxShadow: sticky ? '0 2px 10px rgba(0,0,0,0.1)' : 'none',
+            padding: '20px 0 0 0',
+            margin: '0'
           }}
         >
-          <div className="container">
-            <div className="row align-items-center justify-content-between">
-              <div className="col-auto">
+          <div className="container-fluid" style={{ 
+            padding: '0 clamp(20px, 6vw, 300px)',
+            maxWidth: '100%' 
+          }}>
+            <div className="row align-items-center justify-content-between" style={{ 
+              margin: '0',
+              padding: '15px 0'
+            }}>
+              <div className="col-auto" style={{ padding: '0 20px' }}>
                 <div className="tp-header-logo">
                   <Link href="/">
                     <Image
@@ -57,7 +65,7 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
                   </Link>
                 </div>
               </div>
-              <div className="col-auto d-none d-lg-block">
+              <div className="col-auto d-none d-lg-block" style={{ padding: '0 20px' }}>
                 <div className="tp-header-menu header-main-menu">
                   <nav className="tp-main-menu-content">
                     {/* header menus */}
@@ -66,7 +74,7 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
                   </nav>
                 </div>
               </div>
-              <div className="col-auto d-lg-none">
+              <div className="col-auto d-lg-none" style={{ padding: '0 20px' }}>
                 <div className="tp-header-bar">
                   <button className="tp-offcanvas-open-btn" onClick={() => setOpenOffCanvas(true)}>
                     <span style={{ 

@@ -502,7 +502,7 @@ export const blog_data: IBlogDT[] = [
 
 // Legacy exports for backward compatibility
 export const blog_home_five = blog_data.slice(0, 4);
-export const blog_modern = blog_data.slice(4, 8);
+export const blog_modern = blog_data.slice(0, 10); // All blog posts for modern view
 export const blog_classic = blog_data.slice(6, 10);
 export const blog_lists = blog_data.slice(0, 6);
 

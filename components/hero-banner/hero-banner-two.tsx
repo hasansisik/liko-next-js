@@ -44,15 +44,35 @@ const HeroBannerTwo = () => {
                 </div>
                 <div className="tp-hero-2-content-wrap p-relative d-none d-lg-block" style={{
                   maxWidth: '80%',
-                  paddingRight: '100px'
+                  paddingLeft: 'clamp(20px, 5vw, 0px)',
+                  paddingRight: 'clamp(20px, 5vw, 0px)'
                 }}>
-                  <div className="tp-hero-2-title-box">
-                    <h2 className="tp-hero-2-title text-1 z-index-5 ">
-                      Excellence in Aesthetics & Health
+                  <div className="tp-hero-2-title-box" style={{
+                    margin: '0',
+                    padding: '0'
+                  }}>
+                    <h2 className="tp-hero-2-title text-1 z-index-5" style={{
+                      margin: '0 0 20px 0',
+                      padding: '0',
+                      color: 'white',
+                      fontSize: 'clamp(40px, 8vw, 80px)',
+                      fontWeight: 'bold',
+                      lineHeight: '1.8'
+                    }}>
+                      Route to a Perfect Smile
                     </h2>
                   </div>
-                  <div className="tp-hero-2-content">
-                    <p>
+                  <div className="tp-hero-2-content" style={{
+                    margin: '0',
+                    padding: '0'
+                  }}>
+                    <p style={{
+                      margin: '0',
+                      padding: '0',
+                      color: 'white',
+                      fontSize: '20px',
+                      lineHeight: '1.6'
+                    }}>
                       Rediscover your beauty with our {"Clinic's"} team of
                       experts, personalized solutions, and the latest
                       technology.
@@ -63,37 +83,45 @@ const HeroBannerTwo = () => {
                 {/* Mobile Content */}
                 <div className="tp-hero-2-content-wrap p-relative d-lg-none" style={{
                   width: '100%',
-                  padding: '20px',
-                  textAlign: 'center',
+                  padding: '20px clamp(20px, 5vw, 40px)',
+                  textAlign: 'left',
                   position: 'absolute',
                   top: '50%',
                   left: '0',
                   transform: 'translateY(-50%)',
                   zIndex: 5
                 }}>
-                  <div className="tp-hero-2-title-box">
+                  <div className="tp-hero-2-title-box" style={{
+                    margin: '0',
+                    padding: '0'
+                  }}>
                     <h1 style={{
-                      fontSize: 'clamp(28px, 8vw, 40px)',
+                      fontSize: 'clamp(24px, 6vw, 40px)',
                       fontWeight: 'bold',
                       color: 'white',
-                      marginBottom: 'clamp(15px, 4vw, 20px)',
+                      margin: '0 0 clamp(15px, 4vw, 20px) 0',
+                      padding: '0',
                       textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                      lineHeight: '1.2',
-                      textAlign: 'center'
+                      lineHeight: '1.3',
+                      textAlign: 'left'
                     }}>
                       Excellence in Aesthetics & Health
                     </h1>
                   </div>
-                  <div className="tp-hero-2-content">
+                  <div className="tp-hero-2-content" style={{
+                    margin: '0',
+                    padding: '0'
+                  }}>
                     <p style={{
                       color: 'white',
-                      fontSize: 'clamp(14px, 4vw, 18px)',
+                      fontSize: 'clamp(14px, 3.5vw, 18px)',
                       textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
-                      maxWidth: 'min(90vw, 320px)',
-                      margin: '0 auto',
+                      maxWidth: '100%',
+                      margin: '0',
+                      padding: '0',
                       lineHeight: '1.5',
                       fontWeight: '400',
-                      textAlign: 'center'
+                      textAlign: 'left'
                     }}>
                       Rediscover your beauty with our {"Clinic's"} team of
                       experts, personalized solutions, and the latest
@@ -105,7 +133,7 @@ const HeroBannerTwo = () => {
                 {/* Contact Form */}
                 <div className="tp-hero-2-form-wrap d-none d-lg-block" style={{
                   position: 'absolute',
-                  right: '50px',
+                  right: 'clamp(20px, 5vw, 200px)',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   zIndex: 10
@@ -129,7 +157,7 @@ const HeroBannerTwo = () => {
           marginTop: 'clamp(-200px, -25vh, -150px)',
           zIndex: 10
         }}>
-          <div className="col-12" style={{ padding: 'clamp(15px, 5vw, 20px)' }}>
+          <div className="col-12" style={{ padding: 'clamp(15px, 5vw, 20px) clamp(20px, 5vw, 40px)' }}>
             <ContactFormDental 
               style={{
                 maxWidth: 'min(90vw, 500px)',

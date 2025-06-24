@@ -2,12 +2,11 @@
 import React from "react";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
+import { SunMoon } from 'lucide-react';
 
 const  ThemeSetting = () => {
   const { setTheme, theme } = useTheme();
   const [settingOpen, setSettingOpen] = React.useState(false);
-
-  console.log('theme', theme);
 
   function handleOpenSetting() {
     setSettingOpen(!settingOpen);
@@ -20,7 +19,7 @@ const  ThemeSetting = () => {
     >
       <div className="tp-theme-wrapper">
         <div className="tp-theme-header text-center">
-          <h4 className="tp-theme-header-title">Liko Mode Settings</h4>
+          <h4 className="tp-theme-header-title">Mode Theme</h4>
         </div>
 
         <div className="tp-theme-dir mb-20">
@@ -52,7 +51,7 @@ const  ThemeSetting = () => {
                 onClick={handleOpenSetting}
               >
                 <span className="tp-theme-settings-gear">
-                  <i className="fa-light fa-gear"></i>
+                  <SunMoon size={30} />
                 </span>
                 <span className="tp-theme-settings-close">
                   <i className="fa-regular fa-xmark"></i>

@@ -15,6 +15,7 @@ import { charAnimation } from "@/utils/title-animation";
 import BlogModern from "@/components/blog/blog-modern-area";
 import BigText from "@/components/big-text";
 import HeaderOne from "@/layouts/headers/header-one";
+import BlogHeroBanner from "@/components/blog/blog-hero-banner";
 
 const BlogModernMain = () => {
   useScrollSmooth();
@@ -29,12 +30,16 @@ const BlogModernMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderOne transparent={true} color="black"/>
+      <HeaderOne transparent={true} color="white"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main>
+            {/* blog hero banner start */}
+            <BlogHeroBanner />
+            {/* blog hero banner end */}
+
             {/* blog modern area start */}
             <BlogModern />
             {/* blog modern area end */}
