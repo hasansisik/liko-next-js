@@ -2,14 +2,31 @@ import React, { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import menu_data from "@/data/menu-data";
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
+
+// Props type for opening dialog
+type IProps = {
+  onOpenDialog?: () => void;
+  isSticky?: boolean;
+};
 
 const imgStyle:CSSProperties = { width: "100%", height: "auto", objectFit: "cover" };
-const HeaderMenus = () => {
+const HeaderMenus = ({ onOpenDialog, isSticky = false }: IProps) => {
+  const [isHovered, setIsHovered] = React.useState(false);
   return (
-    <ul>
+    <ul style={{ 
+      fontSize: '13px',
+      fontWeight: '500'
+    }}>
       {menu_data.map((menu) => (
         <li key={menu.id} className="has-dropdown">
-          <Link href={menu.link}>{menu.title}</Link>
+          <Link href={menu.link} style={{ 
+            color: isSticky ? '#333' : 'white',
+            textDecoration: 'none',
+            fontSize: '13px',
+            fontWeight: '500',
+            transition: 'color 0.3s ease'
+          }}>{menu.title}</Link>
           {menu.home_menus ? (
             <div className="tp-submenu submenu tp-mega-menu">
               <div className="tp-menu-fullwidth">
@@ -27,7 +44,11 @@ const HeaderMenus = () => {
                         </div>
                         <div className="homemenu-content text-center">
                           <h4 className="homemenu-title">
-                            <Link href={home_menu.link}>{home_menu.title}</Link>
+                            <Link href={home_menu.link} style={{ 
+                              color: 'white',
+                              textDecoration: 'none',
+                              fontSize: '12px'
+                            }}>{home_menu.title}</Link>
                           </h4>
                         </div>
                       </div>
@@ -53,7 +74,11 @@ const HeaderMenus = () => {
                                 {menu.pages_mega_menu.first.submenus.map(
                                   (psm,i) => (
                                     <li key={i}>
-                                      <Link href={psm.link}>{psm.title}</Link>
+                                      <Link href={psm.link} style={{ 
+                                        color: 'white',
+                                        textDecoration: 'none',
+                                        fontSize: '12px'
+                                      }}>{psm.title}</Link>
                                     </li>
                                   )
                                 )}
@@ -71,7 +96,11 @@ const HeaderMenus = () => {
                                 {menu.pages_mega_menu.second.submenus.map(
                                   (psm,i) => (
                                     <li key={i}>
-                                      <Link href={psm.link}>{psm.title}</Link>
+                                      <Link href={psm.link} style={{ 
+                                        color: 'white',
+                                        textDecoration: 'none',
+                                        fontSize: '12px'
+                                      }}>{psm.title}</Link>
                                     </li>
                                   )
                                 )}
@@ -137,7 +166,11 @@ const HeaderMenus = () => {
                                         <ul>
                                           {portSm.menu_lists.map((psm) => (
                                             <li key={psm.title}>
-                                              <Link href={psm.link}>
+                                              <Link href={psm.link} style={{ 
+                                                color: 'white',
+                                                textDecoration: 'none',
+                                                fontSize: '12px'
+                                              }}>
                                                 {psm.title}
                                               </Link>
                                             </li>
@@ -162,7 +195,11 @@ const HeaderMenus = () => {
                                     <ul>
                                       {portSm2.menu_lists.map((psm) => (
                                         <li key={psm.title}>
-                                          <Link href={psm.link}>
+                                          <Link href={psm.link} style={{ 
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            fontSize: '12px'
+                                          }}>
                                             {psm.title}
                                           </Link>
                                         </li>
@@ -190,13 +227,67 @@ const HeaderMenus = () => {
             <ul className="tp-submenu submenu">
               {menu.dropdown_menus.map((mm, i) => (
                 <li key={i}>
-                  <Link href={mm.link}>{mm.title}</Link>
+                  <Link href={mm.link} style={{ 
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '12px'
+                  }}>{mm.title}</Link>
                 </li>
               ))}
             </ul>
           ) : null}
         </li>
       ))}
+      
+      {/* Get Personal Advice Button */}
+      <li className="get-advice-btn" style={{ marginLeft: '20px' }}>
+        <button 
+          onClick={onOpenDialog}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: isSticky ? '#333' : 'white',
+            fontSize: '13px',
+            fontWeight: '500',
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            padding: '0',
+            position: 'relative',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            setIsHovered(true);
+            e.currentTarget.style.textDecoration = 'none';
+            e.currentTarget.style.transform = 'translateX(5px)';
+          }}
+          onMouseLeave={(e) => {
+            setIsHovered(false);
+            e.currentTarget.style.textDecoration = 'underline';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          GET PERSONAL ADVICE
+          {isHovered ? (
+            <ArrowRight 
+              size={25} 
+              style={{
+                marginLeft: '8px',
+                transition: 'all 0.3s ease',
+                display: 'inline-block'
+              }}
+            />
+          ) : (
+            <ArrowUpRight 
+              size={25} 
+              style={{
+                marginLeft: '8px',
+                transition: 'all 0.3s ease',
+                display: 'inline-block'
+              }}
+            />
+          )}
+        </button>
+      </li>
     </ul>
   );
 };

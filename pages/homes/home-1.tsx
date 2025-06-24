@@ -39,6 +39,7 @@ import AboutOne from "@/components/about/about-one";
 import { instagramAnim } from "@/utils/instagram-anim";
 import FaqAreaTwo from "@/components/faq/faq-area-2";
 import BlogOne from "@/components/blog/blog-one";
+import FooterTwo from "@/layouts/footers/footer-two";
 
 const HomeMain = () => {
   useScrollSmooth();
@@ -90,25 +91,24 @@ const HomeMain = () => {
       <div id="magic-cursor">
         <div id="ball"></div>
       </div>
-      <HeaderOne />
+      <HeaderOne transparent={true} />
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main>
             <HeroBannerTwo />
-            <HeroBannerOne />
+            <ServiceOne />
+            <AboutOne />
+            <TeamOne />
             <VideOne />
             <div className="tp-brand-area">
               <div className="tp-brand-brd-top tp-brand-ptb">
                 {/* Brand area spacing simulation */}
               </div>
             </div>
-            <ServiceOne />
-            <AboutOne />
-            <TeamOne />
             <FaqAreaTwo />
             <BlogOne />
           </main>
-          <FooterOne />
+          <FooterTwo />
         </div>
       </div>
     </Wrapper>

@@ -32,44 +32,36 @@ const AboutOne = () => {
         </div>
         
         {/* First Section: Image Left, Text Right */}
-        <div className="row align-items-center mb-100">
-          <div className="col-xl-6 col-lg-6 col-md-6">
-            <div className="tp-about-2-thumb-box p-relative">
+        <div className="row align-items-center mb-5">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1">
+            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
               <div className="tp-about-2-thumb-main">
                 <Image src={ab_1} alt="ab-img" style={imgStyle} />
               </div>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6">
-            <div className="tp-about-2-content">
+          <div className="col-xl-6 col-lg-6 col-12 order-2">
+            <div className="tp-about-2-content ps-xl-4">
               <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
               <p className="mb-30">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
-              <p className="mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt .!
               </p>
             </div>
           </div>
         </div>
 
         {/* Second Section: Text Left, Image Right */}
-        <div className="row align-items-center mb-100">
-          <div className="col-xl-6 col-lg-6">
-            <div className="tp-about-2-content">
+        <div className="row align-items-center mb-5">
+          <div className="col-xl-6 col-lg-6 col-12 order-2 order-lg-1">
+            <div className="tp-about-2-content mb-4 mb-lg-0 pe-xl-4">
               <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
               <p className="mb-30">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
               </p>
-              <p className="mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt .!
-              </p>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6 col-md-6">
-            <div className="tp-about-2-thumb-box p-relative">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1 order-lg-2">
+            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
               <div className="tp-about-2-thumb-main">
                 <Image src={ab_2} alt="ab-img" style={imgStyle} />
               </div>
@@ -78,44 +70,36 @@ const AboutOne = () => {
         </div>
 
         {/* Third Section: Image Left, Text Right */}
-        <div className="row align-items-center mb-100">
-          <div className="col-xl-6 col-lg-6 col-md-6">
-            <div className="tp-about-2-thumb-box p-relative">
+        <div className="row align-items-center mb-5">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1">
+            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
               <div className="tp-about-2-thumb-main">
                 <Image src={ab_3} alt="ab-img" style={imgStyle} />
               </div>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6">
-            <div className="tp-about-2-content">
+          <div className="col-xl-6 col-lg-6 col-12 order-2">
+            <div className="tp-about-2-content ps-xl-4">
               <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
               <p className="mb-30">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
-              <p className="mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt .!
               </p>
             </div>
           </div>
         </div>
 
         {/* Fourth Section: Text Left, Image Right */}
-        <div className="row align-items-center">
-          <div className="col-xl-6 col-lg-6">
-            <div className="tp-about-2-content">
+        <div className="row align-items-center mb-5">
+          <div className="col-xl-6 col-lg-6 col-12 order-2 order-lg-1">
+            <div className="tp-about-2-content mb-4 mb-lg-0 pe-xl-4">
               <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
               <p className="mb-30">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
               </p>
-              <p className="mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt .!
-              </p>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6 col-md-6">
-            <div className="tp-about-2-thumb-box p-relative">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1 order-lg-2">
+            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
               <div className="tp-about-2-thumb-main">
                 <Image src={ab_4} alt="ab-img" style={imgStyle} />
               </div>

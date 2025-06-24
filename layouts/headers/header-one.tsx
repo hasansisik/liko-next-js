@@ -5,10 +5,17 @@ import Link from "next/link";
 import HeaderMenus from "./header-menus";
 import useSticky from "@/hooks/use-sticky";
 import MobileOffcanvas from "@/components/offcanvas/mobile-offcanvas";
+import { ArrowRight } from 'lucide-react';
 
-const HeaderOne = () => {
+// prop type
+type IProps = {
+  transparent?: boolean;
+};
+
+const HeaderOne = ({ transparent = false }: IProps) => {
   const {sticky,headerRef,headerFullWidth} = useSticky();
   const [openOffCanvas, setOpenOffCanvas] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
   useEffect(() => {
     headerFullWidth();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -19,44 +26,48 @@ const HeaderOne = () => {
       <header className="tp-header-height" ref={headerRef}>
         <div
           id="header-sticky"
-          className={`tp-header-area tp-header-mob-space tp-transparent pl-60 pr-60 z-index-9 ${sticky?'header-sticky':''}`}
+          className={`tp-header-area tp-header-mob-space ${transparent ? 'tp-transparent' : ''} pl-60 pr-60 z-index-9 ${sticky?'header-sticky':''}`}
+          style={{
+            backgroundColor: sticky ? 'white' : 'transparent',
+            transition: 'background-color 0.3s ease',
+            boxShadow: sticky ? '0 2px 10px rgba(0,0,0,0.1)' : 'none'
+          }}
         >
           <div className="container">
-            <div className="row align-items-center">
-              <div className="col-xl-2 col-lg-2 col-6">
+            <div className="row align-items-center justify-content-between">
+              <div className="col-auto">
                 <div className="tp-header-logo">
-                  <Link className="logo-1" href="/">
+                  <Link href="/">
                     <Image
-                      src="/assets/img/logo/logo.png"
+                      src={sticky ? "/assets/img/logo/logo.png" : "/assets/img/logo/logo-white.png"}
                       alt="logo"
-                      width={100}
-                      height={36}
-                    />
-                  </Link>
-                  <Link className="logo-2" href="/">
-                    <Image
-                      src="/assets/img/logo/logo-white.png"
-                      alt="logo"
-                      width={85}
-                      height={26}
+                      width={sticky ? 120 : 150}
+                      height={sticky ? 40 : 50}
+                      style={{ transition: 'all 0.3s ease' }}
                     />
                   </Link>
                 </div>
               </div>
-              <div className="col-xl-8 col-lg-9 d-none d-xl-block">
-                <div className="tp-header-menu header-main-menu text-center">
+              <div className="col-auto d-none d-lg-block">
+                <div className="tp-header-menu header-main-menu">
                   <nav className="tp-main-menu-content">
                     {/* header menus */}
-                    <HeaderMenus />
+                    <HeaderMenus onOpenDialog={() => setOpenDialog(true)} isSticky={sticky} />
                     {/* header menus */}
                   </nav>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg col-6">
-                <div className="tp-header-bar text-end">
+              <div className="col-auto d-lg-none">
+                <div className="tp-header-bar">
                   <button className="tp-offcanvas-open-btn" onClick={() => setOpenOffCanvas(true)}>
-                    <span></span>
-                    <span></span>
+                    <span style={{ 
+                      backgroundColor: sticky ? '#333' : 'white',
+                      transition: 'background-color 0.3s ease'
+                    }}></span>
+                    <span style={{ 
+                      backgroundColor: sticky ? '#333' : 'white',
+                      transition: 'background-color 0.3s ease'
+                    }}></span>
                   </button>
                 </div>
               </div>
@@ -68,6 +79,186 @@ const HeaderOne = () => {
       {/* off canvas */}
       <MobileOffcanvas openOffcanvas={openOffCanvas} setOpenOffcanvas={setOpenOffCanvas} />
       {/* off canvas */}
+
+      {/* Personal Advice Dialog */}
+      {openDialog && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }} onClick={() => setOpenDialog(false)}>
+          <div style={{
+            background: 'white',
+            padding: '30px',
+            borderRadius: '15px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+            width: '100%',
+            maxWidth: '500px',
+            position: 'relative'
+          }} onClick={(e) => e.stopPropagation()}>
+            
+            {/* Close Button */}
+            <button 
+              onClick={() => setOpenDialog(false)}
+              style={{
+                position: 'absolute',
+                top: '15px',
+                right: '15px',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '24px',
+                cursor: 'pointer',
+                color: '#666',
+                width: '30px',
+                height: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ×
+            </button>
+
+            {/* Dialog Content */}
+            <div className="tp-hero-2-form-header" style={{ marginBottom: '25px' }}>
+              <h3 style={{
+                fontSize: '28px',
+                fontWeight: 'bold',
+                marginBottom: '10px',
+                color: '#333',
+                textAlign: 'center'
+              }}>Let&apos;s Talk Teeth!</h3>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '8px'
+              }}>
+                <span style={{
+                  width: '10px',
+                  height: '10px',
+                  backgroundColor: '#4CAF50',
+                  borderRadius: '50%',
+                  marginRight: '8px'
+                }}></span>
+                <span style={{
+                  color: '#4CAF50',
+                  fontSize: '16px',
+                  fontWeight: '500'
+                }}>Online now</span>
+              </div>
+              <p style={{
+                fontSize: '14px',
+                color: '#666',
+                margin: '0',
+                textAlign: 'center'
+              }}>avg. response time: 3 minutes</p>
+            </div>
+            
+            <form>
+              <div style={{ marginBottom: '20px' }}>
+                <input 
+                  type="text" 
+                  placeholder="Name*" 
+                  required 
+                  style={{
+                    width: '100%',
+                    padding: '15px',
+                    border: '2px solid #eee',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    outline: 'none',
+                    transition: 'border-color 0.3s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#4CAF50'}
+                  onBlur={(e) => e.target.style.borderColor = '#eee'}
+                />
+              </div>
+              
+              <div style={{
+                display: 'flex',
+                marginBottom: '25px'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '15px',
+                  border: '2px solid #eee',
+                  borderRight: 'none',
+                  borderRadius: '8px 0 0 8px',
+                  backgroundColor: '#f8f9fa',
+                  minWidth: '90px'
+                }}>
+                  <span style={{ marginRight: '8px' }}>🇹🇷</span>
+                  <span style={{ fontSize: '16px' }}>+90</span>
+                </div>
+                <input 
+                  type="tel" 
+                  placeholder="Phone Number*" 
+                  required 
+                  style={{
+                    flex: 1,
+                    padding: '15px',
+                    border: '2px solid #eee',
+                    borderRadius: '0 8px 8px 0',
+                    fontSize: '16px',
+                    outline: 'none',
+                    transition: 'border-color 0.3s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#4CAF50'}
+                  onBlur={(e) => e.target.style.borderColor = '#eee'}
+                />
+              </div>
+              
+              <button type="submit" style={{
+                width: '100%',
+                padding: '15px',
+                backgroundColor: '#000',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '18px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                marginBottom: '15px',
+                transition: 'background-color 0.3s ease'
+              }}
+                             onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#333'}
+               onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#000'}
+               >
+                 Send <ArrowRight size={20} style={{ marginLeft: '8px', display: 'inline' }} />
+               </button>
+              
+              <Link href="#" style={{
+                display: 'block',
+                width: '100%',
+                padding: '15px',
+                backgroundColor: '#25D366',
+                color: 'white',
+                textAlign: 'center',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                fontSize: '18px',
+                fontWeight: '600',
+                transition: 'background-color 0.3s ease'
+              }}
+              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = '#1da851'}
+              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = '#25D366'}
+              >
+                💬 Chat on WhatsApp
+              </Link>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };
