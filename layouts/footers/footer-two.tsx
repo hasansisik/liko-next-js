@@ -52,11 +52,11 @@ export default function FooterTwo({ whiteFooter = false,topCls='footer-top' }: I
                 <div className="tp-footer-2-widget-menu">
                   <h4 className="tp-footer-2-widget-title">Sitemap</h4>
                   <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li> <a href="#">Blog</a></li>
-                    <li><a href="#">Landing</a></li>
+                    <li><Link href="/">Home</Link></li>
+                    <li><Link href="/about-us">About</Link></li>
+                    <li><Link href="/contact">Contact</Link></li>
+                    <li><Link href="/blog">Blog</Link></li>
+                    <li><Link href="/service">Services</Link></li>
                   </ul>
                 </div>
               </div>
@@ -89,13 +89,12 @@ export default function FooterTwo({ whiteFooter = false,topCls='footer-top' }: I
             <div className="col-xl-4 col-lg-5 col-md-6 mb-50">
               <div className="tp-footer-2-widget footer-col-2-4">
                 <div className="tp-footer-2-widget-menu">
-                  <h4 className="tp-footer-2-widget-title">Services</h4>
+                  <h4 className="tp-footer-2-widget-title">Legal & Policies</h4>
                   <ul>
-                    <li><a href="#">Dental Implants</a></li>
-                    <li><a href="#">Teeth Whitening</a></li>
-                    <li><a href="#">Orthodontics</a></li>
-                    <li><a href="#">Root Canal</a></li>
-                    <li><a href="#">Cosmetic Dentistry</a></li>
+                    <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                    <li><Link href="/terms-of-service">Terms of Service</Link></li>
+                    <li><Link href="/cookie-policy">Cookie Policy</Link></li>
+                    <li><Link href="/hipaa-privacy-notice">HIPAA Privacy Notice</Link></li>
                   </ul>
                 </div>
               </div>
