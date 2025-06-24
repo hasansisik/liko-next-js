@@ -21,7 +21,13 @@ export default function ServiceSix() {
                   <Image
                     src={item.img}
                     alt={item.title}
-                    style={{ height: "auto" }}
+                    width={600}
+                    height={400}
+                    style={{ 
+                      height: "auto", 
+                      width: "100%", 
+                      objectFit: "cover" 
+                    }}
                   />
                 </div>
               </div>

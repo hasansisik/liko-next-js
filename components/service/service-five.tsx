@@ -2,11 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { service_data } from "@/data/service-data";
-// images
-import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
-import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
-import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
-import s_4 from "@/assets/img/home-01/service/service-icon-4.png";
 
 // Helper function to generate slug from title
 const generateSlug = (title: string) => {
@@ -19,15 +14,22 @@ export function ServiceItems() {
     <div className="row">
       <div className="col-xxl-3"></div>
       {service_data.slice(0, 3).map((item, index) => {
-        // Use different icons for each service
-        const icons = [s_2, s_1, s_3, s_4];
-        const icon = icons[index % icons.length];
-        
         return (
           <div key={item.id} className="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
             <div className="tp-service-5-item tp_fade_bottom space-1">
               <div className="tp-service-4-icon">
-                <Image src={icon} alt="icon" />
+                <Image 
+                  src={item.img} 
+                  alt={item.title}
+                  width={120}
+                  height={120}
+                  style={{ 
+                    height: "120px", 
+                    width: "120px", 
+                    objectFit: "cover",
+                    borderRadius: "12px"
+                  }}
+                />
               </div>
               <div className="tp-service-4-content">
                 <h4 className="tp-service-4-title-sm tp-text-black">

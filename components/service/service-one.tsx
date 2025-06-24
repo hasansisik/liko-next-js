@@ -1,40 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { service_data } from "@/data/service-data";
 
-// service images
-import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
-import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
-import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
-import s_4 from "@/assets/img/home-01/service/service-icon-4.png";
-
-// service data
-const service_data = [
-  {
-    id: 1,
-    title: "VIDEO CREATION",
-    desc: "Dolor magna eget est lorem ipsum dolor sit amet consectetur. Bibendum est ultricies integer quis auctor elit sed.",
-    icon: s_1,
-  },
-  {
-    id: 2,
-    title: "ART DIRECTION",
-    desc: "Dolor magna eget est lorem ipsum dolor sit amet consectetur. Bibendum est ultricies integer quis auctor elit sed.",
-    icon: s_2,
-  },
-  {
-    id: 3,
-    title: "MOTION DESIGN",
-    desc: "Dolor magna eget est lorem ipsum dolor sit amet consectetur. Bibendum est ultricies integer quis auctor elit sed.",
-    icon: s_3,
-  },
-  {
-    id: 4,
-    title: "BRAND STRATEGY",
-    desc: "Dolor magna eget est lorem ipsum dolor sit amet consectetur. Bibendum est ultricies integer quis auctor elit sed.",
-    icon: s_4,
-  },
-];
+// Helper function to generate slug from title
+const generateSlug = (title: string) => {
+  return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+};
 
 const ServiceOne = () => {
   return (
@@ -43,13 +15,11 @@ const ServiceOne = () => {
         <div className="row">
           <div className="col-xl-6 col-lg-6">
             <div className="tp-service-title-box p-relative">
-              <span className="tp-section-subtitle subtitle-position tp_fade_bottom">
-                I Think a lot
-              </span>
+
               <h4 className="tp-section-title tp_fade_bottom">
-                Thoughtful
+                Dental
                 <br />
-                <span>Process</span>
+                <span>Excellence</span>
               </h4>
             </div>
             <div className="tp-service-left-btn tp-btn-bounce">
@@ -63,19 +33,30 @@ const ServiceOne = () => {
           </div>
           <div className="col-xl-6 col-lg-6">
             <div className="tp-service-right-wrap">
-              {service_data.map((s, i) => (
+              {service_data.slice(0, 4).map((s, i) => (
                 <div
                   key={s.id}
-                  className="tp-service-item d-flex align-items-start mb-75 tp_fade_bottom"
+                  className="tp-service-item d-flex align-items-center mb-25 tp_fade_bottom"
                 >
                   <div className="tp-service-icon">
-                    <Image src={s.icon} alt="icon" style={{ height: "auto" }} />
+                    <Image 
+                      src={s.img} 
+                      alt={s.title} 
+                      width={200}
+                      height={200}
+                      style={{ 
+                        height: "200px", 
+                        width: "200px",
+                        objectFit: "cover",
+                        borderRadius: "8px"
+                      }} 
+                    />
                   </div>
                   <div className="tp-service-content">
                     <h4 className="tp-service-title-sm order-0">
-                      <Link href="/service-details">{s.title}</Link>
+                      <Link href={`/service-details/${generateSlug(s.title)}`}>{s.title}</Link>
                     </h4>
-                    <p className="order-1">{s.desc}</p>
+                    <p className="order-1">{s.shortDesc || s.desc}</p>
                   </div>
                 </div>
               ))}
