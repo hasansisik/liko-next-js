@@ -13,7 +13,11 @@ export default function AboutUsHero() {
   return (
     <div
       className="ab-inner-hero-area ab-inner-hero-bg p-relative"
-      style={{backgroundImage: "url(/assets/img/home-01/hero/dentist-2.jpg)"}}
+      style={{
+        backgroundImage: "url(/assets/img/home-01/hero/dentist-2.jpg)",
+        paddingTop: '200px',
+        paddingBottom: '45px'
+      }}
     >
       <div className="breadcurmb-site d-none">
         <h6>About Us</h6>
@@ -33,14 +37,26 @@ export default function AboutUsHero() {
               className="ab-inner-hero-title-box"
               data-lag="0.2"
               data-stagger="0.08"
+              style={{ marginBottom: '50px' }}
             >
-              <span className="ab-inner-hero-subtitle">
+              <span className="ab-inner-hero-subtitle" style={{
+                fontSize: '13px',
+                marginBottom: '15px'
+              }}>
                 Professional <br /> dental care
               </span>
-              <h1 className="ab-inner-hero-title tp-char-animation">
+              <h1 className="ab-inner-hero-title tp-char-animation" style={{
+                fontSize: 'clamp(40px, 8vw, 90px)',
+                marginBottom: '20px',
+                lineHeight: '0.9'
+              }}>
                 Creating Healthy Smiles
               </h1>
-              <p>Comprehensive dental care with personalized treatment approach</p>
+              <p style={{
+                fontSize: '16px',
+                lineHeight: '24px',
+                maxWidth: '400px'
+              }}>Comprehensive dental care with personalized treatment approach</p>
             </div>
           </div>
         </div>
