@@ -4,12 +4,12 @@ import ServiceDetailsMain from "@/pages/service/service-details";
 import { service_data } from "@/data/service-data";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const serviceSlug = params.slug;
+  const { slug: serviceSlug } = await params;
   const service = service_data.find(
     (s) => s.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') === serviceSlug
   );
@@ -33,8 +33,8 @@ export async function generateStaticParams() {
   }));
 }
 
-const ServiceDetailsPage = ({ params }: Props) => {
-  const serviceSlug = params.slug;
+const ServiceDetailsPage = async ({ params }: Props) => {
+  const { slug: serviceSlug } = await params;
   const service = service_data.find(
     (s) => s.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') === serviceSlug
   );
@@ -43,7 +43,7 @@ const ServiceDetailsPage = ({ params }: Props) => {
     return (
       <div className="container text-center py-5">
         <h1>Service Not Found</h1>
-        <p>The service you're looking for doesn't exist.</p>
+        <p>The service you&apos;re looking for doesn&apos;t exist.</p>
       </div>
     );
   }

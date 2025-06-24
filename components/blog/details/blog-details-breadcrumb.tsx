@@ -7,6 +7,37 @@ type IProps = {
 };
 
 export default function BlogDetailsBreadcrumb({ blog }: IProps) {
+  // Handle case where blog might be undefined during build
+  if (!blog) {
+    return (
+      <div className="blog-details-area">
+        <div className="blog-details-bg p-relative d-flex align-items-center pt-120 pb-120" style={{
+          backgroundColor: '#000',
+          minHeight: '400px'
+        }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-12">
+                <div className="blog-details-content text-center">
+                  <h1 className="blog-details-title" style={{
+                    color: '#fff',
+                    fontSize: 'clamp(28px, 5vw, 48px)',
+                    fontWeight: 'bold',
+                    lineHeight: '1.2',
+                    marginTop: '15px',
+                    marginBottom: '0'
+                  }}>
+                    Blog Details
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="blog-details-area">
       <div

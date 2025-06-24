@@ -13,6 +13,28 @@ type IProps = {
 };
 
 export default function BlogDetailsArea({ blog }: IProps) {
+  // Handle case where blog might be undefined during build
+  if (!blog) {
+    return (
+      <section className="postbox__area tp-blog-sidebar-sticky-area pt-120 pb-120">
+        <div className="container">
+          <div className="row">
+            <div className="col-xxl-8 col-xl-8 col-lg-8">
+              <div className="postbox__wrapper">
+                <div className="blog-details-top-text">
+                  <p>Blog post not found.</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-xxl-4 col-xl-4 col-lg-4">
+              <BlogSidebar />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const content = blog.content;
   
   if (!content) {

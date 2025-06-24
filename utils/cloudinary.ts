@@ -1,32 +1,9 @@
 import crypto from 'crypto';
-import { store } from '@/redux/store';
-import { getGeneral } from '@/redux/actions/generalActions';
 
-// Default values
-let CLOUD_NAME = '';
-let API_KEY = '';
-let API_SECRET = '';
-
-// Function to get Cloudinary settings from Redux store
-export const getCloudinarySettings = async (): Promise<void> => {
-  try {
-    // Dispatch getGeneral action to make sure we have the latest data
-    await store.dispatch(getGeneral());
-    
-    // Get the general state from the Redux store
-    const state = store.getState();
-    const { general } = state.general;
-    
-    if (general?.cloudinary) {
-      CLOUD_NAME = general.cloudinary.cloudName || '';
-      API_KEY = general.cloudinary.apiKey || '';
-      API_SECRET = general.cloudinary.apiSecret || '';
-    }
-  } catch (error) {
-    console.error('Error getting Cloudinary settings from Redux store:', error);
-    // If there's an error, keep the current values
-  }
-};
+// Get Cloudinary settings from environment variables
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || '';
+const API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY || '';
+const API_SECRET = process.env.CLOUDINARY_API_SECRET || '';
 
 function generateSignature(timestamp: number): string {
   const str = `timestamp=${timestamp}${API_SECRET}`;
@@ -35,12 +12,9 @@ function generateSignature(timestamp: number): string {
 
 
 export const uploadImageToCloudinary = async (file: File): Promise<string> => {
-  // Refresh settings before upload to ensure we have the latest
-  await getCloudinarySettings();
-  
   // Check if we have the required Cloudinary credentials
   if (!CLOUD_NAME || !API_KEY || !API_SECRET) {
-    throw new Error('Cloudinary credentials not found or invalid. Please check your settings.');
+    throw new Error('Cloudinary credentials not found or invalid. Please check your environment variables.');
   }
   
   return new Promise((resolve, reject) => {

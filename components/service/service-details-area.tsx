@@ -15,6 +15,29 @@ interface ServiceDetailsAreaProps {
 }
 
 export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps) {
+  // Handle case where service might be undefined during build
+  if (!service) {
+    return (
+      <div className="service-details__area service-details__space pt-200 pb-120">
+        <div className="container-fluid" style={{ 
+          padding: '0 clamp(20px, 6vw, 300px)',
+          maxWidth: '100%' 
+        }}>
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="service-details__title-box mb-40">
+                <h4 className="sv-hero-title tp-char-animation">
+                  Service Not Found
+                </h4>
+                <p>The requested service could not be found.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Get other service images for the small thumbnails
   const otherServices = service_data.filter(s => s.id !== service.id);
   

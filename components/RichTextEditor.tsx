@@ -7,6 +7,7 @@ import Underline from '@tiptap/extension-underline';
 import TextStyle from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Link from '@tiptap/extension-link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -1025,9 +1026,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         <div className="flex flex-col space-y-1">
                           <label className="text-xs font-medium">Image Preview</label>
                           <div className="relative aspect-video border rounded overflow-hidden bg-gray-50">
-                            <img 
+                            <Image 
                               src={imageUrl} 
                               alt="Image preview" 
+                              width={400}
+                              height={300}
                               className="object-contain w-full h-full"
                             />
                           </div>
