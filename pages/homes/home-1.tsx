@@ -97,7 +97,7 @@ const HomeMain = () => {
             <HeroBannerTwo heroData={home1Data.heroBanner} />
             <ServiceOne serviceData={home1Data.serviceSection} />
             <AboutOne aboutData={home1Data.aboutSection} />
-            <TeamOne />
+            <TeamOne teamData={home1Data.teamSection} />
             <VideOne videoData={home1Data.videoSection} />
             <FaqAreaTwo faqData={home1Data.faqSection} />
             <BlogOne />

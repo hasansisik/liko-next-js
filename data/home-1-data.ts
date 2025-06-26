@@ -43,10 +43,21 @@ interface IFaqSectionData {
   faqItems: IFaqItem[];
 }
 
+interface ITeamMember {
+  id: number;
+  img: string;
+}
+
+interface ITeamSectionData {
+  spacing?: string;
+  teamMembers: ITeamMember[];
+}
+
 interface IHome1Data {
   heroBanner: IHeroBannerData;
   serviceSection: IServiceSectionData;
   aboutSection: IAboutSectionData;
+  teamSection: ITeamSectionData;
   videoSection: IVideoSectionData;
   faqSection: IFaqSectionData;
 }
@@ -63,6 +74,35 @@ export const home1Data: IHome1Data = {
     subtitle: "Excellence",
     buttonText: "See All Services",
     buttonLink: "/service"
+  },
+  teamSection: {
+    spacing: "pt-20",
+    teamMembers: [
+      {
+        id: 1,
+        img: "/assets/img/home-01/team/team-1-1.jpg"
+      },
+      {
+        id: 2,
+        img: "/assets/img/home-01/team/team-1-2.jpg"
+      },
+      {
+        id: 3,
+        img: "/assets/img/home-01/team/team-1-3.jpg"
+      },
+      {
+        id: 4,
+        img: "/assets/img/home-01/team/team-1-4.jpg"
+      },
+      {
+        id: 5,
+        img: "/assets/img/home-01/team/team-1-6.jpg"
+      },
+      {
+        id: 6,
+        img: "/assets/img/home-01/team/team-1-7.jpg"
+      }
+    ]
   },
   aboutSection: {
     mainTitle: "Cooperation is possible within various shapes and formats",
