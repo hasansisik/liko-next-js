@@ -1,7 +1,7 @@
 import { IContactFormData } from "../types/contact-form-d-t";
 
 export const contactFormData: IContactFormData = {
-  title: "Let's Talk Teeth!",
+  title: "Let's Talk Teeth!1",
   subtitle: "Online now",
   responseTime: "avg. response time: 3 minutes",
   showWhatsApp: true,

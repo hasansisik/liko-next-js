@@ -6,17 +6,37 @@ import HeaderMenus from "./header-menus";
 import useSticky from "@/hooks/use-sticky";
 import MobileOffcanvas from "@/components/offcanvas/mobile-offcanvas";
 import ContactFormDental from "@/components/form/contact-form-dental";
+import { headerData } from "@/data/header-data";
+import { IHeaderData } from "@/types/header-d-t";
 
 // prop type
 type IProps = {
   transparent?: boolean;
   color?: 'black' | 'white';
+  headerData?: IHeaderData;
 };
 
-const HeaderOne = ({ transparent = false, color }: IProps) => {
+const HeaderOne = ({ transparent = false, color, headerData: data = headerData }: IProps) => {
   const {sticky,headerRef,headerFullWidth} = useSticky();
   const [openOffCanvas, setOpenOffCanvas] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+  
+  // Dynamic logo selection
+  const getLogoSrc = () => {
+    if (sticky) return data.logo.sticky;
+    if (color === 'black') return data.logo.dark;
+    if (color === 'white') return data.logo.default;
+    return data.logo.default;
+  };
+
+  // Dynamic hamburger color
+  const getHamburgerColor = () => {
+    if (sticky) return data.styling.colors.hamburger.sticky;
+    if (color === 'black') return data.styling.colors.hamburger.black;
+    if (color === 'white') return data.styling.colors.hamburger.white;
+    return data.styling.colors.hamburger.default;
+  };
+
   useEffect(() => {
     headerFullWidth();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,37 +49,29 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
           id="header-sticky"
           className={`tp-header-area tp-header-mob-space ${transparent ? 'tp-transparent' : ''} z-index-9 ${sticky?'header-sticky':''}`}
           style={{
-            backgroundColor: sticky ? 'white' : 'transparent',
-            transition: 'background-color 0.3s ease',
-            boxShadow: sticky ? '0 2px 10px rgba(0,0,0,0.1)' : 'none',
+            backgroundColor: sticky ? data.styling.header.stickyBackground : data.styling.header.transparentBackground,
+            transition: data.styling.header.transition,
+            boxShadow: sticky ? data.styling.header.boxShadow.sticky : data.styling.header.boxShadow.default,
             padding: '0',
             margin: '0'
           }}
         >
           <div className="container-fluid" style={{ 
-            padding: '0 clamp(20px, 6vw, 300px)',
-            maxWidth: '100%' 
+            padding: data.styling.container.padding,
+            maxWidth: data.styling.container.maxWidth
           }}>
             <div className="row align-items-center justify-content-between" style={{ 
               margin: '0',
-              padding: '10px 0'
+              padding: data.styling.header.padding
             }}>
               <div className="col-auto" style={{ padding: '0 20px' }}>
                 <div className="tp-header-logo">
                   <Link href="/">
                     <Image
-                      src={
-                        sticky 
-                          ? "/assets/img/logo/logo.png" 
-                          : color === 'black' 
-                            ? "/assets/img/logo/logo.png"
-                            : color === 'white'
-                              ? "/assets/img/logo/logo-white.png"
-                              : "/assets/img/logo/logo-white.png"
-                      }
-                      alt="logo"
-                      width={sticky ? 120 : 150}
-                      height={sticky ? 40 : 50}
+                      src={getLogoSrc()}
+                      alt={data.logo.alt}
+                      width={sticky ? data.logo.dimensions.sticky.width : data.logo.dimensions.default.width}
+                      height={sticky ? data.logo.dimensions.sticky.height : data.logo.dimensions.default.height}
                       style={{ transition: 'all 0.3s ease' }}
                     />
                   </Link>
@@ -69,7 +81,12 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
                 <div className="tp-header-menu header-main-menu">
                   <nav className="tp-main-menu-content">
                     {/* header menus */}
-                    <HeaderMenus onOpenDialog={() => setOpenDialog(true)} isSticky={sticky} color={color} />
+                    <HeaderMenus 
+                      onOpenDialog={() => setOpenDialog(true)}
+                      isSticky={sticky} 
+                      color={color}
+                      navigationData={data.navigation}
+                    />
                     {/* header menus */}
                   </nav>
                 </div>
@@ -77,26 +94,15 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
               <div className="col-auto d-lg-none" style={{ padding: '0 20px' }}>
                 <div className="tp-header-bar">
                   <button className="tp-offcanvas-open-btn" onClick={() => setOpenOffCanvas(true)}>
-                    <span style={{ 
-                      backgroundColor: sticky 
-                        ? '#333' 
-                        : color === 'black' 
-                          ? '#333'
-                          : color === 'white'
-                            ? 'white'
-                            : 'white',
-                      transition: 'background-color 0.3s ease'
-                    }}></span>
-                    <span style={{ 
-                      backgroundColor: sticky 
-                        ? '#333' 
-                        : color === 'black' 
-                          ? '#333'
-                          : color === 'white'
-                            ? 'white'
-                            : 'white',
-                      transition: 'background-color 0.3s ease'
-                    }}></span>
+                    {Array.from({ length: data.mobile.hamburgerIcon.lines }, (_, index) => (
+                      <span 
+                        key={index}
+                        style={{ 
+                          backgroundColor: getHamburgerColor(),
+                          transition: data.mobile.hamburgerIcon.animation ? 'background-color 0.3s ease' : 'none'
+                        }}
+                      ></span>
+                    ))}
                   </button>
                 </div>
               </div>
@@ -106,24 +112,28 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
       </header>
 
       {/* off canvas */}
-      <MobileOffcanvas openOffcanvas={openOffCanvas} setOpenOffcanvas={setOpenOffCanvas} />
+      <MobileOffcanvas 
+        openOffcanvas={openOffCanvas} 
+        setOpenOffcanvas={setOpenOffCanvas}
+        navigationData={data.navigation}
+      />
       {/* off canvas */}
 
       {/* Personal Advice Dialog */}
-      {openDialog && (
+      {openDialog && data.dialog.enabled && (
         <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          backgroundColor: data.dialog.backdrop.backgroundColor,
           zIndex: 9999,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           padding: '20px'
-        }} onClick={() => setOpenDialog(false)}>
+        }} onClick={data.dialog.backdrop.closeOnClick ? () => setOpenDialog(false) : undefined}>
           <div style={{
             position: 'relative'
           }} onClick={(e) => e.stopPropagation()}>
@@ -133,11 +143,11 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
               onClick={() => setOpenDialog(false)}
               style={{
                 position: 'absolute',
-                top: '15px',
-                right: '15px',
+                top: data.dialog.closeButton.position.top,
+                right: data.dialog.closeButton.position.right,
                 background: 'transparent',
                 border: 'none',
-                fontSize: '24px',
+                fontSize: data.dialog.closeButton.size,
                 cursor: 'pointer',
                 color: '#666',
                 width: '30px',
@@ -148,26 +158,20 @@ const HeaderOne = ({ transparent = false, color }: IProps) => {
                 zIndex: 10001
               }}
             >
-              ×
+              {data.dialog.closeButton.text}
             </button>
 
             {/* ContactFormDental Component */}
             <ContactFormDental 
-              title="Let's Talk Teeth!"
-              subtitle="Online now"
-              responseTime="avg. response time: 3 minutes"
-              showWhatsApp={true}
               style={{
-                maxWidth: '500px',
-                width: '90vw',
-                margin: '0',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-                borderRadius: '15px'
+                maxWidth: '600px',
+                width: '90vw'
               }}
             />
           </div>
         </div>
       )}
+
     </>
   );
 };

@@ -1,33 +1,27 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Behance, CloseTwo, Dribble, InstagramTwo, Youtube } from "../svg";
-
-// images
-import logo from "@/assets/img/logo/logo.png";
-import gallery_1 from "@/assets/img/menu/offcanvas/offcanvas-1.jpg";
-import gallery_2 from "@/assets/img/menu/offcanvas/offcanvas-2.jpg";
-import gallery_3 from "@/assets/img/menu/offcanvas/offcanvas-3.jpg";
-import gallery_4 from "@/assets/img/menu/offcanvas/offcanvas-4.jpg";
 import MobileMenus from "./mobile-menus";
-
-const gallery_images = [gallery_1, gallery_2, gallery_3, gallery_4];
+import { INavigation } from "@/types/header-d-t";
 
 // prop type
 type IProps = {
   openOffcanvas: boolean;
   setOpenOffcanvas: React.Dispatch<React.SetStateAction<boolean>>;
+  navigationData?: INavigation;
 };
 
-export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas}: IProps) {
+export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigationData}: IProps) {
   return (
     <>
       <div className={`tp-offcanvas-area ${openOffcanvas ? "opened" : ""}`}>
         <div className="tp-offcanvas-wrapper">
           <div className="tp-offcanvas-top d-flex align-items-center justify-content-between">
             <div className="tp-offcanvas-logo">
-              <a href="#">
-                <Image src={logo} alt="logo" />
-              </a>
+              <Link href="/">
+                <Image src="/assets/img/logo/logo.png" alt="logo" width={120} height={40} />
+              </Link>
             </div>
             <div className="tp-offcanvas-close">
               <button
@@ -40,7 +34,7 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas}: IProps
           </div>
           <div className="tp-offcanvas-main">
             <div className="tp-main-menu-mobile d-xl-none">
-              <MobileMenus/>
+              <MobileMenus navigationData={navigationData} />
             </div>
 
             <div className="tp-offcanvas-contact">

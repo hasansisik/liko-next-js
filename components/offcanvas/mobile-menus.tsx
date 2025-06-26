@@ -4,9 +4,17 @@ import Link from "next/link";
 import menu_data from "@/data/menu-data";
 import shop_banner from '@/assets/img/menu/shop-menu/banner-1.jpg';
 import port_img from '@/assets/img/menu/portfolio-menu/portfolio.png';
+import { INavigation } from "@/types/header-d-t";
 
-export default function MobileMenus() {
+type IProps = {
+  navigationData?: INavigation;
+};
+
+export default function MobileMenus({ navigationData }: IProps) {
   const [navTitle, setNavTitle] = React.useState<string>("");
+
+  // Use navigationData if provided, otherwise fallback to menu_data
+  const menuItems = navigationData?.menus || menu_data;
 
   //openMobileMenu
   const openMobileMenu = (menu: string) => {
@@ -20,21 +28,25 @@ export default function MobileMenus() {
     <>
       <nav className="tp-main-menu-content">
         <ul>
-          {menu_data.map((menu) => (
+          {menuItems.map((menu) => (
             <li
               key={menu.id}
-              className={`has-dropdown ${
+              className={`${menu.hasDropdown || menu.home_menus || menu.portfolio_mega_menus ? "has-dropdown" : ""} ${
                 menu.home_menus || menu.portfolio_mega_menus
                   ? "has-homemenu"
                   : ""
               } ${menu.home_menus ? "dropdown-opened" : ""}`}
             >
+              {menu.hasDropdown || menu.home_menus || menu.portfolio_mega_menus ? (
               <a className="pointer" onClick={() => openMobileMenu(menu.title)}>
                 {menu.title}
                 <button className="dropdown-toggle-btn">
                   <i className="fa-light fa-plus"></i>
                 </button>
               </a>
+              ) : (
+                <Link href={menu.url || menu.link}>{menu.title}</Link>
+              )}
               {menu.home_menus ? (
                 <div className="tp-submenu submenu tp-mega-menu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
                   <div className="tp-menu-fullwidth">
@@ -214,6 +226,14 @@ export default function MobileMenus() {
                   {menu.dropdown_menus.map((mm, i) => (
                     <li key={i}>
                       <Link href={mm.link}>{mm.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : menu.subMenus ? (
+                <ul className="tp-submenu submenu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
+                  {menu.subMenus.map((sm, i) => (
+                    <li key={i}>
+                      <Link href={sm.url}>{sm.title}</Link>
                     </li>
                   ))}
                 </ul>

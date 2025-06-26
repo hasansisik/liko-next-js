@@ -22,6 +22,7 @@ import HeaderOne from "@/layouts/headers/header-one";
 
 // data import
 import { aboutUsData } from "@/data/about-us-data";
+import { footerData } from "@/data/footer-data";
 
 const AboutUsMain = () => {
   useScrollSmooth();
@@ -54,7 +55,7 @@ const AboutUsMain = () => {
           </main>
 
           {/* footer area */}
-          <FooterTwo />
+          <FooterTwo footerData={footerData} />
           {/* footer area */}
         </div>
       </div>

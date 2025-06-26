@@ -35,10 +35,25 @@ export default function BlogSidebar() {
             <p className="mb-0">Contact us today to discuss your treatment</p>
           </div>
           <ContactFormDental
-            title={`Book Your `}
-            subtitle="Expert available"
-            responseTime="Schedule within 24 hours"
-            showWhatsApp={false}
+            formData={{
+              title: "Book Your Appointment",
+              subtitle: "Expert available",
+              responseTime: "Schedule within 24 hours",
+              showWhatsApp: false,
+              placeholders: {
+                name: "Your Name",
+                phone: "Phone Number",
+                countrySearch: "Search country..."
+              },
+              countries: [
+                { code: "US", name: "United States", phone: "+1", flag: "🇺🇸" },
+                { code: "TR", name: "Turkey", phone: "+90", flag: "🇹🇷" }
+              ],
+              defaultCountry: "US",
+              submitButtonText: "Book Now",
+              whatsAppText: "Chat on WhatsApp",
+              whatsAppLink: "https://wa.me/1234567890"
+            }}
             style={{
               maxWidth: "100%",
               margin: "0",
