@@ -1,8 +1,13 @@
 import React from "react";
 import { scroller } from "react-scroll";
 import { ScrollDown } from "../svg";
+import { IAboutUsHeroData } from "@/types/about-us-d-t";
 
-export default function AboutUsHero() {
+interface AboutUsHeroProps {
+  heroData: IAboutUsHeroData;
+}
+
+export default function AboutUsHero({ heroData }: AboutUsHeroProps) {
   const scrollTo = () => {
     scroller.scrollTo('about-info', {
       duration: 800,
@@ -10,11 +15,12 @@ export default function AboutUsHero() {
       smooth: 'easeInOutQuart',
     });
   };
+  
   return (
     <div
       className="ab-inner-hero-area ab-inner-hero-bg p-relative"
       style={{
-        backgroundImage: "url(/assets/img/home-01/hero/dentist-2.jpg)",
+        backgroundImage: `url(${heroData.backgroundImage})`,
         paddingTop: '200px',
         paddingBottom: '45px'
       }}
@@ -25,7 +31,7 @@ export default function AboutUsHero() {
       <div className="ab-inner-hero-scroll smooth">
         <a className="pointer" onClick={scrollTo}>
           <span>
-            Scroll to explore
+            {heroData.scrollText}
             <ScrollDown />
           </span>
         </a>
@@ -43,20 +49,27 @@ export default function AboutUsHero() {
                 fontSize: '13px',
                 marginBottom: '15px'
               }}>
-                Professional <br /> dental care
+                {heroData.subtitle.split(' ').map((word, index, array) => (
+                  <React.Fragment key={index}>
+                    {word}
+                    {index === Math.floor(array.length / 2) - 1 ? <br /> : ' '}
+                  </React.Fragment>
+                ))}
               </span>
               <h1 className="ab-inner-hero-title tp-char-animation" style={{
                 fontSize: 'clamp(40px, 8vw, 90px)',
                 marginBottom: '20px',
                 lineHeight: '0.9'
               }}>
-                Creating Healthy Smiles
+                {heroData.title}
               </h1>
               <p style={{
                 fontSize: '16px',
                 lineHeight: '24px',
                 maxWidth: '400px'
-              }}>Comprehensive dental care with personalized treatment approach</p>
+              }}>
+                {heroData.description}
+              </p>
             </div>
           </div>
         </div>

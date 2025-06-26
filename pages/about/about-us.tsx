@@ -20,6 +20,9 @@ import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterTwo from "@/layouts/footers/footer-two";
 import HeaderOne from "@/layouts/headers/header-one";
 
+// data import
+import { aboutUsData } from "@/data/about-us-data";
+
 const AboutUsMain = () => {
   useScrollSmooth();
 
@@ -44,9 +47,9 @@ const AboutUsMain = () => {
         <div id="smooth-content">
           <main>
             {/* about hero */}
-            <AboutUsHero />
+            <AboutUsHero heroData={aboutUsData.hero} />
 
-            <AboutUsArea />
+            <AboutUsArea aboutData={aboutUsData.aboutInfo} />
             {/* about area */}
           </main>
 

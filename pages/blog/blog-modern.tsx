@@ -17,6 +17,9 @@ import BigText from "@/components/big-text";
 import HeaderOne from "@/layouts/headers/header-one";
 import BlogHeroBanner from "@/components/blog/blog-hero-banner";
 
+// data import
+import { blogModernData } from "@/data/blog-modern-data";
+
 const BlogModernMain = () => {
   useScrollSmooth();
 
@@ -37,7 +40,7 @@ const BlogModernMain = () => {
         <div id="smooth-content">
           <main>
             {/* blog hero banner start */}
-            <BlogHeroBanner />
+            <BlogHeroBanner heroData={blogModernData.hero} />
             {/* blog hero banner end */}
 
             {/* blog modern area start */}
@@ -45,7 +48,7 @@ const BlogModernMain = () => {
             {/* blog modern area end */}
 
             {/* big text area */}
-            <BigText />
+            <BigText bigTextData={blogModernData.bigText} />
             {/* big text area */}
           </main>
 

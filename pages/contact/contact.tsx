@@ -8,14 +8,15 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";
-import HeaderEleven from "@/layouts/headers/header-eleven";
 import ContactTwo from "@/components/contact/contact-two";
 import ContactLocation from "@/components/contact/contact-location";
-import FooterOne from "@/layouts/footers/footer-one";
 // animation
 import { charAnimation } from "@/utils/title-animation";
 import FooterTwo from "@/layouts/footers/footer-two";
 import HeaderOne from "@/layouts/headers/header-one";
+
+// data import
+import { contactData } from "@/data/contact-data";
 
 const ContactMain = () => {
   useScrollSmooth();
@@ -38,8 +39,7 @@ const ContactMain = () => {
           <div
             className="inner-bg"
             style={{
-              backgroundImage:
-                "url(/assets/img/home-01/team/team-details-bg.png)",
+              backgroundImage: `url(${contactData.hero.backgroundImage})`,
             }}
           >
             <main>
@@ -49,9 +49,9 @@ const ContactMain = () => {
                   <div className="row">
                     <div className="col-xl-12">
                       <div className="tm-hero-content">
-                        <span className="tm-hero-subtitle">Liko Studio</span>
+                        <span className="tm-hero-subtitle">{contactData.hero.subtitle}</span>
                         <h4 className="tm-hero-title-big tp-char-animation">
-                          Get in touch
+                          {contactData.hero.title}
                         </h4>
                       </div>
                     </div>
@@ -61,11 +61,11 @@ const ContactMain = () => {
               {/* hero area end */}
 
               {/* contact area */}
-              <ContactTwo/>
+              <ContactTwo contactFormData={contactData.contactForm} />
               {/* contact area */}
 
               {/* contact location */}
-              <ContactLocation/>
+              <ContactLocation contactInfoData={contactData.contactInfo} />
               {/* contact location */}
             </main>
 

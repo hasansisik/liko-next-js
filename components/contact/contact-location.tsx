@@ -1,36 +1,23 @@
 import React from "react";
 import Image from "next/image";
-// images
-import location_1 from "@/assets/img/home-01/tr.jpg";
+import { IContactInfoData } from "../../types/contact-d-t";
 
+interface ContactLocationProps {
+  contactInfoData: IContactInfoData;
+}
 
-// data
-const location_data = [
-  {
-    id: 1,
-    img: location_1,
-    country: "Istanbul",
-    time: "12:00 pm GMT+3",
-    location_title: "Birim Ajans Clinic",
-    address: "Birim Studio, 43 Appleton <br /> Lane, 3287 Istanbul",
-    phone: "(+90) 532 123 45 67",
-    email: "info@birimajans.com",
-  },
-
-];
-
-const ContactLocation = () => {
+const ContactLocation = ({ contactInfoData }: ContactLocationProps) => {
   return (
     <div className="cn-contact-info-area ">
       <div className="container container-1840">
         <div className="cn-contact-info-bg black-bg">
-          {location_data.map((item) => (
+          {contactInfoData.locations.map((item) => (
             <div key={item.id} className="cn-contact-info-item">
               <div className="row">
                 <div className="col-xl-7">
                   <div className="cn-contact-left d-flex flex-wrap align-items-center">
                     <div className="cn-contact-info-thumb">
-                      <Image src={item.img} alt="image" style={{ height: "auto" , borderRadius:"10px"}} />
+                      <Image src={item.img} alt="image" width={200} height={150} style={{ height: "auto" , borderRadius:"10px"}} />
                     </div>
                     <div className="cn-contact-left-info">
                       <h4 className="cn-contact-left-title">{item.country}</h4>
@@ -46,21 +33,21 @@ const ContactLocation = () => {
                     <div className="cn-contact-right">
                       <div className="cn-contact-location">
                         <span className="cn-contact-location-title">
-                          {item.location_title}
+                          {item.locationTitle}
                         </span>
                         <a
-                          href="https://www.google.com/maps"
+                          href={item.mapsUrl}
                           target="_blank"
                           dangerouslySetInnerHTML={{ __html: item.address }}
                         ></a>
                       </div>
                       <div className="cn-contact-map">
-                        <a href="#">Google Maps</a>
+                        <a href={item.mapsUrl} target="_blank">{item.mapsText}</a>
                       </div>
                     </div>
                     <div className="cn-contact-right-info text-start text-md-end">
-                      <a href="tel:(+91)76001726">{item.phone}</a> <br />
-                      <a href="mailto:Hello@contact.com">{item.email}</a>
+                      <a href={`tel:${item.phone}`}>{item.phone}</a> <br />
+                      <a href={`mailto:${item.email}`}>{item.email}</a>
                     </div>
                   </div>
                 </div>

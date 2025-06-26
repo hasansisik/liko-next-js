@@ -1,35 +1,60 @@
 import React from "react";
 import { Facebook, Instagram, Linkdin, Twitter } from "../svg";
 
-const social_data = [
+interface SocialMediaItem {
+  id: number;
+  name: string;
+  link: string;
+}
+
+interface SocialProps {
+  socialData?: SocialMediaItem[];
+}
+
+const defaultSocialData = [
   {
     id: 1,
-    icon: <Linkdin />,
+    name: "LinkedIn",
     link: "https://www.facebook.com/",
   },
   {
     id: 2,
-    icon: <Twitter />,
+    name: "Twitter",
     link: "https://twitter.com/",
   },
   {
     id: 3,
-    icon: <Instagram />,
+    name: "Instagram",
     link: "https://www.instagram.com/",
   },
   {
     id: 4,
-    icon: <Facebook />,
+    name: "Facebook",
     link: "https://www.facebook.com/",
   },
 ];
 
-export default function Social() {
+const getIcon = (name: string) => {
+  switch (name.toLowerCase()) {
+    case 'linkedin':
+      return <Linkdin />;
+    case 'twitter':
+      return <Twitter />;
+    case 'instagram':
+      return <Instagram />;
+    case 'facebook':
+      return <Facebook />;
+    default:
+      return <Facebook />;
+  }
+};
+
+export default function Social({ socialData = defaultSocialData }: SocialProps) {
   return (
     <>
-      {social_data.map((item) => (
-        <a href={item.link} key={item.id} target="_blank">
-          <span>{item.icon}</span>
+      {socialData.map((item) => (
+        <a href={item.link} key={item.id} target="_blank" rel="noopener noreferrer">
+          <span>{getIcon(item.name)}</span>
         </a>
       ))}
     </>

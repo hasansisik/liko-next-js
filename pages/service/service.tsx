@@ -51,7 +51,6 @@ const ServiceMain = () => {
                   <div className="col-xl-12">
                     <div className="tp-service-5-title-box mb-90">
                       <span className="ab-inner-subtitle mb-20">
-                        <Leaf />
                         Services
                       </span>
                       <h4 className="tp-service-5-title">

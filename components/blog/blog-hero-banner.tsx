@@ -1,7 +1,12 @@
 "use client";
 import React from "react";
+import { IBlogHeroData } from "../../types/blog-modern-d-t";
 
-const BlogHeroBanner = () => {
+interface BlogHeroBannerProps {
+  heroData: IBlogHeroData;
+}
+
+const BlogHeroBanner = ({ heroData }: BlogHeroBannerProps) => {
   return (
     <div className="tp-hero-2-area" style={{ 
       paddingTop: '0', 
@@ -36,7 +41,7 @@ const BlogHeroBanner = () => {
                       objectFit: 'cover'
                     }}
                   >
-                    <source src="/assets/img/home-01/video1.mp4" type="video/mp4" />
+                    <source src={heroData.videoSrc} type="video/mp4" />
                   </video>
                 </div>
                 
@@ -56,7 +61,7 @@ const BlogHeroBanner = () => {
                       textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                       lineHeight: '1.2'
                     }}>
-                      DENTAL INSIGHTS
+                      {heroData.title}
                     </h1>
                   </div>
                   <div className="tp-hero-2-content">
@@ -69,8 +74,7 @@ const BlogHeroBanner = () => {
                       lineHeight: '1.6',
                       fontWeight: '400'
                     }}>
-                      DISCOVER EXPERT TIPS, TREATMENT TRENDS, AND REAL STORIES TO HELP YOU 
-                      MAKE INFORMED DECISIONS ABOUT YOUR SMILE.
+                      {heroData.description}
                     </p>
                   </div>
                 </div>

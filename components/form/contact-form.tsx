@@ -19,36 +19,58 @@ const schema = yup.object().shape({
 
 // prop type 
 type IProps = {
-  btnCls?:string;
+  btnCls?: string;
+  formData?: {
+    nameLabel: string;
+    namePlaceholder: string;
+    subjectLabel: string;
+    subjectPlaceholder: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    buttonText: string;
+  };
 }
-export default function ContactForm({btnCls=''}:IProps) {
-  const {register,handleSubmit,reset,formState: { errors }} = useForm<FormData>({
+
+export default function ContactForm({ btnCls = '', formData }: IProps) {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-  const onSubmit = handleSubmit((data:FormData) => {
+  const onSubmit = handleSubmit((data: FormData) => {
     alert(JSON.stringify(data))
     reset()
   });
+
+  // Default values if formData is not provided (for backward compatibility)
+  const labels = formData || {
+    nameLabel: "Name",
+    namePlaceholder: "John Doe",
+    subjectLabel: "Subject",
+    subjectPlaceholder: "Your@email.com",
+    messageLabel: "Message",
+    messagePlaceholder: "Tell Us About Your Project",
+    buttonText: "Send Message"
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <div className="cn-contactform-input mb-25">
-        <label>Name</label>
-        <input id='name' {...register("name")} type="text" placeholder="John Doe" />
+        <label>{labels.nameLabel}</label>
+        <input id='name' {...register("name")} type="text" placeholder={labels.namePlaceholder} />
         <ErrorMsg msg={errors.name?.message!} />
       </div>
       <div className="cn-contactform-input mb-25">
-        <label>Subject</label>
-        <input id='subject' {...register("subject")} type="text" placeholder="Your@email.com" />
+        <label>{labels.subjectLabel}</label>
+        <input id='subject' {...register("subject")} type="text" placeholder={labels.subjectPlaceholder} />
         <ErrorMsg msg={errors.subject?.message!} />
       </div>
       <div className="cn-contactform-input mb-25">
-        <label>Message</label>
-        <textarea id='message' {...register("message")} placeholder="Tell Us About Your Project"></textarea>
+        <label>{labels.messageLabel}</label>
+        <textarea id='message' {...register("message")} placeholder={labels.messagePlaceholder}></textarea>
         <ErrorMsg msg={errors.message?.message!} />
       </div>
       <div className="cn-contactform-btn">
         <button className={`tp-btn-black-md ${btnCls} w-100`} type="submit">
-          Send Message
+          {labels.buttonText}
         </button>
       </div>
     </form>
