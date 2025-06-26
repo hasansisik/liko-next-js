@@ -25,6 +25,7 @@ import { panelOneAnimation } from "@/utils/panel-animation";
 import { awardAnimOne } from "@/utils/award-anim";
 import { instagramAnim } from "@/utils/instagram-anim";
 import { hoverBtn } from "@/utils/hover-btn";
+import { home1Data } from "@/data/home-1-data";
 
 const HomeTwoMain = () => {
   useScrollSmooth();
@@ -66,11 +67,11 @@ const HomeTwoMain = () => {
         <div id="smooth-content">
           <main>
             {/* hero area start */}
-            <HeroBannerTwo />
+            <HeroBannerTwo heroData={home1Data.heroBanner} />
             {/* hero area end */}
 
             {/* about area start */}
-            <AboutOne/>
+            <AboutOne aboutData={home1Data.aboutSection}/>
             {/* about area end */}
 
             {/* video area start */}

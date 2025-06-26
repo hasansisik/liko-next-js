@@ -14,6 +14,7 @@ import FaqAreaTwo from "@/components/faq/faq-area-2";
 import FooterTwo from "@/layouts/footers/footer-two";
 // animation
 import { charAnimation, titleAnimation } from "@/utils/title-animation";
+import { home1Data } from "@/data/home-1-data";
 
 const PricingMain = () => {
   useScrollSmooth();
@@ -71,7 +72,7 @@ const PricingMain = () => {
               {/* pricing area */}
 
               {/* faq area */}
-              <FaqAreaTwo/>
+              <FaqAreaTwo faqData={home1Data.faqSection}/>
               {/* faq area */}
             </main>
 

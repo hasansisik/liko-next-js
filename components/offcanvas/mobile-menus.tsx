@@ -13,8 +13,8 @@ type IProps = {
 export default function MobileMenus({ navigationData }: IProps) {
   const [navTitle, setNavTitle] = React.useState<string>("");
 
-  // Use navigationData if provided, otherwise fallback to menu_data
-  const menuItems = navigationData?.menus || menu_data;
+  // Use menu_data directly since it has the required properties
+  const menuItems = menu_data;
 
   //openMobileMenu
   const openMobileMenu = (menu: string) => {
@@ -31,13 +31,13 @@ export default function MobileMenus({ navigationData }: IProps) {
           {menuItems.map((menu) => (
             <li
               key={menu.id}
-              className={`${menu.hasDropdown || menu.home_menus || menu.portfolio_mega_menus ? "has-dropdown" : ""} ${
+              className={`${menu.dropdown_menus || menu.home_menus || menu.portfolio_mega_menus ? "has-dropdown" : ""} ${
                 menu.home_menus || menu.portfolio_mega_menus
                   ? "has-homemenu"
                   : ""
               } ${menu.home_menus ? "dropdown-opened" : ""}`}
             >
-              {menu.hasDropdown || menu.home_menus || menu.portfolio_mega_menus ? (
+              {menu.dropdown_menus || menu.home_menus || menu.portfolio_mega_menus ? (
               <a className="pointer" onClick={() => openMobileMenu(menu.title)}>
                 {menu.title}
                 <button className="dropdown-toggle-btn">
@@ -45,7 +45,7 @@ export default function MobileMenus({ navigationData }: IProps) {
                 </button>
               </a>
               ) : (
-                <Link href={menu.url || menu.link}>{menu.title}</Link>
+                <Link href={menu.link}>{menu.title}</Link>
               )}
               {menu.home_menus ? (
                 <div className="tp-submenu submenu tp-mega-menu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
@@ -226,14 +226,6 @@ export default function MobileMenus({ navigationData }: IProps) {
                   {menu.dropdown_menus.map((mm, i) => (
                     <li key={i}>
                       <Link href={mm.link}>{mm.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : menu.subMenus ? (
-                <ul className="tp-submenu submenu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
-                  {menu.subMenus.map((sm, i) => (
-                    <li key={i}>
-                      <Link href={sm.url}>{sm.title}</Link>
                     </li>
                   ))}
                 </ul>

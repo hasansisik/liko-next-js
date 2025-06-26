@@ -208,10 +208,6 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
                 <p>Contact us today to discuss your {service.title.toLowerCase()} treatment</p>
               </div>
               <ContactFormDental 
-                title={`Book Your ${service.title}`}
-                subtitle="Expert available"
-                responseTime="Schedule within 24 hours"
-                showWhatsApp={false}
                 style={{
                   maxWidth: '100%',
                   margin: '0 auto',
