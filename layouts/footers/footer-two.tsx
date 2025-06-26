@@ -47,20 +47,6 @@ export default function FooterTwo({ whiteFooter = false,topCls='footer-top' }: I
                 </div>
               </div>
             </div>
-            <div className="col-xl-2 col-lg-3 col-md-6 mb-50">
-              <div className="tp-footer-2-widget footer-col-2-2">
-                <div className="tp-footer-2-widget-menu">
-                  <h4 className="tp-footer-2-widget-title">Sitemap</h4>
-                  <ul>
-                    <li><Link href="/">Home</Link></li>
-                    <li><Link href="/about-us">About</Link></li>
-                    <li><Link href="/contact">Contact</Link></li>
-                    <li><Link href="/blog">Blog</Link></li>
-                    <li><Link href="/service">Services</Link></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
             <div className="col-xl-3 col-lg-5 col-md-6 mb-50">
               <div className="tp-footer-2-widget footer-col-2-3">
                 <h4 className="tp-footer-2-widget-title">Office</h4>
@@ -83,6 +69,20 @@ export default function FooterTwo({ whiteFooter = false,topCls='footer-top' }: I
                   <span>
                     <a href="mailto:contact@liko.com">E: contact@liko.com</a>
                   </span>
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-2 col-lg-3 col-md-6 mb-50">
+              <div className="tp-footer-2-widget footer-col-2-2">
+                <div className="tp-footer-2-widget-menu">
+                  <h4 className="tp-footer-2-widget-title">Sitemap</h4>
+                  <ul>
+                    <li><Link href="/">Home</Link></li>
+                    <li><Link href="/about-us">About</Link></li>
+                    <li><Link href="/contact">Contact</Link></li>
+                    <li><Link href="/blog">Blog</Link></li>
+                    <li><Link href="/service">Services</Link></li>
+                  </ul>
                 </div>
               </div>
             </div>
