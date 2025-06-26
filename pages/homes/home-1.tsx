@@ -100,11 +100,6 @@ const HomeMain = () => {
             <AboutOne />
             <TeamOne />
             <VideOne />
-            <div className="tp-brand-area">
-              <div className="tp-brand-brd-top tp-brand-ptb">
-                {/* Brand area spacing simulation */}
-              </div>
-            </div>
             <FaqAreaTwo />
             <BlogOne />
           </main>
