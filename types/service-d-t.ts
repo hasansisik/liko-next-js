@@ -9,6 +9,7 @@ export interface IServiceDT {
   shortDesc?: string;
   price?: string;
   duration?: string;
+  features?: string[];
   content: {
     htmlContent: string;
   };

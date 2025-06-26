@@ -19,6 +19,9 @@ import { charAnimation, fadeAnimation } from "@/utils/title-animation";
 import { servicePanel } from "@/utils/panel-animation";
 import HeaderOne from "@/layouts/headers/header-one";
 
+// data import
+import { servicePageData } from "@/data/service-page-data";
+
 const ServiceMain = () => {
   useScrollSmooth();
 
@@ -41,7 +44,7 @@ const ServiceMain = () => {
         <div id="smooth-content">
           <main>
             {/* service hero */}
-            <ServiceHero />
+            <ServiceHero heroData={servicePageData.hero} />
             {/* service hero */}
 
             {/* service area */}
@@ -51,12 +54,10 @@ const ServiceMain = () => {
                   <div className="col-xl-12">
                     <div className="tp-service-5-title-box mb-90">
                       <span className="ab-inner-subtitle mb-20">
-                        Services
+                        {servicePageData.serviceSection.subtitle}
                       </span>
                       <h4 className="tp-service-5-title">
-                        We provide comprehensive dental care with{" "}
-                        <br />
-                        modern technology and personalized treatment plans.
+                        {servicePageData.serviceSection.title}
                       </h4>
                     </div>
                   </div>
@@ -73,7 +74,7 @@ const ServiceMain = () => {
             {/* service area */}
 
             {/* big text */}
-            <BigText />
+            <BigText bigTextData={servicePageData.bigText} />
             {/* big text */}
           </main>
 

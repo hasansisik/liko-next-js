@@ -47,22 +47,9 @@ export default function ServiceSix() {
                       </div>
                       <div className="sv-service-list">
                         <ul>
-                          {item.category === "Cosmetic Dentistry" && (
-                            <>
-                              <li>Aesthetic Enhancement</li>
-                              <li>Natural Appearance</li>
-                              <li>Confidence Boost</li>
-                              <li>Long-lasting Results</li>
-                            </>
-                          )}
-                          {item.category === "Restorative Dentistry" && (
-                            <>
-                              <li>Functional Restoration</li>
-                              <li>Durability & Strength</li>
-                              <li>Biocompatible Materials</li>
-                              <li>Precision Fit</li>
-                            </>
-                          )}
+                          {item.features?.map((feature, index) => (
+                            <li key={index}>{feature}</li>
+                          ))}
                         </ul>
                       </div>
                       <div className="sv-service-btn">

@@ -18,6 +18,7 @@ export const service_data: IServiceDT[] = [
     shortDesc: "Perfect white teeth with flawless alignment",
     price: "Starting from $2,500",
     duration: "2-3 visits",
+    features: ["Aesthetic Enhancement", "Natural Appearance", "Confidence Boost", "Long-lasting Results"],
     content: {
       htmlContent: `
         <div class="service-details-top-text">
@@ -78,6 +79,7 @@ export const service_data: IServiceDT[] = [
     shortDesc: "Ultra-thin porcelain shells for perfect teeth",
     price: "Starting from $800 per tooth",
     duration: "2-3 visits",
+    features: ["Aesthetic Enhancement", "Natural Appearance", "Confidence Boost", "Long-lasting Results"],
     content: {
       htmlContent: `
         <div class="service-details-top-text">
@@ -141,6 +143,7 @@ export const service_data: IServiceDT[] = [
     shortDesc: "Permanent tooth replacement with titanium implants",
     price: "Starting from $1,500 per implant",
     duration: "3-6 months",
+    features: ["Functional Restoration", "Durability & Strength", "Biocompatible Materials", "Precision Fit"],
     content: {
       htmlContent: `
         <div class="service-details-top-text">
@@ -213,6 +216,7 @@ export const service_data: IServiceDT[] = [
     shortDesc: "Complete smile transformation with multiple treatments",
     price: "Starting from $3,000",
     duration: "4-8 weeks",
+    features: ["Aesthetic Enhancement", "Natural Appearance", "Confidence Boost", "Long-lasting Results"],
     content: {
       htmlContent: `
         <div class="service-details-top-text">
@@ -282,6 +286,7 @@ export const service_data: IServiceDT[] = [
     shortDesc: "Strong and aesthetic zirconium oxide crowns",
     price: "Starting from $600 per crown",
     duration: "2-3 visits",
+    features: ["Functional Restoration", "Durability & Strength", "Biocompatible Materials", "Precision Fit"],
     content: {
       htmlContent: `
         <div class="service-details-top-text">
@@ -362,6 +367,7 @@ export const service_data: IServiceDT[] = [
     shortDesc: "Premium all-ceramic crowns with exceptional aesthetics",
     price: "Starting from $700 per crown",
     duration: "2-3 visits",
+    features: ["Aesthetic Enhancement", "Natural Appearance", "Confidence Boost", "Long-lasting Results"],
     content: {
       htmlContent: `
         <div class="service-details-top-text">

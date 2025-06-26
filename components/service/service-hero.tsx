@@ -1,10 +1,16 @@
 import React from "react";
 import Image from "next/image";
+interface IServiceHeroData {
+  title: string;
+  description: string;
+  image: string;
+}
 
-// image
-import ser_hero from "@/assets/img/inner-service/hero/hero-1.jpg";
+interface ServiceHeroProps {
+  heroData: IServiceHeroData;
+}
 
-export default function ServiceHero() {
+export default function ServiceHero({ heroData }: ServiceHeroProps) {
   return (
     <div className="sv-hero-area sv-hero-ptb">
       <div className="container-fluid" style={{ 
@@ -15,10 +21,15 @@ export default function ServiceHero() {
           <div className="col-xl-10">
             <div className="sv-hero-title-box">
               <h4 className="sv-hero-title tp-char-animation">
-                Expert Dental <br /> Care Services
+                {heroData.title.split(' ').map((word, index, array) => (
+                  <React.Fragment key={index}>
+                    {word}
+                    {index === Math.floor(array.length / 2) - 1 ? <br /> : ' '}
+                  </React.Fragment>
+                ))}
               </h4>
               <p className="tp_fade_bottom">
-                Transform your smile with our comprehensive dental treatments and modern technology.
+                {heroData.description}
               </p>
             </div>
           </div>
@@ -29,9 +40,11 @@ export default function ServiceHero() {
               <div className="sv-hero-thumb-box">
                 <Image
                   data-speed=".7"
-                  src={ser_hero}
+                  src={heroData.image}
                   alt="dental-services-hero"
-                  style={{height:"auto"}}
+                  width={1200}
+                  height={600}
+                  style={{height:"auto", width:"100%", objectFit:"cover"}}
                 />
               </div>
 
