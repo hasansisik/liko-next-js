@@ -1,14 +1,22 @@
 'use client';
 import React from 'react';
 
-const VideOne = () => {
+interface IVideoSectionData {
+  videoSrc: string;
+}
+
+interface VideoOneProps {
+  videoData: IVideoSectionData;
+}
+
+const VideOne = ({ videoData }: VideoOneProps) => {
   
   return (
     <>
       <div className="tp-hero-bottom-img-wrap">
         <div className="tp-hero-bottom-img">
           <video loop={true} muted={true} autoPlay={true} playsInline={true}>
-            <source src="/assets/img/home-01/video1.mp4" type="video/mp4" />
+            <source src={videoData.videoSrc} type="video/mp4" />
           </video>
         </div>
       </div>

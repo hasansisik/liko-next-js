@@ -1,11 +1,23 @@
 'use client';
 import React, { CSSProperties } from 'react';
 import Image from 'next/image';
-// images
-import ab_1 from '@/assets/img/home-01/ab-1.jpg';
-import ab_2 from '@/assets/img/home-01/ab-2.jpg';
-import ab_3 from '@/assets/img/home-01/ab-3.jpg';
-import ab_4 from '@/assets/img/home-01/ab-4.jpg';
+
+interface IAboutSectionItem {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+  imagePosition: 'left' | 'right';
+}
+
+interface IAboutSectionData {
+  mainTitle: string;
+  items: IAboutSectionItem[];
+}
+
+interface AboutOneProps {
+  aboutData: IAboutSectionData;
+}
 
 // img style
 const imgStyle:CSSProperties = {
@@ -15,7 +27,7 @@ const imgStyle:CSSProperties = {
   objectFit: "cover"
 };
 
-const AboutOne = () => {
+const AboutOne = ({ aboutData }: AboutOneProps) => {
 
   return (
     <div className="tp-about-2-area pt-125 pb-200">
@@ -24,88 +36,53 @@ const AboutOne = () => {
           <div className="col-xxl-8 col-xl-10">
             <div className="tp-about-2-title-box tp-btn-trigger tp-btn-bounce mb-70 text-start text-xl-center">
               <h2 className="tp-about-2-section-title">
-                Cooperation is possible within
-                various shapes and formats
+                {aboutData.mainTitle}
               </h2>
             </div>
           </div>
         </div>
         
-        {/* First Section: Image Left, Text Right */}
-        <div className="row align-items-center mb-5">
-          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1">
-            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
-              <div className="tp-about-2-thumb-main">
-                <Image src={ab_1} alt="ab-img" style={imgStyle} />
-              </div>
-            </div>
+        {aboutData.items.map((item, index) => (
+          <div key={item.id} className="row align-items-center mb-5">
+            {item.imagePosition === 'left' ? (
+              <>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1">
+                  <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
+                    <div className="tp-about-2-thumb-main">
+                      <Image src={item.image} alt="ab-img" width={500} height={500} style={imgStyle} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-xl-6 col-lg-6 col-12 order-2">
+                  <div className="tp-about-2-content ps-xl-4">
+                    <span>{item.title}</span>
+                    <p className="mb-30">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="col-xl-6 col-lg-6 col-12 order-2 order-lg-1">
+                  <div className="tp-about-2-content mb-4 mb-lg-0 pe-xl-4">
+                    <span>{item.title}</span>
+                    <p className="mb-30">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1 order-lg-2">
+                  <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
+                    <div className="tp-about-2-thumb-main">
+                      <Image src={item.image} alt="ab-img" width={500} height={500} style={imgStyle} />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
-          <div className="col-xl-6 col-lg-6 col-12 order-2">
-            <div className="tp-about-2-content ps-xl-4">
-              <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
-              <p className="mb-30">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Second Section: Text Left, Image Right */}
-        <div className="row align-items-center mb-5">
-          <div className="col-xl-6 col-lg-6 col-12 order-2 order-lg-1">
-            <div className="tp-about-2-content mb-4 mb-lg-0 pe-xl-4">
-              <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
-              <p className="mb-30">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
-            </div>
-          </div>
-          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1 order-lg-2">
-            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
-              <div className="tp-about-2-thumb-main">
-                <Image src={ab_2} alt="ab-img" style={imgStyle} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Third Section: Image Left, Text Right */}
-        <div className="row align-items-center mb-5">
-          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1">
-            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
-              <div className="tp-about-2-thumb-main">
-                <Image src={ab_3} alt="ab-img" style={imgStyle} />
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-6 col-lg-6 col-12 order-2">
-            <div className="tp-about-2-content ps-xl-4">
-              <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
-              <p className="mb-30">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Fourth Section: Text Left, Image Right */}
-        <div className="row align-items-center mb-5">
-          <div className="col-xl-6 col-lg-6 col-12 order-2 order-lg-1">
-            <div className="tp-about-2-content mb-4 mb-lg-0 pe-xl-4">
-              <span>FOLLOW FOR THE BEST EYEWEAR INSPIRATION</span>
-              <p className="mb-30">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
-            </div>
-          </div>
-          <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1 order-lg-2">
-            <div className="tp-about-2-thumb-box p-relative mb-4 mb-lg-0">
-              <div className="tp-about-2-thumb-main">
-                <Image src={ab_4} alt="ab-img" style={imgStyle} />
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

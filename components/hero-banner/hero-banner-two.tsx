@@ -4,7 +4,18 @@ import Link from "next/link";
 import { Leaf } from "../svg";
 import ContactFormDental from "../form/contact-form-dental";
 
-const HeroBannerTwo = () => {
+interface IHeroBannerData {
+  videoSrc: string;
+  desktopTitle: string;
+  mobileTitle: string;
+  description: string;
+}
+
+interface HeroBannerTwoProps {
+  heroData: IHeroBannerData;
+}
+
+const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
   return (
     <div className="tp-hero-2-area" style={{ 
       paddingTop: '0', 
@@ -39,7 +50,7 @@ const HeroBannerTwo = () => {
                       objectFit: 'cover'
                     }}
                   >
-                    <source src="/assets/img/home-01/video1.mp4" type="video/mp4" />
+                    <source src={heroData.videoSrc} type="video/mp4" />
                   </video>
                 </div>
                 <div className="tp-hero-2-content-wrap p-relative d-none d-lg-block" style={{
@@ -59,7 +70,7 @@ const HeroBannerTwo = () => {
                       fontWeight: 'bold',
                       lineHeight: '1.8'
                     }}>
-                      Route to a Perfect Smile
+                      {heroData.desktopTitle}
                     </h2>
                   </div>
                   <div className="tp-hero-2-content" style={{
@@ -73,9 +84,7 @@ const HeroBannerTwo = () => {
                       fontSize: '20px',
                       lineHeight: '1.6'
                     }}>
-                      Rediscover your beauty with our {"Clinic's"} team of
-                      experts, personalized solutions, and the latest
-                      technology.
+                      {heroData.description}
                     </p>
                   </div>
                 </div>
@@ -105,7 +114,7 @@ const HeroBannerTwo = () => {
                       lineHeight: '1.3',
                       textAlign: 'left'
                     }}>
-                      Excellence in Aesthetics & Health
+                      {heroData.mobileTitle}
                     </h1>
                   </div>
                   <div className="tp-hero-2-content" style={{
@@ -123,9 +132,7 @@ const HeroBannerTwo = () => {
                       fontWeight: '400',
                       textAlign: 'left'
                     }}>
-                      Rediscover your beauty with our {"Clinic's"} team of
-                      experts, personalized solutions, and the latest
-                      technology.
+                      {heroData.description}
                     </p>
                   </div>
                 </div>

@@ -3,12 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { service_data } from "@/data/service-data";
 
+interface IServiceSectionData {
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
+}
+
+interface ServiceOneProps {
+  serviceData: IServiceSectionData;
+}
+
 // Helper function to generate slug from title
 const generateSlug = (title: string) => {
   return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 };
 
-const ServiceOne = () => {
+const ServiceOne = ({ serviceData }: ServiceOneProps) => {
   return (
     <div className="tp-service-area pt-180 pb-80 tp-btn-trigger">
       <div className="container container-1630">
@@ -17,16 +28,16 @@ const ServiceOne = () => {
             <div className="tp-service-title-box p-relative">
 
               <h4 className="tp-section-title tp_fade_bottom">
-                Dental
+                {serviceData.title}
                 <br />
-                <span>Excellence</span>
+                <span>{serviceData.subtitle}</span>
               </h4>
             </div>
             <div className="tp-service-left-btn tp-btn-bounce">
-              <Link className="tp-btn-border" href="/service">
+              <Link className="tp-btn-border" href={serviceData.buttonLink}>
                 <span className="tp-btn-border-wrap">
-                  <span className="text-1">See All Services</span>
-                  <span className="text-2">See All Services</span>
+                  <span className="text-1">{serviceData.buttonText}</span>
+                  <span className="text-2">{serviceData.buttonText}</span>
                 </span>
               </Link>
             </div>

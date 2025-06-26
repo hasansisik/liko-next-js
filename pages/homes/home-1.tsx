@@ -16,12 +16,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, SplitText);
 // internal imports
 import Wrapper from "@/layouts/wrapper";
 import HeaderOne from "@/layouts/headers/header-one";
-import HeroBannerOne from "@/components/hero-banner/hero-banner-one";
 
 import ServiceOne from "@/components/service/service-one";
 import VideOne from "@/components/video/video-one";
 import TeamOne from "@/components/team/team-one";
-import FooterOne from "@/layouts/footers/footer-one";
 
 
 // animation
@@ -40,6 +38,9 @@ import { instagramAnim } from "@/utils/instagram-anim";
 import FaqAreaTwo from "@/components/faq/faq-area-2";
 import BlogOne from "@/components/blog/blog-one";
 import FooterTwo from "@/layouts/footers/footer-two";
+
+// data import
+import { home1Data } from "@/data/home-1-data";
 
 const HomeMain = () => {
   useScrollSmooth();
@@ -95,12 +96,12 @@ const HomeMain = () => {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main>
-            <HeroBannerTwo />
-            <ServiceOne />
-            <AboutOne />
+            <HeroBannerTwo heroData={home1Data.heroBanner} />
+            <ServiceOne serviceData={home1Data.serviceSection} />
+            <AboutOne aboutData={home1Data.aboutSection} />
             <TeamOne />
-            <VideOne />
-            <FaqAreaTwo />
+            <VideOne videoData={home1Data.videoSection} />
+            <FaqAreaTwo faqData={home1Data.faqSection} />
             <BlogOne />
           </main>
           <FooterTwo />
