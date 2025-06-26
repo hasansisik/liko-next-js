@@ -2,118 +2,31 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from 'lucide-react';
-
-type Country = {
-  name: string;
-  code: string;
-  flag: string;
-  phone: string;
-};
-
-const countries: Country[] = [
-  { name: "Turkey", code: "TR", flag: "🇹🇷", phone: "+90" },
-  { name: "United States", code: "US", flag: "🇺🇸", phone: "+1" },
-  { name: "United Kingdom", code: "GB", flag: "🇬🇧", phone: "+44" },
-  { name: "Germany", code: "DE", flag: "🇩🇪", phone: "+49" },
-  { name: "France", code: "FR", flag: "🇫🇷", phone: "+33" },
-  { name: "Italy", code: "IT", flag: "🇮🇹", phone: "+39" },
-  { name: "Spain", code: "ES", flag: "🇪🇸", phone: "+34" },
-  { name: "Netherlands", code: "NL", flag: "🇳🇱", phone: "+31" },
-  { name: "Belgium", code: "BE", flag: "🇧🇪", phone: "+32" },
-  { name: "Switzerland", code: "CH", flag: "🇨🇭", phone: "+41" },
-  { name: "Austria", code: "AT", flag: "🇦🇹", phone: "+43" },
-  { name: "Sweden", code: "SE", flag: "🇸🇪", phone: "+46" },
-  { name: "Norway", code: "NO", flag: "🇳🇴", phone: "+47" },
-  { name: "Denmark", code: "DK", flag: "🇩🇰", phone: "+45" },
-  { name: "Finland", code: "FI", flag: "🇫🇮", phone: "+358" },
-  { name: "Poland", code: "PL", flag: "🇵🇱", phone: "+48" },
-  { name: "Czech Republic", code: "CZ", flag: "🇨🇿", phone: "+420" },
-  { name: "Hungary", code: "HU", flag: "🇭🇺", phone: "+36" },
-  { name: "Romania", code: "RO", flag: "🇷🇴", phone: "+40" },
-  { name: "Bulgaria", code: "BG", flag: "🇧🇬", phone: "+359" },
-  { name: "Greece", code: "GR", flag: "🇬🇷", phone: "+30" },
-  { name: "Portugal", code: "PT", flag: "🇵🇹", phone: "+351" },
-  { name: "Ireland", code: "IE", flag: "🇮🇪", phone: "+353" },
-  { name: "Luxembourg", code: "LU", flag: "🇱🇺", phone: "+352" },
-  { name: "Cyprus", code: "CY", flag: "🇨🇾", phone: "+357" },
-  { name: "Malta", code: "MT", flag: "🇲🇹", phone: "+356" },
-  { name: "Canada", code: "CA", flag: "🇨🇦", phone: "+1" },
-  { name: "Australia", code: "AU", flag: "🇦🇺", phone: "+61" },
-  { name: "New Zealand", code: "NZ", flag: "🇳🇿", phone: "+64" },
-  { name: "Japan", code: "JP", flag: "🇯🇵", phone: "+81" },
-  { name: "South Korea", code: "KR", flag: "🇰🇷", phone: "+82" },
-  { name: "China", code: "CN", flag: "🇨🇳", phone: "+86" },
-  { name: "India", code: "IN", flag: "🇮🇳", phone: "+91" },
-  { name: "Singapore", code: "SG", flag: "🇸🇬", phone: "+65" },
-  { name: "Malaysia", code: "MY", flag: "🇲🇾", phone: "+60" },
-  { name: "Thailand", code: "TH", flag: "🇹🇭", phone: "+66" },
-  { name: "Philippines", code: "PH", flag: "🇵🇭", phone: "+63" },
-  { name: "Indonesia", code: "ID", flag: "🇮🇩", phone: "+62" },
-  { name: "Vietnam", code: "VN", flag: "🇻🇳", phone: "+84" },
-  { name: "UAE", code: "AE", flag: "🇦🇪", phone: "+971" },
-  { name: "Saudi Arabia", code: "SA", flag: "🇸🇦", phone: "+966" },
-  { name: "Qatar", code: "QA", flag: "🇶🇦", phone: "+974" },
-  { name: "Kuwait", code: "KW", flag: "🇰🇼", phone: "+965" },
-  { name: "Bahrain", code: "BH", flag: "🇧🇭", phone: "+973" },
-  { name: "Oman", code: "OM", flag: "🇴🇲", phone: "+968" },
-  { name: "Jordan", code: "JO", flag: "🇯🇴", phone: "+962" },
-  { name: "Lebanon", code: "LB", flag: "🇱🇧", phone: "+961" },
-  { name: "Israel", code: "IL", flag: "🇮🇱", phone: "+972" },
-  { name: "Egypt", code: "EG", flag: "🇪🇬", phone: "+20" },
-  { name: "South Africa", code: "ZA", flag: "🇿🇦", phone: "+27" },
-  { name: "Nigeria", code: "NG", flag: "🇳🇬", phone: "+234" },
-  { name: "Kenya", code: "KE", flag: "🇰🇪", phone: "+254" },
-  { name: "Morocco", code: "MA", flag: "🇲🇦", phone: "+212" },
-  { name: "Tunisia", code: "TN", flag: "🇹🇳", phone: "+216" },
-  { name: "Algeria", code: "DZ", flag: "🇩🇿", phone: "+213" },
-  { name: "Brazil", code: "BR", flag: "🇧🇷", phone: "+55" },
-  { name: "Argentina", code: "AR", flag: "🇦🇷", phone: "+54" },
-  { name: "Chile", code: "CL", flag: "🇨🇱", phone: "+56" },
-  { name: "Colombia", code: "CO", flag: "🇨🇴", phone: "+57" },
-  { name: "Peru", code: "PE", flag: "🇵🇪", phone: "+51" },
-  { name: "Mexico", code: "MX", flag: "🇲🇽", phone: "+52" },
-  { name: "Venezuela", code: "VE", flag: "🇻🇪", phone: "+58" },
-  { name: "Ecuador", code: "EC", flag: "🇪🇨", phone: "+593" },
-  { name: "Uruguay", code: "UY", flag: "🇺🇾", phone: "+598" },
-  { name: "Paraguay", code: "PY", flag: "🇵🇾", phone: "+595" },
-  { name: "Bolivia", code: "BO", flag: "🇧🇴", phone: "+591" },
-  { name: "Russia", code: "RU", flag: "🇷🇺", phone: "+7" },
-  { name: "Ukraine", code: "UA", flag: "🇺🇦", phone: "+380" },
-  { name: "Belarus", code: "BY", flag: "🇧🇾", phone: "+375" },
-  { name: "Kazakhstan", code: "KZ", flag: "🇰🇿", phone: "+7" },
-  { name: "Uzbekistan", code: "UZ", flag: "🇺🇿", phone: "+998" },
-  { name: "Azerbaijan", code: "AZ", flag: "🇦🇿", phone: "+994" },
-  { name: "Armenia", code: "AM", flag: "🇦🇲", phone: "+374" },
-  { name: "Georgia", code: "GE", flag: "🇬🇪", phone: "+995" },
-];
+import { contactFormData } from "@/data/contact-form-data";
+import { IContactFormData, ICountry } from "@/types/contact-form-d-t";
 
 type ContactFormDentalProps = {
   className?: string;
   style?: React.CSSProperties;
-  showWhatsApp?: boolean;
-  title?: string;
-  subtitle?: string;
-  responseTime?: string;
+  formData?: IContactFormData;
 };
 
 const ContactFormDental = ({ 
   className = "",
   style = {},
-  showWhatsApp = true,
-  title = "Let's Talk Teeth!",
-  subtitle = "Online now",
-  responseTime = "avg. response time: 3 minutes"
+  formData = contactFormData
 }: ContactFormDentalProps) => {
-  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]); // Default to Turkey
+  const defaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
+  const [selectedCountry, setSelectedCountry] = useState<ICountry>(defaultCountry);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredCountries = countries.filter(country =>
+  const filteredCountries = formData.countries.filter(country =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     country.phone.includes(searchTerm)
   );
 
-  const handleCountrySelect = (country: Country) => {
+  const handleCountrySelect = (country: ICountry) => {
     setSelectedCountry(country);
     setIsDropdownOpen(false);
     setSearchTerm("");
@@ -136,7 +49,7 @@ const ContactFormDental = ({
           marginBottom: '10px',
           color: '#333',
           textAlign: 'center'
-        }}>{title}</h3>
+        }}>{formData.title}</h3>
         <div className="tp-dental-form-status" style={{
           display: 'flex',
           alignItems: 'center',
@@ -154,21 +67,21 @@ const ContactFormDental = ({
             color: '#4CAF50',
             fontSize: '14px',
             fontWeight: '500'
-          }}>{subtitle}</span>
+          }}>{formData.subtitle}</span>
         </div>
         <p className="tp-dental-form-response" style={{
           fontSize: '12px',
           color: '#666',
           margin: '0',
           textAlign: 'center'
-        }}>{responseTime}</p>
+        }}>{formData.responseTime}</p>
       </div>
       
       <form className="tp-dental-form">
         <div className="tp-dental-form-input" style={{ marginBottom: '15px' }}>
           <input 
             type="text" 
-            placeholder="Name*" 
+            placeholder={formData.placeholders.name} 
             required 
             style={{
               width: '100%',
@@ -231,7 +144,7 @@ const ContactFormDental = ({
               <div style={{ padding: '10px' }}>
                 <input
                   type="text"
-                  placeholder="Search country..."
+                  placeholder={formData.placeholders.countrySearch}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   style={{
@@ -275,7 +188,7 @@ const ContactFormDental = ({
           
           <input 
             type="tel" 
-            placeholder="Phone Number*" 
+            placeholder={formData.placeholders.phone} 
             required 
             style={{
               flex: 1,
@@ -301,7 +214,7 @@ const ContactFormDental = ({
           fontSize: '16px',
           fontWeight: '500',
           cursor: 'pointer',
-          marginBottom: showWhatsApp ? '15px' : '0',
+          marginBottom: formData.showWhatsApp ? '15px' : '0',
           transition: 'background-color 0.3s ease',
           display: 'flex',
           alignItems: 'center',
@@ -310,11 +223,11 @@ const ContactFormDental = ({
         onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#333'}
         onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#000'}
         >
-          Send <ArrowRight size={16} style={{ marginLeft: '8px' }} />
+          {formData.submitButtonText} <ArrowRight size={16} style={{ marginLeft: '8px' }} />
         </button>
       
-        {showWhatsApp && (
-          <Link href="#" className="tp-dental-whatsapp-btn" style={{
+        {formData.showWhatsApp && (
+          <Link href={formData.whatsAppLink} className="tp-dental-whatsapp-btn" style={{
             display: 'block',
             width: '100%',
             padding: '12px',
@@ -330,7 +243,7 @@ const ContactFormDental = ({
           onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = '#1da851'}
           onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = '#25D366'}
           >
-            Chat on WhatsApp
+            {formData.whatsAppText}
           </Link>
         )}
       </form>

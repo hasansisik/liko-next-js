@@ -2,8 +2,6 @@
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
-import Image from "next/image";
-import Link from "next/link";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import {
   ScrollSmoother,
