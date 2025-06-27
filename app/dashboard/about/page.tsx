@@ -185,7 +185,7 @@ export default function AboutEditorPage() {
             <Save className="w-4 h-4 mr-2" />
             {loading ? "Saving..." : "Save Changes"}
           </Button>
-        </div>
+          </div>
         </header>
 
       {/* Main Content */}

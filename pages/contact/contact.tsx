@@ -15,11 +15,20 @@ import { charAnimation } from "@/utils/title-animation";
 import FooterTwo from "@/layouts/footers/footer-two";
 import HeaderOne from "@/layouts/headers/header-one";
 
-// data import
-import { contactData } from "@/data/contact-data";
+// Redux imports
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getContact } from "@/redux/actions/contactActions";
 
 const ContactMain = () => {
+  const dispatch = useAppDispatch();
+  const { contact, loading, error } = useAppSelector((state) => state.contact);
+  
   useScrollSmooth();
+
+  // Fetch contact data on component mount
+  React.useEffect(() => {
+    dispatch(getContact());
+  }, [dispatch]);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -27,6 +36,45 @@ const ContactMain = () => {
     }, 100);
     return () => clearTimeout(timer);
   });
+
+  // Show loading state
+  if (loading) {
+    return (
+      <Wrapper>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <Wrapper>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
+
+  // Show content if contact data is available
+  if (!contact) {
+    return (
+      <Wrapper>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="alert alert-warning" role="alert">
+            Contact verisi bulunamadı.
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
@@ -39,7 +87,7 @@ const ContactMain = () => {
           <div
             className="inner-bg"
             style={{
-              backgroundImage: `url(${contactData.hero.backgroundImage})`,
+              backgroundImage: `url(${contact.hero.backgroundImage})`,
             }}
           >
             <main>
@@ -49,9 +97,9 @@ const ContactMain = () => {
                   <div className="row">
                     <div className="col-xl-12">
                       <div className="tm-hero-content">
-                        <span className="tm-hero-subtitle">{contactData.hero.subtitle}</span>
+                        <span className="tm-hero-subtitle">{contact.hero.subtitle}</span>
                         <h4 className="tm-hero-title-big tp-char-animation">
-                          {contactData.hero.title}
+                          {contact.hero.title}
                         </h4>
                       </div>
                     </div>
@@ -61,11 +109,11 @@ const ContactMain = () => {
               {/* hero area end */}
 
               {/* contact area */}
-              <ContactTwo contactFormData={contactData.contactForm} />
+              <ContactTwo contactFormData={contact.contactForm} />
               {/* contact area */}
 
               {/* contact location */}
-              <ContactLocation contactInfoData={contactData.contactInfo} />
+              <ContactLocation contactInfoData={contact.contactInfo} />
               {/* contact location */}
             </main>
 

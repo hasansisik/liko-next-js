@@ -38,19 +38,19 @@ const data = {
       items: [
         {
           title: "Home",
-          url: "#",
+          url: "/dashboard/home",
         },
         {
           title: "Services",
-          url: "#",
+          url: "/dashboard/services",
         },
         {
           title: "Blog",
-          url: "#",
+          url: "/dashboard/blog",
         },
         {
           title: "Contact",
-          url: "#",
+          url: "/dashboard/contact",
         },
         {
           title: "About",
@@ -68,6 +68,10 @@ const data = {
         {
           title: "About",
           url: "/dashboard/about",
+        },
+        {
+          title: "Contact",
+          url: "/dashboard/contact",
         },
         {
           title: "Blog",
