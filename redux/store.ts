@@ -1,12 +1,13 @@
 // redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userReducer";
+import aboutReducer from "./reducers/aboutReducer";
 
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-
+    about: aboutReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>

@@ -8,8 +8,6 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";
-import HeaderEleven from "@/layouts/headers/header-eleven";
-import FooterOne from "@/layouts/footers/footer-one";
 import AboutUsHero from "@/components/about/about-us-hero";
 import AboutUsArea from "@/components/about/about-us-area";
 
@@ -20,12 +18,21 @@ import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterTwo from "@/layouts/footers/footer-two";
 import HeaderOne from "@/layouts/headers/header-one";
 
-// data import
-import { aboutUsData } from "@/data/about-us-data";
+// Redux imports
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getAbout } from "@/redux/actions/aboutActions";
 import { footerData } from "@/data/footer-data";
 
 const AboutUsMain = () => {
+  const dispatch = useAppDispatch();
+  const { about, loading, error } = useAppSelector((state) => state.about);
+  
   useScrollSmooth();
+
+  // Fetch about data on component mount
+  React.useEffect(() => {
+    dispatch(getAbout());
+  }, [dispatch]);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -38,6 +45,45 @@ const AboutUsMain = () => {
     return () => clearTimeout(timer);
   });
 
+  // Show loading state
+  if (loading) {
+    return (
+      <Wrapper>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <Wrapper>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
+
+  // Show content if about data is available
+  if (!about) {
+    return (
+      <Wrapper>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="alert alert-warning" role="alert">
+            About verisi bulunamadı.
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
+
   return (
     <Wrapper>
       {/* header area start */}
@@ -48,9 +94,9 @@ const AboutUsMain = () => {
         <div id="smooth-content">
           <main>
             {/* about hero */}
-            <AboutUsHero heroData={aboutUsData.hero} />
+            <AboutUsHero heroData={about.hero} />
 
-            <AboutUsArea aboutData={aboutUsData.aboutInfo} />
+            <AboutUsArea aboutData={about.aboutInfo} />
             {/* about area */}
           </main>
 

@@ -29,11 +29,6 @@ import {
 } from "@/components/ui/sidebar"
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Pages",
@@ -59,7 +54,7 @@ const data = {
         },
         {
           title: "About",
-          url: "#",
+          url: "/dashboard/about",
         },
         
       ],
@@ -70,6 +65,10 @@ const data = {
       icon: Bot,
       isActive: true,
       items: [
+        {
+          title: "About",
+          url: "/dashboard/about",
+        },
         {
           title: "Blog",
           url: "#",
@@ -84,7 +83,20 @@ const data = {
   ]
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  userData?: {
+    name: string;
+    email: string;
+    avatar?: string;
+  };
+}
+
+export function AppSidebar({ userData, ...props }: AppSidebarProps) {
+  const defaultUser = {
+    name: userData?.name || "User",
+    email: userData?.email || "user@example.com",
+    avatar: userData?.avatar || "/avatars/default.jpg",
+  };
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -108,7 +120,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={defaultUser} />
       </SidebarFooter>
     </Sidebar>
   )
