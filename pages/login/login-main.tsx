@@ -12,6 +12,7 @@ import HeaderTwelve from "@/layouts/headers/header-twelve";
 import FooterTwo from "@/layouts/footers/footer-two";
 import SocialLogin from "@/components/form/social-login";
 import LoginForm from "@/components/form/login-form";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const LoginMain = () => {
   useScrollSmooth();
@@ -19,7 +20,7 @@ const LoginMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderTwelve />
+      <HeaderOne color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
@@ -41,12 +42,7 @@ const LoginMain = () => {
                         </p>
                       </div>
                       <div className="tp-login-option">
-                        <SocialLogin />
-                        <div className="tp-login-mail text-center mb-40">
-                          <p>
-                            or Sign in with <a href="#">Email</a>
-                          </p>
-                        </div>
+
                         {/* login form */}
                         <LoginForm />
                         {/* login form */}
