@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +19,9 @@ export default function RootLayout({
         className={`antialiased`}
         suppressHydrationWarning={true}
       >
-        <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
+        </Provider>
       </body>
     </html>
   );
