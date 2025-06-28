@@ -1,9 +1,12 @@
 "use client";
 import { gsap } from "gsap";
-import React from "react";
+import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { getService } from '@/redux/actions/serviceActions';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
@@ -19,11 +22,19 @@ import { charAnimation, fadeAnimation } from "@/utils/title-animation";
 import { servicePanel } from "@/utils/panel-animation";
 import HeaderOne from "@/layouts/headers/header-one";
 
-// data import
+// fallback data import
 import { servicePageData } from "@/data/service-page-data";
 
 const ServiceMain = () => {
+  const dispatch = useDispatch();
+  const { service, loading, error } = useSelector((state: RootState) => state.service);
+  
   useScrollSmooth();
+
+  // Fetch service data on component mount
+  useEffect(() => {
+    dispatch(getService() as any);
+  }, [dispatch]);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -34,6 +45,9 @@ const ServiceMain = () => {
     return () => clearTimeout(timer);
   });
 
+  // Use Redux data if available, otherwise fallback to static data
+  const currentServiceData = service || servicePageData;
+
   return (
     <Wrapper>
       {/* header area start */}
@@ -43,39 +57,66 @@ const ServiceMain = () => {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main>
-            {/* service hero */}
-            <ServiceHero heroData={servicePageData.hero} />
-            {/* service hero */}
+            {/* Loading state */}
+            {loading && (
+              <div className="flex justify-center items-center min-h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+              </div>
+            )}
 
-            {/* service area */}
-            <div className="tp-service-5-area sv-service-style pb-70">
-              <div className="container container-1530">
-                <div className="row">
-                  <div className="col-xl-12">
-                    <div className="tp-service-5-title-box mb-90">
-                      <span className="ab-inner-subtitle mb-20">
-                        {servicePageData.serviceSection.subtitle}
-                      </span>
-                      <h4 className="tp-service-5-title">
-                        {servicePageData.serviceSection.title}
-                      </h4>
+            {/* Error state */}
+            {error && (
+              <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                  <p className="text-red-600 mb-4">Error loading service data: {error}</p>
+                                     <button 
+                     onClick={() => dispatch(getService() as any)}
+                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                   >
+                    Retry
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Content */}
+            {!loading && !error && (
+              <>
+                {/* service hero */}
+                <ServiceHero heroData={currentServiceData.hero} />
+                {/* service hero */}
+
+                {/* service area */}
+                <div className="tp-service-5-area sv-service-style pb-70">
+                  <div className="container container-1530">
+                    <div className="row">
+                      <div className="col-xl-12">
+                        <div className="tp-service-5-title-box mb-90">
+                          <span className="ab-inner-subtitle mb-20">
+                            {currentServiceData.serviceSection.subtitle}
+                          </span>
+                          <h4 className="tp-service-5-title">
+                            {currentServiceData.serviceSection.title}
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="tp-service-5-wrap">
+                      <ServiceItems />
                     </div>
                   </div>
                 </div>
-                <div className="tp-service-5-wrap">
-                  <ServiceItems />
-                </div>
-              </div>
-            </div>
-            {/* service area */}
+                {/* service area */}
 
-            {/* service area */}
-            <ServiceSix />
-            {/* service area */}
+                {/* service area */}
+                <ServiceSix />
+                {/* service area */}
 
-            {/* big text */}
-            <BigText bigTextData={servicePageData.bigText} />
-            {/* big text */}
+                {/* big text */}
+                <BigText bigTextData={currentServiceData.bigText} />
+                {/* big text */}
+              </>
+            )}
           </main>
 
           {/* footer area */}
