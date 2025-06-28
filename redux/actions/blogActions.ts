@@ -29,17 +29,13 @@ export interface UpdateBlogPayload {
   bigText?: Partial<BlogData['bigText']>;
 }
 
-// Get Blog Data
+// Get Blog Data (Public - no auth required)
 export const getBlog = createAsyncThunk(
   "blog/getBlog",
-  async (_, thunkAPI) => {
+  async (companyId?: string, thunkAPI) => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const { data } = await axios.get(`${server}/blog`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const params = companyId ? { companyId } : {};
+      const { data } = await axios.get(`${server}/blog`, { params });
       return data.blog;
     } catch (error: any) {
       const message = error.response?.data?.message || 'Blog verileri alınamadı';

@@ -65,17 +65,13 @@ export interface UpdateContactPayload {
   contactInfo?: Partial<ContactData['contactInfo']>;
 }
 
-// Get Contact Data
+// Get Contact Data (Public - no auth required)
 export const getContact = createAsyncThunk(
   "contact/getContact",
-  async (_, thunkAPI) => {
+  async (companyId?: string, thunkAPI) => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const { data } = await axios.get(`${server}/contact`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const params = companyId ? { companyId } : {};
+      const { data } = await axios.get(`${server}/contact`, { params });
       return data.contact;
     } catch (error: any) {
       const message = error.response?.data?.message || 'Contact verileri alınamadı';

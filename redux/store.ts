@@ -5,6 +5,7 @@ import aboutReducer from "./reducers/aboutReducer";
 import contactReducer from "./reducers/contactReducer";
 import serviceReducer from "./reducers/serviceReducer";
 import blogReducer from "./reducers/blogReducer";
+import homeReducer from "./reducers/homeReducer";
 
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     contact: contactReducer,
     service: serviceReducer,
     blog: blogReducer,
+    home: homeReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>

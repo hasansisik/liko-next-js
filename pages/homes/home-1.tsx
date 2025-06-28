@@ -3,6 +3,9 @@ import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { getHome } from '@/redux/actions/homeActions';
 import {
   ScrollSmoother,
   ScrollTrigger,
@@ -37,11 +40,20 @@ import FaqAreaTwo from "@/components/faq/faq-area-2";
 import BlogOne from "@/components/blog/blog-one";
 import FooterTwo from "@/layouts/footers/footer-two";
 
-// data import
+// fallback data import
 import { home1Data } from "@/data/home-1-data";
 
 const HomeMain = () => {
+  const dispatch = useDispatch();
+  const { home, loading, error } = useSelector((state: RootState) => state.home);
+  
   useScrollSmooth();
+
+  // Fetch home data on component mount
+  useEffect(() => {
+    dispatch(getHome() as any);
+  }, [dispatch]);
+
   useEffect(() => {
     document.body.classList.add("tp-magic-cursor");
     return () => {
@@ -58,31 +70,69 @@ const HomeMain = () => {
     }
   }, []);
 
+  // Use Redux data if available, otherwise fallback to static data
+  const currentHomeData = home || home1Data;
+
   useGSAP(() => {
-    const timer = setTimeout(() => {
-      videoAnimOne();
-      // portfolio image wrap
-      gsap.timeline({
-        scrollTrigger: {
-           trigger: ".tp-project-full-img-wrap",
-           start: "top 65",
-           end: "bottom 0%",
-           pin: ".tp-project-full-img",
-           pinSpacing: false,
-        }
-      });
-      // team marquee
-      teamMarqueAnim();
-      hoverBtn();
-      footerTwoAnimation();
-      fadeAnimation();
-      charAnimation();
-      bounceAnimation();
-      instagramAnim();
-      hoverBtn();
-    }, 100);
-    return () => clearTimeout(timer);
-  });
+    // Only initialize animations if we have data (either from Redux or fallback)
+    if (currentHomeData) {
+      const timer = setTimeout(() => {
+        // Clear any existing ScrollTriggers
+        ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
+        
+        videoAnimOne();
+        // portfolio image wrap
+        gsap.timeline({
+          scrollTrigger: {
+             trigger: ".tp-project-full-img-wrap",
+             start: "top 65",
+             end: "bottom 0%",
+             pin: ".tp-project-full-img",
+             pinSpacing: false,
+          }
+        });
+        // team marquee
+        teamMarqueAnim();
+        hoverBtn();
+        footerTwoAnimation();
+        fadeAnimation();
+        charAnimation();
+        bounceAnimation();
+        instagramAnim();
+        hoverBtn();
+        
+        // Refresh ScrollTrigger after all animations are set up
+        ScrollTrigger.refresh();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [currentHomeData]); // Add dependency to re-run when data changes
+
+  // Show loading only if we don't have any data (not even fallback)
+  if (loading && !currentHomeData) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  // Show error only if we don't have fallback data
+  if (error && !currentHomeData) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Error loading home data: {error}</p>
+          <button 
+            onClick={() => dispatch(getHome() as any)}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Wrapper>
@@ -94,12 +144,12 @@ const HomeMain = () => {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main>
-            <HeroBannerTwo heroData={home1Data.heroBanner} />
-            <ServiceOne serviceData={home1Data.serviceSection} />
-            <AboutOne aboutData={home1Data.aboutSection} />
-            <TeamOne teamData={home1Data.teamSection} />
-            <VideOne videoData={home1Data.videoSection} />
-            <FaqAreaTwo faqData={home1Data.faqSection} />
+            <HeroBannerTwo heroData={currentHomeData.heroBanner} />
+            <ServiceOne serviceData={currentHomeData.serviceSection} />
+            <AboutOne aboutData={currentHomeData.aboutSection} />
+            <TeamOne teamData={currentHomeData.teamSection} />
+            <VideOne videoData={currentHomeData.videoSection} />
+            <FaqAreaTwo faqData={currentHomeData.faqSection} />
             <BlogOne />
           </main>
           <FooterTwo />

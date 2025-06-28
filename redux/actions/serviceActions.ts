@@ -65,17 +65,13 @@ export interface UpdateServicePayload {
   bigText?: Partial<ServiceData['bigText']>;
 }
 
-// Get Service Data
+// Get Service Data (Public - no auth required)
 export const getService = createAsyncThunk(
   "service/getService",
-  async (_, thunkAPI) => {
+  async (companyId?: string, thunkAPI) => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const { data } = await axios.get(`${server}/service`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const params = companyId ? { companyId } : {};
+      const { data } = await axios.get(`${server}/service`, { params });
       return data.service;
     } catch (error: any) {
       const message = error.response?.data?.message || 'Service verileri alınamadı';

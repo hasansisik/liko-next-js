@@ -38,17 +38,13 @@ export interface UpdateAboutPayload {
   aboutInfo?: Partial<AboutData['aboutInfo']>;
 }
 
-// Get About Data
+// Get About Data (Public - no auth required)
 export const getAbout = createAsyncThunk(
   "about/getAbout",
-  async (_, thunkAPI) => {
+  async (companyId?: string, thunkAPI) => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const { data } = await axios.get(`${server}/about`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const params = companyId ? { companyId } : {};
+      const { data } = await axios.get(`${server}/about`, { params });
       return data.about;
     } catch (error: any) {
       const message = error.response?.data?.message || 'About verileri alınamadı';
