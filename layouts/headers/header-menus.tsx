@@ -61,9 +61,16 @@ const HeaderMenus = ({ onOpenDialog, isSticky = false, color, navigationData }: 
                   <Link
                     href={sm.url}
                     style={{
-                      color: "white",
+                      color: isSticky
+                        ? "#333"
+                        : color === "black"
+                        ? "#333"
+                        : color === "white"
+                        ? "white"
+                        : "white",
                       textDecoration: "none",
                       fontSize: "12px",
+                      transition: "color 0.3s ease",
                     }}
                   >
                     {sm.title}

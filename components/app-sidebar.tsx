@@ -60,6 +60,27 @@ const data = {
       ],
     },
     {
+      title: "Components",
+      url: "#",
+      icon: BookOpen,
+      isActive: true,
+      items: [
+        {
+          title: "Header",
+          url: "/dashboard/header",
+        },
+        {
+          title: "Footer",
+          url: "/dashboard/footer",
+        },
+        {
+          title: "Form",
+          url: "/dashboard/form",
+        }
+       
+      ],
+    },
+    {
       title: "Editor",
       url: "#",
       icon: Bot,
@@ -83,7 +104,7 @@ const data = {
         },
        
       ],
-    },
+    }
   ]
 }
 
