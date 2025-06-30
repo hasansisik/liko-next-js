@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { footerData } from "@/data/footer-data";
 import { IFooterData } from "@/types/footer-d-t";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getFooter } from "@/redux/actions/footerActions";
+import { FooterData } from "@/redux/actions/footerActions";
 
 // prop type
 type IProps = {
@@ -11,7 +14,18 @@ type IProps = {
   footerData?: IFooterData;
 };
 
-export default function FooterTwo({ whiteFooter = false, topCls='footer-top', footerData: data = footerData }: IProps) {
+export default function FooterTwo({ whiteFooter = false, topCls='footer-top', footerData: staticData }: IProps) {
+  // Redux
+  const dispatch = useAppDispatch();
+  const { footer, loading } = useAppSelector((state) => state.footer);
+  
+  // Use Redux data if available, otherwise fallback to static data or default
+  const data = footer || staticData || footerData;
+
+  useEffect(() => {
+    // Fetch footer data from API
+    dispatch(getFooter());
+  }, [dispatch]);
   return (
     <footer className={`${topCls}`}>
       <div

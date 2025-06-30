@@ -13,8 +13,8 @@ type IProps = {
 export default function MobileMenus({ navigationData }: IProps) {
   const [navTitle, setNavTitle] = React.useState<string>("");
 
-  // Use menu_data directly since it has the required properties
-  const menuItems = menu_data;
+  // Use navigationData if available, otherwise fallback to menu_data
+  const menuItems = navigationData?.menus || menu_data;
 
   //openMobileMenu
   const openMobileMenu = (menu: string) => {
@@ -28,25 +28,43 @@ export default function MobileMenus({ navigationData }: IProps) {
     <>
       <nav className="tp-main-menu-content">
         <ul>
-          {menuItems.map((menu) => (
-            <li
-              key={menu.id}
-              className={`${menu.dropdown_menus || menu.home_menus || menu.portfolio_mega_menus ? "has-dropdown" : ""} ${
-                menu.home_menus || menu.portfolio_mega_menus
-                  ? "has-homemenu"
-                  : ""
-              } ${menu.home_menus ? "dropdown-opened" : ""}`}
-            >
-              {menu.dropdown_menus || menu.home_menus || menu.portfolio_mega_menus ? (
-              <a className="pointer" onClick={() => openMobileMenu(menu.title)}>
-                {menu.title}
-                <button className="dropdown-toggle-btn">
-                  <i className="fa-light fa-plus"></i>
-                </button>
-              </a>
-              ) : (
-                <Link href={menu.link}>{menu.title}</Link>
-              )}
+          {menuItems.map((menu) => {
+            // Handle both new navigation structure and old menu_data structure
+            const hasDropdown = menu.hasDropdown || menu.dropdown_menus || menu.home_menus || menu.portfolio_mega_menus;
+            const menuLink = menu.url || menu.link;
+            
+            return (
+              <li
+                key={menu.id}
+                className={`${hasDropdown ? "has-dropdown" : ""} ${
+                  menu.home_menus || menu.portfolio_mega_menus
+                    ? "has-homemenu"
+                    : ""
+                } ${menu.home_menus ? "dropdown-opened" : ""}`}
+              >
+                {hasDropdown ? (
+                <a className="pointer" onClick={() => openMobileMenu(menu.title)}>
+                  {menu.title}
+                  <button className="dropdown-toggle-btn">
+                    <i className="fa-light fa-plus"></i>
+                  </button>
+                </a>
+                ) : (
+                  <Link href={menuLink}>{menu.title}</Link>
+                )}
+                
+                {/* Handle simple dropdown for new navigation structure */}
+                {menu.hasDropdown && menu.subMenus && (
+                  <div className="tp-submenu submenu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
+                    <ul>
+                      {menu.subMenus.map((subMenu) => (
+                        <li key={subMenu.id}>
+                          <Link href={subMenu.url}>{subMenu.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               {menu.home_menus ? (
                 <div className="tp-submenu submenu tp-mega-menu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
                   <div className="tp-menu-fullwidth">
@@ -231,7 +249,8 @@ export default function MobileMenus({ navigationData }: IProps) {
                 </ul>
               ) : null}
             </li>
-          ))}
+            );
+          })}
         </ul>
       </nav>
     </>

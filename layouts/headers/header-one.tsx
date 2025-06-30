@@ -8,6 +8,9 @@ import MobileOffcanvas from "@/components/offcanvas/mobile-offcanvas";
 import ContactFormDental from "@/components/form/contact-form-dental";
 import { headerData } from "@/data/header-data";
 import { IHeaderData } from "@/types/header-d-t";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getHeader } from "@/redux/actions/headerActions";
+import { HeaderData } from "@/redux/actions/headerActions";
 
 // prop type
 type IProps = {
@@ -16,10 +19,17 @@ type IProps = {
   headerData?: IHeaderData;
 };
 
-const HeaderOne = ({ transparent = false, color, headerData: data = headerData }: IProps) => {
+const HeaderOne = ({ transparent = false, color, headerData: staticData }: IProps) => {
   const {sticky,headerRef,headerFullWidth} = useSticky();
   const [openOffCanvas, setOpenOffCanvas] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+  
+  // Redux
+  const dispatch = useAppDispatch();
+  const { header, loading } = useAppSelector((state) => state.header);
+  
+  // Use Redux data if available, otherwise fallback to static data or default
+  const data = header || staticData || headerData;
   
   // Dynamic logo selection
   const getLogoSrc = () => {
@@ -39,8 +49,10 @@ const HeaderOne = ({ transparent = false, color, headerData: data = headerData }
 
   useEffect(() => {
     headerFullWidth();
+    // Fetch header data from API
+    dispatch(getHeader());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
