@@ -68,7 +68,7 @@ export interface UpdateContactPayload {
 // Get Contact Data (Public - no auth required)
 export const getContact = createAsyncThunk(
   "contact/getContact",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
       const { data } = await axios.get(`${server}/contact`, { params });

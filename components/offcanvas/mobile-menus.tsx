@@ -30,47 +30,47 @@ export default function MobileMenus({ navigationData }: IProps) {
         <ul>
           {menuItems.map((menu) => {
             // Handle both new navigation structure and old menu_data structure
-            const hasDropdown = menu.hasDropdown || menu.dropdown_menus || menu.home_menus || menu.portfolio_mega_menus;
-            const menuLink = menu.url || menu.link;
+            const hasDropdown = (menu as any).hasDropdown || (menu as any).dropdown_menus || (menu as any).home_menus || (menu as any).portfolio_mega_menus;
+            const menuLink = (menu as any).url || (menu as any).link;
             
             return (
-              <li
-                key={menu.id}
+            <li
+              key={menu.id}
                 className={`${hasDropdown ? "has-dropdown" : ""} ${
-                  menu.home_menus || menu.portfolio_mega_menus
-                    ? "has-homemenu"
-                    : ""
-                } ${menu.home_menus ? "dropdown-opened" : ""}`}
-              >
+                  (menu as any).home_menus || (menu as any).portfolio_mega_menus
+                  ? "has-homemenu"
+                  : ""
+                } ${(menu as any).home_menus ? "dropdown-opened" : ""}`}
+            >
                 {hasDropdown ? (
-                <a className="pointer" onClick={() => openMobileMenu(menu.title)}>
-                  {menu.title}
-                  <button className="dropdown-toggle-btn">
-                    <i className="fa-light fa-plus"></i>
-                  </button>
-                </a>
-                ) : (
+              <a className="pointer" onClick={() => openMobileMenu(menu.title)}>
+                {menu.title}
+                <button className="dropdown-toggle-btn">
+                  <i className="fa-light fa-plus"></i>
+                </button>
+              </a>
+              ) : (
                   <Link href={menuLink}>{menu.title}</Link>
                 )}
                 
                 {/* Handle simple dropdown for new navigation structure */}
-                {menu.hasDropdown && menu.subMenus && (
+                {(menu as any).hasDropdown && (menu as any).subMenus && (
                   <div className="tp-submenu submenu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
                     <ul>
-                      {menu.subMenus.map((subMenu) => (
+                      {(menu as any).subMenus.map((subMenu: any) => (
                         <li key={subMenu.id}>
                           <Link href={subMenu.url}>{subMenu.title}</Link>
                         </li>
                       ))}
                     </ul>
                   </div>
-                )}
-              {menu.home_menus ? (
+              )}
+              {(menu as any).home_menus ? (
                 <div className="tp-submenu submenu tp-mega-menu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
                   <div className="tp-menu-fullwidth">
                     <div className="tp-homemenu-wrapper">
                       <div className="row gx-25 row-cols-xl-6 row-cols-lg-2 row-cols-md-2 row-cols-1">
-                        {menu.home_menus.map((hm, i) => (
+                        {(menu as any).home_menus.map((hm: any, i: number) => (
                           <div key={i} className="col homemenu">
                             <div className="homemenu-thumb-wrap mb-20">
                               <div className="homemenu-thumb fix">
@@ -90,7 +90,7 @@ export default function MobileMenus({ navigationData }: IProps) {
                     </div>
                   </div>
                 </div>
-              ) : menu.pages_mega_menu ? (
+              ) : (menu as any).pages_mega_menu ? (
                 <div className="tp-submenu submenu tp-mega-menu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
                   <div className="tp-megamenu-wrapper">
                     <div className="row gx-50">
@@ -100,12 +100,12 @@ export default function MobileMenus({ navigationData }: IProps) {
                             <div className="col-xl-8">
                               <div className="tp-megamenu-list">
                                 <h4 className="tp-megamenu-title">
-                                  {menu.pages_mega_menu.first.title}
+                                  {(menu as any).pages_mega_menu.first.title}
                                 </h4>
                                 <div className="tp-megamenu-list-wrap">
                                   <ul>
-                                    {menu.pages_mega_menu.first.submenus.map(
-                                      (sm, i) => (
+                                    {(menu as any).pages_mega_menu.first.submenus.map(
+                                      (sm: any, i: number) => (
                                         <li key={i}>
                                           <Link href={sm.link}>{sm.title}</Link>
                                         </li>
@@ -118,12 +118,12 @@ export default function MobileMenus({ navigationData }: IProps) {
                             <div className="col-xl-4">
                               <div className="tp-megamenu-list tp-megamenu-list-2">
                                 <h4 className="tp-megamenu-title">
-                                  {menu.pages_mega_menu.second.title}
+                                  {(menu as any).pages_mega_menu.second.title}
                                 </h4>
                                 <div className="tp-megamenu-list-wrap">
                                   <ul>
-                                    {menu.pages_mega_menu.second.submenus.map(
-                                      (sm, i) => (
+                                    {(menu as any).pages_mega_menu.second.submenus.map(
+                                      (sm: any, i: number) => (
                                         <li key={i}>
                                           <Link href={sm.link}>{sm.title}</Link>
                                         </li>
@@ -162,7 +162,7 @@ export default function MobileMenus({ navigationData }: IProps) {
                     </div>
                   </div>
                 </div>
-              ) : menu.portfolio_mega_menus ? (
+              ) : (menu as any).portfolio_mega_menus ? (
                 <div className="tp-submenu submenu tp-mega-menu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
                   <div className="tp-menu-fullwidth">
                     <div className="tp-megamenu-portfolio p-relative">
@@ -180,15 +180,15 @@ export default function MobileMenus({ navigationData }: IProps) {
                               <div className="col-xxl-5 col-xl-6">
                                 <div className="tp-megamenu-list">
                                   <h4 className="tp-megamenu-title">
-                                    {menu.portfolio_mega_menus.first.title}
+                                    {(menu as any).portfolio_mega_menus.first.title}
                                   </h4>
                                   <div className="tp-megamenu-list-wrap tp-portfolio-menu-style">
                                     <div className="row">
-                                      {menu.portfolio_mega_menus.first.submenus.map(
-                                        (portSm, i) => (
+                                      {(menu as any).portfolio_mega_menus.first.submenus.map(
+                                        (portSm: any, i: number) => (
                                           <div key={i} className="col-lg-6">
                                             <ul>
-                                              {portSm.menu_lists.map((psm) => (
+                                              {portSm.menu_lists.map((psm: any) => (
                                                 <li key={psm.title}>
                                                   <Link href={psm.link}>
                                                     {psm.title}
@@ -204,8 +204,8 @@ export default function MobileMenus({ navigationData }: IProps) {
                                 </div>
                               </div>
 
-                              {menu.portfolio_mega_menus.second.submenus.map(
-                                (portSm2, i) => (
+                              {(menu as any).portfolio_mega_menus.second.submenus.map(
+                                (portSm2: any, i: number) => (
                                   <div key={i} className="col-xxl-3 col-xl-3">
                                     <div className="tp-megamenu-list tp-megamenu-list-2 ml-20">
                                       <h4 className="tp-megamenu-title">
@@ -213,7 +213,7 @@ export default function MobileMenus({ navigationData }: IProps) {
                                       </h4>
                                       <div className="tp-megamenu-list-wrap">
                                         <ul>
-                                          {portSm2.menu_lists.map((psm) => (
+                                          {portSm2.menu_lists.map((psm: any) => (
                                             <li key={psm.title}>
                                               <Link href={psm.link}>
                                                 {psm.title}
@@ -239,9 +239,9 @@ export default function MobileMenus({ navigationData }: IProps) {
                     </div>
                   </div>
                 </div>
-              ) : menu.dropdown_menus ? (
+              ) : (menu as any).dropdown_menus ? (
                 <ul className="tp-submenu submenu" style={{ display: navTitle === menu.title ? "block" : "none"}}>
-                  {menu.dropdown_menus.map((mm, i) => (
+                  {(menu as any).dropdown_menus.map((mm: any, i: number) => (
                     <li key={i}>
                       <Link href={mm.link}>{mm.title}</Link>
                     </li>

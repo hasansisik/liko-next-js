@@ -75,12 +75,21 @@ export interface UpdateFooterPayload {
 // Get Footer Data (Public - no auth required)
 export const getFooter = createAsyncThunk(
   "footer/getFooter",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
+      console.log('getFooter - Making request to:', `${server}/footer`);
+      console.log('getFooter - Params:', params);
+      
       const { data } = await axios.get(`${server}/footer`, { params });
+      
+      console.log('getFooter - Response data:', data);
+      console.log('getFooter - Footer object:', data.footer);
+      console.log('getFooter - Footer ID:', data.footer?._id);
+      
       return data.footer;
     } catch (error: any) {
+      console.error('getFooter - Error:', error);
       const message = error.response?.data?.message || 'Footer verileri alınamadı';
       return thunkAPI.rejectWithValue(message);
     }
@@ -113,13 +122,23 @@ export const updateFooter = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken");
       const { footerId, ...updateData } = payload;
+      
+      console.log('updateFooter - Payload:', payload);
+      console.log('updateFooter - Token:', token ? 'Present' : 'Missing');
+      console.log('updateFooter - URL:', `${server}/footer/${footerId}`);
+      console.log('updateFooter - Update data:', updateData);
+      
       const { data } = await axios.put(`${server}/footer/${footerId}`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      
+      console.log('updateFooter - Response:', data);
       return data.footer;
     } catch (error: any) {
+      console.error('updateFooter - Error:', error);
+      console.error('updateFooter - Error response:', error.response?.data);
       const message = error.response?.data?.message || 'Footer verisi güncellenemedi';
       return thunkAPI.rejectWithValue(message);
     }
@@ -162,4 +181,4 @@ export const getAllFooter = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
-); 
+);

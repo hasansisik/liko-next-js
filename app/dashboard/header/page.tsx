@@ -20,7 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { ImageUpload } from "@/components/ui/image-upload"
-import { Save, Eye, Plus, Trash2, Edit3, Image, Menu, Smartphone, Settings, Palette } from "lucide-react"
+import { Save, Eye, Plus, Trash2, Edit3, Image, Menu, Smartphone, Settings, Palette, Sidebar, Type, Layout } from "lucide-react"
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getHeader, updateHeader } from "@/redux/actions/headerActions";
 import { HeaderData } from "@/redux/actions/headerActions";
@@ -46,16 +46,44 @@ export default function HeaderEditorPage() {
     }
   }, [header]);
 
+  // Reset success state after showing it for a few seconds
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        // The success state will be reset on next action automatically
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
   const handleSave = async () => {
     if (editData && editData._id) {
-      await dispatch(updateHeader({
-        headerId: editData._id,
-        logo: editData.logo,
-        navigation: editData.navigation,
-        mobile: editData.mobile,
-        dialog: editData.dialog,
-        styling: editData.styling
-      }));
+      try {
+        console.log('Saving header data:', editData);
+        console.log('Current loading state:', loading);
+        console.log('Access token:', localStorage.getItem('accessToken') ? 'Present' : 'Missing');
+        
+        const result = await dispatch(updateHeader({
+          headerId: editData._id,
+          logo: editData.logo,
+          navigation: editData.navigation,
+          mobile: editData.mobile,
+          dialog: editData.dialog,
+          styling: editData.styling
+        }));
+        console.log('Save result:', result);
+        
+        if (result.type.endsWith('/fulfilled')) {
+          console.log('Save successful!');
+        } else if (result.type.endsWith('/rejected')) {
+          console.error('Save failed:', result.payload);
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+      }
+    } else {
+      console.error('No edit data or ID available for saving');
+      console.log('editData:', editData);
     }
   };
 
@@ -63,14 +91,15 @@ export default function HeaderEditorPage() {
     if (editData) {
       if (field.includes('.')) {
         const [parent, child, grandchild] = field.split('.');
+        const parentObj = editData.logo[parent as keyof typeof editData.logo] as any;
         setEditData({
           ...editData,
           logo: {
             ...editData.logo,
             [parent]: {
-              ...editData.logo[parent as keyof typeof editData.logo],
+              ...parentObj,
               [child]: grandchild ? {
-                ...(editData.logo[parent as keyof typeof editData.logo] as any)[child],
+                ...parentObj[child],
                 [grandchild]: value
               } : value
             }
@@ -117,16 +146,98 @@ export default function HeaderEditorPage() {
   const handleMobileChange = (field: string, value: any) => {
     if (editData) {
       if (field.includes('.')) {
-        const [parent, child] = field.split('.');
-        setEditData({
-          ...editData,
-          mobile: {
-            ...editData.mobile,
+        const parts = field.split('.');
+        let newMobile = { ...editData.mobile };
+        
+        // Ensure offcanvas structure exists
+        if (!newMobile.offcanvas) {
+          newMobile.offcanvas = {
+            logo: {
+              src: "/assets/img/logo/logo.png",
+              alt: "logo",
+              width: 120,
+              height: 40
+            },
+            information: {
+              title: "Information",
+              phone: {
+                text: "+ 4 20 7700 1007",
+                number: "+420777001007"
+              },
+              email: {
+                text: "hello@diego.com",
+                address: "hello@diego.com"
+              },
+              address: {
+                text: "Avenue de Roma 158b, Lisboa",
+                link: ""
+              }
+            },
+            socialMedia: {
+              title: "Follow Us",
+              links: [
+                {
+                  platform: "Instagram",
+                  url: "#",
+                  icon: "InstagramTwo"
+                },
+                {
+                  platform: "YouTube",
+                  url: "#", 
+                  icon: "Youtube"
+                }
+              ]
+            }
+          };
+        }
+        
+        if (parts.length === 2) {
+          const [parent, child] = parts;
+          const parentObj = newMobile[parent as keyof typeof newMobile] as any;
+          newMobile = {
+            ...newMobile,
             [parent]: {
-              ...editData.mobile[parent as keyof typeof editData.mobile],
+              ...parentObj,
               [child]: value
             }
-          }
+          };
+        } else if (parts.length === 3) {
+          const [parent, child, grandchild] = parts;
+          const parentObj = newMobile[parent as keyof typeof newMobile] as any;
+          const childObj = parentObj?.[child] || {};
+          newMobile = {
+            ...newMobile,
+            [parent]: {
+              ...parentObj,
+              [child]: {
+                ...childObj,
+                [grandchild]: value
+              }
+            }
+          };
+        } else if (parts.length === 4) {
+          const [parent, child, grandchild, greatGrandchild] = parts;
+          const parentObj = newMobile[parent as keyof typeof newMobile] as any;
+          const childObj = parentObj?.[child] || {};
+          const grandchildObj = childObj?.[grandchild] || {};
+          newMobile = {
+            ...newMobile,
+            [parent]: {
+              ...parentObj,
+              [child]: {
+                ...childObj,
+                [grandchild]: {
+                  ...grandchildObj,
+                  [greatGrandchild]: value
+                }
+              }
+            }
+          };
+        }
+        
+        setEditData({
+          ...editData,
+          mobile: newMobile
         });
       } else {
         setEditData({
@@ -146,26 +257,28 @@ export default function HeaderEditorPage() {
         const parts = field.split('.');
         if (parts.length === 2) {
           const [parent, child] = parts;
+          const parentObj = editData.dialog[parent as keyof typeof editData.dialog] as any;
           setEditData({
             ...editData,
             dialog: {
               ...editData.dialog,
               [parent]: {
-                ...editData.dialog[parent as keyof typeof editData.dialog],
+                ...parentObj,
                 [child]: value
               }
             }
           });
         } else if (parts.length === 3) {
           const [parent, child, grandchild] = parts;
+          const parentObj = editData.dialog[parent as keyof typeof editData.dialog] as any;
           setEditData({
             ...editData,
             dialog: {
               ...editData.dialog,
               [parent]: {
-                ...(editData.dialog[parent as keyof typeof editData.dialog] as any),
+                ...parentObj,
                 [child]: {
-                  ...(editData.dialog[parent as keyof typeof editData.dialog] as any)[child],
+                  ...parentObj[child],
                   [grandchild]: value
                 }
               }
@@ -189,26 +302,28 @@ export default function HeaderEditorPage() {
       const parts = field.split('.');
       if (parts.length === 2) {
         const [parent, child] = parts;
+        const parentObj = editData.styling[parent as keyof typeof editData.styling] as any;
         setEditData({
           ...editData,
           styling: {
             ...editData.styling,
             [parent]: {
-              ...editData.styling[parent as keyof typeof editData.styling],
+              ...parentObj,
               [child]: value
             }
           }
         });
       } else if (parts.length === 3) {
         const [parent, child, grandchild] = parts;
+        const parentObj = editData.styling[parent as keyof typeof editData.styling] as any;
         setEditData({
           ...editData,
           styling: {
             ...editData.styling,
             [parent]: {
-              ...(editData.styling[parent as keyof typeof editData.styling] as any),
+              ...parentObj,
               [child]: {
-                ...(editData.styling[parent as keyof typeof editData.styling] as any)[child],
+                ...parentObj[child],
                 [grandchild]: value
               }
             }
@@ -344,7 +459,14 @@ export default function HeaderEditorPage() {
             <Eye className="w-4 h-4 mr-2" />
             {previewMode ? "Edit Mode" : "Preview"}
           </Button>
-          <Button onClick={handleSave} disabled={loading} size="sm">
+          <Button 
+            onClick={() => {
+              console.log('Save button clicked!');
+              handleSave();
+            }} 
+            disabled={loading} 
+            size="sm"
+          >
             <Save className="w-4 h-4 mr-2" />
             {loading ? "Saving..." : "Save Changes"}
           </Button>
@@ -572,11 +694,12 @@ export default function HeaderEditorPage() {
 
               {/* Mobile Tab */}
               <TabsContent value="mobile" className="space-y-4">
+                {/* Hamburger Icon Settings */}
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Smartphone className="w-5 h-5" />
-                      Mobile Settings
+                      <Menu className="w-5 h-5" />
+                      Hamburger Icon
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -597,7 +720,237 @@ export default function HeaderEditorPage() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Offcanvas Logo Settings */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Image className="w-5 h-5" />
+                      Offcanvas Logo
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">Logo URL</label>
+                      <ImageUpload
+                        value={editData.mobile.offcanvas?.logo?.src || "/assets/img/logo/logo.png"}
+                        onChange={(url) => handleMobileChange('offcanvas.logo.src', url)}
+                        placeholder="Offcanvas logo URL"
+                      />
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div>
+                        <label className="text-sm font-medium">Alt Text</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.logo?.alt || "logo"}
+                          onChange={(e) => handleMobileChange('offcanvas.logo.alt', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Width</label>
+                        <Input
+                          type="number"
+                          value={editData.mobile.offcanvas?.logo?.width || 120}
+                          onChange={(e) => handleMobileChange('offcanvas.logo.width', parseInt(e.target.value))}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Height</label>
+                        <Input
+                          type="number"
+                          value={editData.mobile.offcanvas?.logo?.height || 40}
+                          onChange={(e) => handleMobileChange('offcanvas.logo.height', parseInt(e.target.value))}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Information Section */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Type className="w-5 h-5" />
+                      Information Section
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">Section Title</label>
+                      <Input
+                        value={editData.mobile.offcanvas?.information?.title || "Information"}
+                        onChange={(e) => handleMobileChange('offcanvas.information.title', e.target.value)}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="text-sm font-medium">Phone Display Text</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.information?.phone?.text || "+ 4 20 7700 1007"}
+                          onChange={(e) => handleMobileChange('offcanvas.information.phone.text', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Phone Number (tel:)</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.information?.phone?.number || "+420777001007"}
+                          onChange={(e) => handleMobileChange('offcanvas.information.phone.number', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="text-sm font-medium">Email Display Text</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.information?.email?.text || "hello@diego.com"}
+                          onChange={(e) => handleMobileChange('offcanvas.information.email.text', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Email Address</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.information?.email?.address || "hello@diego.com"}
+                          onChange={(e) => handleMobileChange('offcanvas.information.email.address', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="text-sm font-medium">Address Text</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.information?.address?.text || "Avenue de Roma 158b, Lisboa"}
+                          onChange={(e) => handleMobileChange('offcanvas.information.address.text', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Address Link (optional)</label>
+                        <Input
+                          value={editData.mobile.offcanvas?.information?.address?.link || ""}
+                          onChange={(e) => handleMobileChange('offcanvas.information.address.link', e.target.value)}
+                          placeholder="https://maps.google.com/..."
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Social Media Section */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Layout className="w-5 h-5" />
+                      Social Media
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">Section Title</label>
+                      <Input
+                        value={editData.mobile.offcanvas?.socialMedia?.title || "Follow Us"}
+                        onChange={(e) => handleMobileChange('offcanvas.socialMedia.title', e.target.value)}
+                      />
+                    </div>
+                    
+                    {/* Social Media Links */}
+                    <div className="space-y-3">
+                      {(editData.mobile.offcanvas?.socialMedia?.links || []).map((social, index) => (
+                        <div key={index} className="border p-3 rounded">
+                          <div className="flex justify-between items-center mb-2">
+                            <h5 className="font-medium">Social Link {index + 1}</h5>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                if (editData.mobile.offcanvas?.socialMedia?.links) {
+                                  const newLinks = editData.mobile.offcanvas.socialMedia.links.filter((_, i) => i !== index);
+                                  handleMobileChange('offcanvas.socialMedia.links', newLinks);
+                                }
+                              }}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2">
+                            <div>
+                              <label className="text-sm font-medium">Platform</label>
+                              <Input
+                                value={social.platform}
+                                onChange={(e) => {
+                                  if (editData.mobile.offcanvas?.socialMedia?.links) {
+                                    const newLinks = [...editData.mobile.offcanvas.socialMedia.links];
+                                    newLinks[index] = { ...newLinks[index], platform: e.target.value };
+                                    handleMobileChange('offcanvas.socialMedia.links', newLinks);
+                                  }
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium">URL</label>
+                              <Input
+                                value={social.url}
+                                onChange={(e) => {
+                                  if (editData.mobile.offcanvas?.socialMedia?.links) {
+                                    const newLinks = [...editData.mobile.offcanvas.socialMedia.links];
+                                    newLinks[index] = { ...newLinks[index], url: e.target.value };
+                                    handleMobileChange('offcanvas.socialMedia.links', newLinks);
+                                  }
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium">Icon</label>
+                              <Input
+                                value={social.icon}
+                                onChange={(e) => {
+                                  if (editData.mobile.offcanvas?.socialMedia?.links) {
+                                    const newLinks = [...editData.mobile.offcanvas.socialMedia.links];
+                                    newLinks[index] = { ...newLinks[index], icon: e.target.value };
+                                    handleMobileChange('offcanvas.socialMedia.links', newLinks);
+                                  }
+                                }}
+                                placeholder="InstagramTwo, Youtube, etc."
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          if (editData.mobile.offcanvas?.socialMedia?.links) {
+                            const newLinks = [
+                              ...editData.mobile.offcanvas.socialMedia.links,
+                              {
+                                platform: "New Platform",
+                                url: "#",
+                                icon: "InstagramTwo"
+                              }
+                            ];
+                            handleMobileChange('offcanvas.socialMedia.links', newLinks);
+                          } else {
+                            // Initialize offcanvas structure if it doesn't exist
+                            const newLinks = [
+                              {
+                                platform: "New Platform",
+                                url: "#",
+                                icon: "InstagramTwo"
+                              }
+                            ];
+                            handleMobileChange('offcanvas.socialMedia.links', newLinks);
+                          }
+                        }}
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add Social Link
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
+
+
 
               {/* Dialog Tab */}
               <TabsContent value="dialog" className="space-y-4">
@@ -949,6 +1302,12 @@ export default function HeaderEditorPage() {
                 {success && (
                   <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
                     ✅ Changes saved successfully!
+                  </div>
+                )}
+
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+                    ❌ Error: {error}
                   </div>
                 )}
               </div>

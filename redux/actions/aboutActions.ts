@@ -41,7 +41,7 @@ export interface UpdateAboutPayload {
 // Get About Data (Public - no auth required)
 export const getAbout = createAsyncThunk(
   "about/getAbout",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
       const { data } = await axios.get(`${server}/about`, { params });

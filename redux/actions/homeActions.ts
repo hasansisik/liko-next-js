@@ -90,7 +90,7 @@ export interface UpdateHomePayload {
 // Get Home Data (Public - no auth required)
 export const getHome = createAsyncThunk(
   "home/getHome",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
       const { data } = await axios.get(`${server}/home`, { params });

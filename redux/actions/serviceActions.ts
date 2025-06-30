@@ -68,7 +68,7 @@ export interface UpdateServicePayload {
 // Get Service Data (Public - no auth required)
 export const getService = createAsyncThunk(
   "service/getService",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
       const { data } = await axios.get(`${server}/service`, { params });

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { footerData } from "@/data/footer-data";
 import { IFooterData } from "@/types/footer-d-t";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getFooter } from "@/redux/actions/footerActions";
@@ -20,7 +19,42 @@ export default function FooterTwo({ whiteFooter = false, topCls='footer-top', fo
   const { footer, loading } = useAppSelector((state) => state.footer);
   
   // Use Redux data if available, otherwise fallback to static data or default
-  const data = footer || staticData || footerData;
+  const data = footer || staticData || {
+    company: {
+      logo: "/assets/img/logo/logo-white.png",
+      logoDark: "/assets/img/logo/logo-black.png",
+      description: "Modern dental clinic providing comprehensive oral healthcare services."
+    },
+    office: {
+      title: "Office",
+      address: { text: "123 Main St, City", url: "#" },
+      phone: { text: "+1 234 567 8900", number: "+12345678900" },
+      email: { text: "info@clinic.com", address: "info@clinic.com" }
+    },
+    sitemap: {
+      title: "Sitemap",
+      links: [
+        { text: "Home", url: "/" },
+        { text: "About", url: "/about" },
+        { text: "Services", url: "/services" },
+        { text: "Contact", url: "/contact" }
+      ]
+    },
+    legal: {
+      title: "Legal",
+      links: [
+        { text: "Privacy Policy", url: "/privacy" },
+        { text: "Terms of Service", url: "/terms" }
+      ]
+    },
+    copyright: {
+      text: "© {year} Dental Clinic. All rights reserved.",
+      socialLinks: [
+        { text: "Facebook", url: "#" },
+        { text: "Instagram", url: "#" }
+      ]
+    }
+  };
 
   useEffect(() => {
     // Fetch footer data from API

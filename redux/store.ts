@@ -8,6 +8,7 @@ import blogReducer from "./reducers/blogReducer";
 import homeReducer from "./reducers/homeReducer";
 import headerReducer from "./reducers/headerReducer";
 import footerReducer from "./reducers/footerReducer";
+import formReducer from "./reducers/formReducer";
 
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     home: homeReducer,
     header: headerReducer,
     footer: footerReducer,
+    form: formReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>

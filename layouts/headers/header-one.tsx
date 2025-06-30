@@ -6,7 +6,6 @@ import HeaderMenus from "./header-menus";
 import useSticky from "@/hooks/use-sticky";
 import MobileOffcanvas from "@/components/offcanvas/mobile-offcanvas";
 import ContactFormDental from "@/components/form/contact-form-dental";
-import { headerData } from "@/data/header-data";
 import { IHeaderData } from "@/types/header-d-t";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getHeader } from "@/redux/actions/headerActions";
@@ -29,7 +28,110 @@ const HeaderOne = ({ transparent = false, color, headerData: staticData }: IProp
   const { header, loading } = useAppSelector((state) => state.header);
   
   // Use Redux data if available, otherwise fallback to static data or default
-  const data = header || staticData || headerData;
+  const data = header || staticData || {
+    logo: {
+      default: "/assets/img/logo/logo-white.png",
+      dark: "/assets/img/logo/logo-black.png",
+      sticky: "/assets/img/logo/logo-black.png",
+      alt: "Logo",
+      dimensions: {
+        default: { width: 120, height: 40 },
+        sticky: { width: 100, height: 35 }
+      }
+    },
+    navigation: {
+      menus: [
+        { id: 1, title: "Home", url: "/", hasDropdown: false },
+        { id: 2, title: "About", url: "/about", hasDropdown: false },
+        { id: 3, title: "Services", url: "/services", hasDropdown: false },
+        { id: 4, title: "Contact", url: "/contact", hasDropdown: false }
+      ],
+      cta: {
+        text: "Get Consultation",
+        action: "openDialog"
+      }
+    },
+    mobile: {
+      hamburgerIcon: {
+        lines: 3,
+        animation: true
+      },
+      offcanvas: {
+        logo: {
+          src: "/assets/img/logo/logo.png",
+          alt: "logo",
+          width: 120,
+          height: 40
+        },
+        information: {
+          title: "Information",
+          phone: {
+            text: "+ 4 20 7700 1007",
+            number: "+420777001007"
+          },
+          email: {
+            text: "hello@diego.com",
+            address: "hello@diego.com"
+          },
+          address: {
+            text: "Avenue de Roma 158b, Lisboa",
+            link: ""
+          }
+        },
+        socialMedia: {
+          title: "Follow Us",
+          links: [
+            {
+              platform: "Instagram",
+              url: "#",
+              icon: "InstagramTwo"
+            },
+            {
+              platform: "YouTube",
+              url: "#", 
+              icon: "Youtube"
+            }
+          ]
+        }
+      }
+    },
+    dialog: {
+      enabled: true,
+      backdrop: {
+        backgroundColor: "rgba(0,0,0,0.8)",
+        closeOnClick: true
+      },
+      closeButton: {
+        text: "×",
+        size: "24px",
+        position: { top: "-10px", right: "-10px" }
+      }
+    },
+    styling: {
+      container: {
+        padding: "0 20px",
+        maxWidth: "1200px"
+      },
+      header: {
+        padding: "15px 0",
+        transparentBackground: "transparent",
+        stickyBackground: "rgba(255,255,255,0.95)",
+        transition: "all 0.3s ease",
+        boxShadow: {
+          default: "none",
+          sticky: "0 2px 10px rgba(0,0,0,0.1)"
+        }
+      },
+      colors: {
+        hamburger: {
+          default: "white",
+          white: "white",
+          black: "#333",
+          sticky: "#333"
+        }
+      }
+    }
+  };
   
   // Dynamic logo selection
   const getLogoSrc = () => {
@@ -128,6 +230,7 @@ const HeaderOne = ({ transparent = false, color, headerData: staticData }: IProp
         openOffcanvas={openOffCanvas} 
         setOpenOffcanvas={setOpenOffCanvas}
         navigationData={data.navigation}
+        mobileData={data.mobile}
       />
       {/* off canvas */}
 

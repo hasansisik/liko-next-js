@@ -32,7 +32,7 @@ export interface UpdateBlogPayload {
 // Get Blog Data (Public - no auth required)
 export const getBlog = createAsyncThunk(
   "blog/getBlog",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
       const { data } = await axios.get(`${server}/blog`, { params });

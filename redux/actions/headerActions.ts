@@ -46,6 +46,37 @@ export interface Mobile {
     lines: number;
     animation: boolean;
   };
+  offcanvas: {
+    logo: {
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    information: {
+      title: string;
+      phone: {
+        text: string;
+        number: string;
+      };
+      email: {
+        text: string;
+        address: string;
+      };
+      address: {
+        text: string;
+        link?: string;
+      };
+    };
+    socialMedia: {
+      title: string;
+      links: Array<{
+        platform: string;
+        url: string;
+        icon: string;
+      }>;
+    };
+  };
 }
 
 export interface Dialog {
@@ -120,12 +151,21 @@ export interface UpdateHeaderPayload {
 // Get Header Data (Public - no auth required)
 export const getHeader = createAsyncThunk(
   "header/getHeader",
-  async (companyId?: string, thunkAPI) => {
+  async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
+      console.log('getHeader - Making request to:', `${server}/header`);
+      console.log('getHeader - Params:', params);
+      
       const { data } = await axios.get(`${server}/header`, { params });
+      
+      console.log('getHeader - Response data:', data);
+      console.log('getHeader - Header object:', data.header);
+      console.log('getHeader - Header ID:', data.header?._id);
+      
       return data.header;
     } catch (error: any) {
+      console.error('getHeader - Error:', error);
       const message = error.response?.data?.message || 'Header verileri alınamadı';
       return thunkAPI.rejectWithValue(message);
     }
@@ -158,13 +198,23 @@ export const updateHeader = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken");
       const { headerId, ...updateData } = payload;
+      
+      console.log('updateHeader - Payload:', payload);
+      console.log('updateHeader - Token:', token ? 'Present' : 'Missing');
+      console.log('updateHeader - URL:', `${server}/header/${headerId}`);
+      console.log('updateHeader - Update data:', updateData);
+      
       const { data } = await axios.put(`${server}/header/${headerId}`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      
+      console.log('updateHeader - Response:', data);
       return data.header;
     } catch (error: any) {
+      console.error('updateHeader - Error:', error);
+      console.error('updateHeader - Error response:', error.response?.data);
       const message = error.response?.data?.message || 'Header verisi güncellenemedi';
       return thunkAPI.rejectWithValue(message);
     }
@@ -207,4 +257,4 @@ export const getAllHeader = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
-); 
+);

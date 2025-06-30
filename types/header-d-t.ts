@@ -36,9 +36,38 @@ export interface IMobile {
     lines: number;
     animation: boolean;
   };
+  offcanvas?: {
+    logo: {
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    information: {
+      title: string;
+      phone: {
+        text: string;
+        number: string;
+      };
+      email: {
+        text: string;
+        address: string;
+      };
+      address: {
+        text: string;
+        link?: string;
+      };
+    };
+    socialMedia: {
+      title: string;
+      links: Array<{
+        platform: string;
+        url: string;
+        icon: string;
+      }>;
+    };
+  };
 }
-
-
 
 export interface IStyling {
   container: {

@@ -45,16 +45,34 @@ export default function FooterEditorPage() {
     }
   }, [footer]);
 
+  // Reset success state after showing it for a few seconds
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        // The success state will be reset on next action automatically
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
   const handleSave = async () => {
     if (editData && editData._id) {
-      await dispatch(updateFooter({
-        footerId: editData._id,
-        company: editData.company,
-        office: editData.office,
-        sitemap: editData.sitemap,
-        legal: editData.legal,
-        copyright: editData.copyright
-      }));
+      try {
+        console.log('Saving footer data:', editData);
+        const result = await dispatch(updateFooter({
+          footerId: editData._id,
+          company: editData.company,
+          office: editData.office,
+          sitemap: editData.sitemap,
+          legal: editData.legal,
+          copyright: editData.copyright
+        }));
+        console.log('Save result:', result);
+      } catch (error) {
+        console.error('Save error:', error);
+      }
+    } else {
+      console.error('No edit data or ID available for saving');
     }
   };
 
@@ -74,12 +92,13 @@ export default function FooterEditorPage() {
     if (editData) {
       if (field.includes('.')) {
         const [parent, child] = field.split('.');
+        const parentObj = editData.office[parent as keyof typeof editData.office] as any;
         setEditData({
           ...editData,
           office: {
             ...editData.office,
             [parent]: {
-              ...editData.office[parent as keyof typeof editData.office],
+              ...parentObj,
               [child]: value
             }
           }
@@ -254,7 +273,14 @@ export default function FooterEditorPage() {
             <Eye className="w-4 h-4 mr-2" />
             {previewMode ? "Edit Mode" : "Preview"}
           </Button>
-          <Button onClick={handleSave} disabled={loading} size="sm">
+          <Button 
+            onClick={() => {
+              console.log('Save button clicked!');
+              handleSave();
+            }} 
+            disabled={loading} 
+            size="sm"
+          >
             <Save className="w-4 h-4 mr-2" />
             {loading ? "Saving..." : "Save Changes"}
           </Button>
@@ -747,6 +773,12 @@ export default function FooterEditorPage() {
                 {success && (
                   <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
                     ✅ Changes saved successfully!
+                  </div>
+                )}
+
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+                    ❌ Error: {error}
                   </div>
                 )}
               </div>

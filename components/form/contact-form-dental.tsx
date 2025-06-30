@@ -1,12 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { contactFormData } from "@/data/contact-form-data";
 import { IContactFormData, ICountry } from "@/types/contact-form-d-t";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getForm } from "@/redux/actions/formActions";
+import { FormData } from "@/redux/actions/formActions";
 
 type ContactFormDentalProps = {
-  className?: string;
+  className?: string; 
   style?: React.CSSProperties;
   formData?: IContactFormData;
 };
@@ -14,12 +16,53 @@ type ContactFormDentalProps = {
 const ContactFormDental = ({ 
   className = "",
   style = {},
-  formData = contactFormData
+  formData: staticFormData
 }: ContactFormDentalProps) => {
+  // Redux
+  const dispatch = useAppDispatch();
+  const { form, loading } = useAppSelector((state) => state.form);
+  
+  // Use Redux data if available, otherwise fallback to static data or default
+  const formData = form || staticFormData || {
+    title: "Get Free Consultation",
+    subtitle: "Expert available",
+    responseTime: "Response within 24 hours",
+    showWhatsApp: true,
+    placeholders: {
+      name: "Your Name",
+      phone: "Phone Number",
+      countrySearch: "Search country..."
+    },
+    countries: [
+      { code: "US", name: "United States", phone: "+1", flag: "🇺🇸" },
+      { code: "TR", name: "Turkey", phone: "+90", flag: "🇹🇷" },
+      { code: "GB", name: "United Kingdom", phone: "+44", flag: "🇬🇧" },
+      { code: "DE", name: "Germany", phone: "+49", flag: "🇩🇪" },
+      { code: "FR", name: "France", phone: "+33", flag: "🇫🇷" }
+    ],
+    defaultCountry: "US",
+    submitButtonText: "Get Free Consultation",
+    whatsAppText: "Chat on WhatsApp",
+    whatsAppLink: "https://wa.me/1234567890"
+  };
+  
   const defaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
   const [selectedCountry, setSelectedCountry] = useState<ICountry>(defaultCountry);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    // Fetch form data from API
+    dispatch(getForm());
+  }, [dispatch]);
+
+  // Update selected country when form data changes
+  useEffect(() => {
+    if (formData) {
+      const newDefaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
+      setSelectedCountry(newDefaultCountry);
+    }
+  }, [formData]);
 
   const filteredCountries = formData.countries.filter(country =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
