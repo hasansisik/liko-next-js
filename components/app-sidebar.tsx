@@ -67,6 +67,10 @@ const data = {
         {
           title: "Form",
           url: "/dashboard/form",
+        },
+        {
+          title: "Form Submissions",
+          url: "/dashboard/form-submissions",
         }
        
       ],

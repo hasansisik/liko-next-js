@@ -6,6 +6,8 @@ import { IContactFormData, ICountry } from "@/types/contact-form-d-t";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getForm } from "@/redux/actions/formActions";
 import { FormData } from "@/redux/actions/formActions";
+import { submitForm } from "@/redux/actions/formSubmissionActions";
+import { toast } from "sonner";
 
 type ContactFormDentalProps = {
   className?: string; 
@@ -21,6 +23,12 @@ const ContactFormDental = ({
   // Redux
   const dispatch = useAppDispatch();
   const { form, loading } = useAppSelector((state) => state.form);
+  const { success, error, loading: submissionLoading } = useAppSelector((state) => state.formSubmission);
+  
+  // Form state
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
   
   // Use Redux data if available, otherwise fallback to static data or default
   const formData = form || staticFormData || {
@@ -64,6 +72,21 @@ const ContactFormDental = ({
     }
   }, [formData]);
 
+  // Handle form submission success or error
+  useEffect(() => {
+    if (success && formSubmitted) {
+      toast.success("Form başarıyla gönderildi!");
+      setName("");
+      setPhone("");
+      setFormSubmitted(false);
+    }
+    
+    if (error && formSubmitted) {
+      toast.error(error || "Form gönderilirken bir hata oluştu.");
+      setFormSubmitted(false);
+    }
+  }, [success, error, formSubmitted]);
+
   const filteredCountries = formData.countries.filter(country =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     country.phone.includes(searchTerm)
@@ -73,6 +96,32 @@ const ContactFormDental = ({
     setSelectedCountry(country);
     setIsDropdownOpen(false);
     setSearchTerm("");
+  };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!name || !phone) {
+      toast.error("Lütfen tüm alanları doldurunuz.");
+      return;
+    }
+    
+    // Log the submission data
+    console.log('Submitting form with data:', {
+      name,
+      phone,
+      countryCode: selectedCountry.phone,
+      countryName: selectedCountry.name
+    });
+    
+    dispatch(submitForm({
+      name,
+      phone,
+      countryCode: selectedCountry.phone,
+      countryName: selectedCountry.name
+    }));
+    
+    setFormSubmitted(true);
   };
 
   return (
@@ -120,12 +169,14 @@ const ContactFormDental = ({
         }}>{formData.responseTime}</p>
       </div>
       
-      <form className="tp-dental-form">
+      <form className="tp-dental-form" onSubmit={handleSubmit}>
         <div className="tp-dental-form-input" style={{ marginBottom: '15px' }}>
           <input 
             type="text" 
             placeholder={formData.placeholders.name} 
             required 
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             style={{
               width: '100%',
               padding: '12px',
@@ -233,6 +284,8 @@ const ContactFormDental = ({
             type="tel" 
             placeholder={formData.placeholders.phone} 
             required 
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             style={{
               flex: 1,
               padding: '12px',
@@ -247,26 +300,31 @@ const ContactFormDental = ({
           />
         </div>
         
-        <button type="submit" className="tp-dental-form-btn" style={{
-          width: '100%',
-          padding: '12px',
-          backgroundColor: '#000',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          fontSize: '16px',
-          fontWeight: '500',
-          cursor: 'pointer',
-          marginBottom: formData.showWhatsApp ? '15px' : '0',
-          transition: 'background-color 0.3s ease',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#333'}
-        onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#000'}
+        <button 
+          type="submit" 
+          className="tp-dental-form-btn" 
+          disabled={submissionLoading}
+          style={{
+            width: '100%',
+            padding: '12px',
+            backgroundColor: submissionLoading ? '#999' : '#000',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            fontSize: '16px',
+            fontWeight: '500',
+            cursor: submissionLoading ? 'not-allowed' : 'pointer',
+            marginBottom: formData.showWhatsApp ? '15px' : '0',
+            transition: 'background-color 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          onMouseEnter={(e) => !submissionLoading && ((e.target as HTMLButtonElement).style.backgroundColor = '#333')}
+          onMouseLeave={(e) => !submissionLoading && ((e.target as HTMLButtonElement).style.backgroundColor = '#000')}
         >
-          {formData.submitButtonText} <ArrowRight size={16} style={{ marginLeft: '8px' }} />
+          {submissionLoading ? 'Gönderiliyor...' : formData.submitButtonText} 
+          {!submissionLoading && <ArrowRight size={16} style={{ marginLeft: '8px' }} />}
         </button>
       
         {formData.showWhatsApp && (

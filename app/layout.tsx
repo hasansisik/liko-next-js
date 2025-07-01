@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import ReduxProvider from "../components/providers/redux-provider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,8 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <ReduxProvider>
-        <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
+          <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
+          <Toaster position="top-right" richColors />
         </ReduxProvider>
       </body>
     </html>
