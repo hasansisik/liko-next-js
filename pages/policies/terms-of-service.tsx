@@ -1,23 +1,30 @@
 "use client";
 import { gsap } from "gsap";
-import React from "react";
+import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { getPolicy } from "@/redux/actions/policyActions";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";
 import HeaderOne from "@/layouts/headers/header-one";
 import FooterTwo from "@/layouts/footers/footer-two";
-import PolicyContent from "@/components/policy/policy-content";
-import { termsOfServiceData } from "@/data/policy-data";
 
 // animation
 import { charAnimation } from "@/utils/title-animation";
 
 const TermsOfServiceMain = () => {
   useScrollSmooth();
+  const dispatch = useDispatch<AppDispatch>();
+  const { policy, loading } = useSelector((state: RootState) => state.policy);
+
+  useEffect(() => {
+    dispatch(getPolicy({ type: "terms-of-service" }));
+  }, [dispatch]);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -48,9 +55,9 @@ const TermsOfServiceMain = () => {
                   <div className="row">
                     <div className="col-xl-12">
                       <div className="tm-hero-content">
-                        <span className="tm-hero-subtitle">{termsOfServiceData.subtitle}</span>
+                        <span className="tm-hero-subtitle">{policy?.subtitle || "Liko Dental"}</span>
                         <h4 className="tm-hero-title-big tp-char-animation">
-                          {termsOfServiceData.title}
+                          {policy?.title || "Terms of Service"}
                         </h4>
                       </div>
                     </div>
@@ -60,7 +67,15 @@ const TermsOfServiceMain = () => {
               {/* hero area end */}
 
               {/* content area start */}
-              <PolicyContent data={termsOfServiceData} />
+              {loading ? (
+                <div className="container py-5">
+                  <div className="text-center">Loading...</div>
+                </div>
+              ) : (
+                <div className="container py-5">
+                  <div className="policy-content" dangerouslySetInnerHTML={{ __html: policy?.htmlContent || "" }} />
+                </div>
+              )}
               {/* content area end */}
             </main>
 

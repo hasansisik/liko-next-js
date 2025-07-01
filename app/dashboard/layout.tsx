@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getMyProfile } from "@/redux/actions/userActions";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 export default function DashboardLayout({
@@ -55,6 +56,7 @@ export default function DashboardLayout({
       <SidebarInset>
         {children}
       </SidebarInset>
+      <Toaster position="top-right" />
     </SidebarProvider>
   );
 }

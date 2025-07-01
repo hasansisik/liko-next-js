@@ -4,7 +4,7 @@ import TermsOfServiceMain from "@/pages/policies/terms-of-service";
 
 export const metadata: Metadata = {
   title: "Liko Dental - Terms of Service",
-  description: "Terms of Service for Liko Dental Practice - Rules and regulations for using our services"
+  description: "Terms of Service for Liko Dental Practice - Our terms and conditions for using our services"
 };
 
 const TermsOfServicePage = () => {

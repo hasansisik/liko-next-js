@@ -47,7 +47,10 @@ const data = {
           title: "About",
           url: "/dashboard/about",
         },
-        
+        {
+          title: "Policies",
+          url: "/dashboard/policies",
+        },
       ],
     },
     {
