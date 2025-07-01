@@ -4,19 +4,10 @@ import * as React from "react"
 import {
   BookOpen,
   Bot,
-  Command,
-  Frame,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  Settings2,
   SquareTerminal,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
@@ -81,26 +72,18 @@ const data = {
       ],
     },
     {
-      title: "Editor",
+      title: "Blog Management",
       url: "#",
       icon: Bot,
       isActive: true,
       items: [
         {
-          title: "About",
-          url: "/dashboard/about",
+          title: "Blog Posts",
+          url: "/dashboard/blog-posts",
         },
         {
-          title: "Contact",
-          url: "/dashboard/contact",
-        },
-        {
-          title: "Blog",
-          url: "#",
-        },
-        {
-          title: "Services",
-          url: "/dashboard/services",
+          title: "Service Posts",
+          url: "/dashboard/service-posts",
         },
        
       ],

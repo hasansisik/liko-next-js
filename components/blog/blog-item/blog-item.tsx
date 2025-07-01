@@ -29,14 +29,14 @@ export default function BlogItem({ item }: { item: IBlogDT }) {
     >
       <div className="tp-blog-thumb fix p-relative" style={{ 
         height: '250px', 
-        overflow: 'hidden' 
+        overflow: 'hidden',
+        position: 'relative'
       }}>
         <Image 
           src={item.img!} 
           alt="blog-img" 
+          fill
           style={{ 
-            height: "100%", 
-            width: "100%", 
             objectFit: "cover" 
           }} 
         />

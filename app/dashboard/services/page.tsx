@@ -56,7 +56,7 @@ export default function ServiceEditorPage() {
     }
   };
 
-  const handleHeroChange = (field: string, value: string) => {
+  const handleHeroChange = (field: string, value: string | string[]) => {
     if (editData) {
       setEditData({
         ...editData,
@@ -190,7 +190,7 @@ export default function ServiceEditorPage() {
                       <label className="text-sm font-medium">Background Image</label>
                       <ImageUpload
                         value={editData.hero.image}
-                        onChange={(url: string) => handleHeroChange('image', url)}
+                        onChange={(url: string | string[]) => handleHeroChange('image', url)}
                         placeholder="Enter image URL or upload background image"
                       />
                     </div>

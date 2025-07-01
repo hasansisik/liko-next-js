@@ -7,11 +7,12 @@ import { Upload, X, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { uploadImageToCloudinary } from '@/utils/cloudinary';
 
 interface ImageUploadProps {
-  value?: string;
-  onChange: (url: string) => void;
+  value?: string | string[];
+  onChange: (url: string | string[]) => void;
   onRemove?: () => void;
   disabled?: boolean;
   placeholder?: string;
+  maxFiles?: number;
 }
 
 export function ImageUpload({
@@ -152,7 +153,7 @@ export function ImageUpload({
         <div className="relative">
           <div className="aspect-video w-full max-w-sm mx-auto bg-gray-100 rounded-lg overflow-hidden">
             <img
-              src={value}
+              src={Array.isArray(value) ? value[0] : value}
               alt="Preview"
               className="w-full h-full object-cover"
               onError={(e) => {

@@ -56,7 +56,7 @@ export default function ContactEditorPage() {
     }
   };
 
-  const handleHeroChange = (field: string, value: string) => {
+  const handleHeroChange = (field: string, value: string | string[]) => {
     if (editData) {
       setEditData({
         ...editData,

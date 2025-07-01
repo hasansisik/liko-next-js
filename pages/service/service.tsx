@@ -7,6 +7,7 @@ import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { getService } from '@/redux/actions/serviceActions';
+import { getAllServicePosts } from '@/redux/actions/servicePostActions';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
@@ -27,13 +28,15 @@ import { servicePageData } from "@/data/service-page-data";
 
 const ServiceMain = () => {
   const dispatch = useDispatch();
-  const { service, loading, error } = useSelector((state: RootState) => state.service);
+  const { service, loading: serviceLoading, error: serviceError } = useSelector((state: RootState) => state.service);
+  const { servicePosts, loading: servicePostsLoading, error: servicePostsError } = useSelector((state: RootState) => state.servicePosts);
   
   useScrollSmooth();
 
   // Fetch service data on component mount
   useEffect(() => {
     dispatch(getService() as any);
+    dispatch(getAllServicePosts({ published: true, limit: 100 }) as any);
   }, [dispatch]);
 
   useGSAP(() => {
@@ -47,11 +50,13 @@ const ServiceMain = () => {
 
   // Use Redux data if available, otherwise fallback to static data
   const currentServiceData = service || servicePageData;
+  const loading = serviceLoading || servicePostsLoading;
+  const error = serviceError || servicePostsError;
 
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderOne   transparent={true} color="black"/>
+      <HeaderOne transparent={true} color="black"/>
       {/* header area end */}
 
       <div id="smooth-wrapper">
@@ -69,10 +74,13 @@ const ServiceMain = () => {
               <div className="flex justify-center items-center min-h-screen">
                 <div className="text-center">
                   <p className="text-red-600 mb-4">Error loading service data: {error}</p>
-                                     <button 
-                     onClick={() => dispatch(getService() as any)}
-                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                   >
+                  <button 
+                    onClick={() => {
+                      dispatch(getService() as any);
+                      dispatch(getAllServicePosts({ published: true, limit: 100 }) as any);
+                    }}
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  >
                     Retry
                   </button>
                 </div>
@@ -102,14 +110,14 @@ const ServiceMain = () => {
                       </div>
                     </div>
                     <div className="tp-service-5-wrap">
-                      <ServiceItems />
+                      <ServiceItems servicePosts={servicePosts} />
                     </div>
                   </div>
                 </div>
                 {/* service area */}
 
                 {/* service area */}
-                <ServiceSix />
+                <ServiceSix servicePosts={servicePosts} />
                 {/* service area */}
 
                 {/* big text */}

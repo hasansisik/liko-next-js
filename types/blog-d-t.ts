@@ -11,14 +11,14 @@ export interface IBlogComment {
 export interface IBlogDT {
   id: number;
   slug?: string;
-  img?: StaticImageData;
-  images?: StaticImageData[];
+  img?: StaticImageData | string;
+  images?: (StaticImageData | string)[];
   title: string;
   date: string;
   category: string;
   author: string;
   videoId?: string;
-  avatar?: StaticImageData;
+  avatar?: StaticImageData | string;
   blogQuote?: boolean;
   video?: boolean;
   imgSlider?: boolean;

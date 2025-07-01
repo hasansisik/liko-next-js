@@ -76,7 +76,7 @@ export default function FooterEditorPage() {
     }
   };
 
-  const handleCompanyChange = (field: string, value: string) => {
+  const handleCompanyChange = (field: string, value: string | string[]) => {
     if (editData) {
       setEditData({
         ...editData,

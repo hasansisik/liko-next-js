@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { service_data } from "@/data/service-data";
+import { ServicePostData } from "@/redux/actions/servicePostActions";
 
 // Helper function to generate slug from title
 const generateSlug = (title: string) => {
@@ -9,11 +10,22 @@ const generateSlug = (title: string) => {
 };
 
 // service items
-export function ServiceItems() {
+export function ServiceItems({ servicePosts }: { servicePosts?: ServicePostData[] }) {
+  // Use service posts if available, otherwise fallback to static data
+  const serviceItems = servicePosts?.length > 0 
+    ? servicePosts.slice(0, 3).map(post => ({
+        id: post._id,
+        title: post.title,
+        desc: post.desc,
+        shortDesc: post.desc,
+        img: post.img || "/assets/img/service/default-service.jpg"
+      }))
+    : service_data.slice(0, 3);
+
   return (
     <div className="row">
       <div className="col-xxl-3"></div>
-      {service_data.slice(0, 3).map((item, index) => {
+      {serviceItems.map((item, index) => {
         return (
           <div key={item.id} className="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
             <div className="tp-service-5-item tp_fade_bottom space-1">
@@ -67,7 +79,7 @@ export default function ServiceFive() {
           </div>
         </div>
         <div className="tp-service-5-wrap">
-          <ServiceItems/>
+          <ServiceItems />
         </div>
       </div>
     </div>

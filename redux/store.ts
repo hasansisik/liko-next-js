@@ -5,6 +5,9 @@ import aboutReducer from "./reducers/aboutReducer";
 import contactReducer from "./reducers/contactReducer";
 import serviceReducer from "./reducers/serviceReducer";
 import blogReducer from "./reducers/blogReducer";
+import blogPostReducer from "./reducers/blogPostReducer";
+import servicePostReducer from "./reducers/servicePostReducer";
+import categoryReducer from "./reducers/categoryReducer";
 import homeReducer from "./reducers/homeReducer";
 import headerReducer from "./reducers/headerReducer";
 import footerReducer from "./reducers/footerReducer";
@@ -18,6 +21,9 @@ export const store = configureStore({
     contact: contactReducer,
     service: serviceReducer,
     blog: blogReducer,
+  blogPosts: blogPostReducer,
+  servicePosts: servicePostReducer,
+  categories: categoryReducer,
     home: homeReducer,
     header: headerReducer,
     footer: footerReducer,

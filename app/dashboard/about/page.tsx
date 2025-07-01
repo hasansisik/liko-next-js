@@ -55,7 +55,7 @@ export default function AboutEditorPage() {
     }
   };
 
-  const handleHeroChange = (field: string, value: string) => {
+  const handleHeroChange = (field: string, value: string | string[]) => {
     if (editData) {
       setEditData({
         ...editData,

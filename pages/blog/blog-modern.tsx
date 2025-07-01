@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { getBlog } from '@/redux/actions/blogActions';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { getAllBlogPosts } from '@/redux/actions/blogPostActions';
+import { formatBlogDate } from '@/utils/date-utils';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
@@ -23,14 +23,17 @@ import BlogHeroBanner from "@/components/blog/blog-hero-banner";
 import { blogModernData } from "@/data/blog-modern-data";
 
 const BlogModernMain = () => {
-  const dispatch = useDispatch();
-  const { blog, loading, error } = useSelector((state: RootState) => state.blog);
+  const dispatch = useAppDispatch();
+  const { blogPosts, loading, error } = useAppSelector((state) => state.blogPosts);
   
   useScrollSmooth();
 
   // Fetch blog data on component mount
   useEffect(() => {
-    dispatch(getBlog() as any);
+    dispatch(getAllBlogPosts({ 
+      published: true, // Only get published posts for public view
+      limit: 100 // Get more posts to ensure we have enough data
+    }));
   }, [dispatch]);
 
   useGSAP(() => {
@@ -40,8 +43,33 @@ const BlogModernMain = () => {
     return () => clearTimeout(timer);
   });
 
-  // Use Redux data if available, otherwise fallback to static data
-  const currentBlogData = blog || blogModernData;
+  // Use blog posts data if available, otherwise fallback to static data
+  const currentBlogData = blogPosts.length > 0 ? {
+    ...blogModernData,
+    posts: blogPosts.map(post => ({
+      id: parseInt(post._id?.slice(-6) || "1", 16), // Convert ObjectId to number
+      img: post.img,
+      title: post.title,
+      date: formatBlogDate(post.date || post.createdAt),
+      category: post.categories?.[0] || 'General',
+      author: post.author || 'Admin',
+      desc: post.desc,
+      commentCount: post.commentCount || 0,
+      comments: post.comments || [],
+      content: post.content,
+      video: post.video,
+      videoId: post.videoId,
+      blogQuote: post.blogQuote,
+      imgSlider: post.imgSlider,
+      blogQuoteTwo: post.blogQuoteTwo,
+      blogHeroSlider: post.blogHeroSlider,
+      images: post.images,
+      avatar: post.avatar,
+      isPublished: post.isPublished,
+      tags: post.tags,
+      slug: post.slug || post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
+    }))
+  } : blogModernData;
 
   return (
     <Wrapper>
@@ -65,7 +93,7 @@ const BlogModernMain = () => {
                 <div className="text-center">
                   <p className="text-red-600 mb-4">Error loading blog data: {error}</p>
                   <button 
-                    onClick={() => dispatch(getBlog() as any)}
+                    onClick={() => dispatch(getAllBlogPosts({ published: true, limit: 100 }))}
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
                     Retry
@@ -82,7 +110,7 @@ const BlogModernMain = () => {
                 {/* blog hero banner end */}
 
                 {/* blog modern area start */}
-                <BlogModern />
+                <BlogModern blogPosts={blogPosts} />
                 {/* blog modern area end */}
 
                 {/* big text area */}

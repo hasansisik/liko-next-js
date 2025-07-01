@@ -6,6 +6,7 @@ import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { getHome } from '@/redux/actions/homeActions';
+import { getAllServicePosts } from '@/redux/actions/servicePostActions';
 import {
   ScrollSmoother,
   ScrollTrigger,
@@ -46,12 +47,14 @@ import { home1Data } from "@/data/home-1-data";
 const HomeMain = () => {
   const dispatch = useDispatch();
   const { home, loading, error } = useSelector((state: RootState) => state.home);
+  const { servicePosts, loading: servicePostsLoading } = useSelector((state: RootState) => state.servicePosts);
   
   useScrollSmooth();
 
-  // Fetch home data on component mount
+  // Fetch home data and service posts on component mount
   useEffect(() => {
     dispatch(getHome() as any);
+    dispatch(getAllServicePosts({ published: true, limit: 100 }) as any);
   }, [dispatch]);
 
   useEffect(() => {
@@ -145,7 +148,7 @@ const HomeMain = () => {
         <div id="smooth-content">
           <main>
             <HeroBannerTwo heroData={currentHomeData.heroBanner} />
-            <ServiceOne serviceData={currentHomeData.serviceSection} />
+            <ServiceOne serviceData={currentHomeData.serviceSection} servicePosts={servicePosts} />
             <AboutOne aboutData={currentHomeData.aboutSection} />
             <TeamOne teamData={currentHomeData.teamSection} />
             <VideOne videoData={currentHomeData.videoSection} />

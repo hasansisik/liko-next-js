@@ -43,8 +43,9 @@ const HeaderOne = ({ transparent = false, color, headerData: staticData }: IProp
       menus: [
         { id: 1, title: "Home", url: "/", hasDropdown: false },
         { id: 2, title: "About", url: "/about", hasDropdown: false },
-        { id: 3, title: "Services", url: "/services", hasDropdown: false },
-        { id: 4, title: "Contact", url: "/contact", hasDropdown: false }
+        { id: 3, title: "Services", url: "/service", hasDropdown: false },
+        { id: 4, title: "Blog", url: "/blog", hasDropdown: false },
+        { id: 5, title: "Contact", url: "/contact", hasDropdown: false }
       ],
       cta: {
         text: "Get Consultation",
@@ -230,7 +231,7 @@ const HeaderOne = ({ transparent = false, color, headerData: staticData }: IProp
         openOffcanvas={openOffCanvas} 
         setOpenOffcanvas={setOpenOffCanvas}
         navigationData={data.navigation}
-        mobileData={data.mobile}
+        mobileData={data.mobile?.offcanvas ? data.mobile as any : undefined}
       />
       {/* off canvas */}
 

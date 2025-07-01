@@ -2,7 +2,7 @@ import { StaticImageData } from "next/image";
 
 export interface IServiceDT {
   id: number;
-  img: StaticImageData;
+  img: StaticImageData | string;
   title: string;
   category: string;
   desc: string;
