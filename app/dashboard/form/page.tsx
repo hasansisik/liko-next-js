@@ -1,5 +1,9 @@
 "use client";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+
 import React, { useState, useEffect } from "react";
 import {
   Breadcrumb,
@@ -58,7 +62,6 @@ export default function FormEditorPage() {
   const handleSave = async () => {
     if (editData && editData._id) {
       try {
-        console.log('Saving form data:', editData);
         const result = await dispatch(updateForm({
           formId: editData._id,
           title: editData.title,
@@ -71,7 +74,6 @@ export default function FormEditorPage() {
           placeholders: editData.placeholders,
           defaultCountry: editData.defaultCountry
         }));
-        console.log('Save result:', result);
       } catch (error) {
         console.error('Save error:', error);
       }
@@ -168,7 +170,6 @@ export default function FormEditorPage() {
           </Button>
           <Button 
             onClick={() => {
-              console.log('Save button clicked!');
               handleSave();
             }} 
             disabled={loading} 

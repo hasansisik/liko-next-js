@@ -36,9 +36,7 @@ export const submitForm = createAsyncThunk(
   "formSubmission/submitForm",
   async (payload: SubmitFormPayload, thunkAPI) => {
     try {
-      console.log('Submitting form with payload:', payload);
       const { data } = await axios.post(`${server}/form-submissions`, payload);
-      console.log('Form submission response:', data);
       return data.formSubmission;
     } catch (error: any) {
       console.error('Form submission error:', error.response?.data || error.message);
@@ -57,17 +55,12 @@ export const getAllFormSubmissions = createAsyncThunk(
       
       const url = `${server}/form-submissions`;
       
-      console.log('Getting all form submissions from URL:', url);
-      console.log('With token:', token ? 'Present' : 'Missing');
-      
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
-      console.log('Form submissions response:', data);
-      
+            
       if (!data.formSubmissions || !Array.isArray(data.formSubmissions)) {
         console.error('Invalid form submissions response format:', data);
         return [];

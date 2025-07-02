@@ -22,7 +22,6 @@ const useSticky = () => {
     if (setHeaderHeight) {
       const headerElements = document.querySelectorAll<HTMLDivElement>('.tp-header-height');
       headerElements.forEach(element => {
-        console.log('setHeaderHeight', setHeaderHeight,element);
         element.style.height = `${setHeaderHeight}px`;
       });
     }

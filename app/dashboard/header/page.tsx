@@ -1,5 +1,9 @@
 "use client";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+
 import React, { useState, useEffect } from "react";
 import {
   Breadcrumb,
@@ -59,10 +63,7 @@ export default function HeaderEditorPage() {
   const handleSave = async () => {
     if (editData && editData._id) {
       try {
-        console.log('Saving header data:', editData);
-        console.log('Current loading state:', loading);
-        console.log('Access token:', localStorage.getItem('accessToken') ? 'Present' : 'Missing');
-        
+
         const result = await dispatch(updateHeader({
           headerId: editData._id,
           logo: editData.logo,
@@ -71,10 +72,8 @@ export default function HeaderEditorPage() {
           dialog: editData.dialog,
           styling: editData.styling
         }));
-        console.log('Save result:', result);
         
         if (result.type.endsWith('/fulfilled')) {
-          console.log('Save successful!');
         } else if (result.type.endsWith('/rejected')) {
           console.error('Save failed:', result.payload);
         }
@@ -83,7 +82,6 @@ export default function HeaderEditorPage() {
       }
     } else {
       console.error('No edit data or ID available for saving');
-      console.log('editData:', editData);
     }
   };
 
@@ -461,7 +459,6 @@ export default function HeaderEditorPage() {
           </Button>
           <Button 
             onClick={() => {
-              console.log('Save button clicked!');
               handleSave();
             }} 
             disabled={loading} 

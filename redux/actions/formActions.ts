@@ -64,15 +64,8 @@ export const getForm = createAsyncThunk(
   async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
-      console.log('getForm - Making request to:', `${server}/form`);
-      console.log('getForm - Params:', params);
-      
       const { data } = await axios.get(`${server}/form`, { params });
-      
-      console.log('getForm - Response data:', data);
-      console.log('getForm - Form object:', data.form);
-      console.log('getForm - Form ID:', data.form?._id);
-      
+
       return data.form;
     } catch (error: any) {
       console.error('getForm - Error:', error);
@@ -109,18 +102,12 @@ export const updateForm = createAsyncThunk(
       const token = localStorage.getItem("accessToken");
       const { formId, ...updateData } = payload;
       
-      console.log('updateForm - Payload:', payload);
-      console.log('updateForm - Token:', token ? 'Present' : 'Missing');
-      console.log('updateForm - URL:', `${server}/form/${formId}`);
-      console.log('updateForm - Update data:', updateData);
-      
       const { data } = await axios.put(`${server}/form/${formId}`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       
-      console.log('updateForm - Response:', data);
       return data.form;
     } catch (error: any) {
       console.error('updateForm - Error:', error);

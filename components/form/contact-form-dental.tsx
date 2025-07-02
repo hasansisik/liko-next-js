@@ -106,14 +106,6 @@ const ContactFormDental = ({
       return;
     }
     
-    // Log the submission data
-    console.log('Submitting form with data:', {
-      name,
-      phone,
-      countryCode: selectedCountry.phone,
-      countryName: selectedCountry.name
-    });
-    
     dispatch(submitForm({
       name,
       phone,

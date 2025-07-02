@@ -65,7 +65,6 @@ export const formSubmissionReducer = createReducer(initialState, (builder) => {
       } else {
         state.formSubmissions = [];
       }
-      console.log("Reducer received form submissions:", state.formSubmissions.length);
       state.error = null;
     })
     .addCase(getAllFormSubmissions.rejected, (state, action) => {

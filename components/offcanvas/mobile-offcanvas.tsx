@@ -55,11 +55,6 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigat
     }
   };
 
-  // Debug logging
-  console.log('MobileOffcanvas - mobileData:', mobileData);
-  console.log('MobileOffcanvas - mobileData?.offcanvas:', mobileData?.offcanvas);
-  console.log('MobileOffcanvas - mobileData?.offcanvas?.logo:', mobileData?.offcanvas?.logo);
-
   // Safe navigation and fallback
   const offcanvasData = {
     logo: {
@@ -88,8 +83,6 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigat
       links: mobileData?.offcanvas?.socialMedia?.links || defaultOffcanvas.socialMedia.links
     }
   };
-
-  console.log('MobileOffcanvas - final offcanvasData:', offcanvasData);
 
   return (
     <>

@@ -1,4 +1,7 @@
 "use client";
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
@@ -65,12 +68,6 @@ const ServiceDetailsMain = ({ service, slug }: ServiceDetailsMainProps) => {
     return () => clearTimeout(timer);
   });
 
-  // For debugging
-  useEffect(() => {
-    if (service) {
-      console.log("Service data received:", service);
-    }
-  }, [service]);
 
   // Loading state
   if (loading && !service) {

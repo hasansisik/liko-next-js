@@ -1,5 +1,9 @@
 "use client";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getAllFormSubmissions, updateFormSubmission, deleteFormSubmission } from "@/redux/actions/formSubmissionActions";
@@ -38,23 +42,19 @@ const FormSubmissionsPage = () => {
   const [notes, setNotes] = useState("");
   const [status, setStatus] = useState<"new" | "contacted" | "completed" | "cancelled">("new");
   
-  useEffect(() => {
-    console.log("Fetching form submissions with filter:", filter);
-    // Fetch all form submissions without filtering
+  useEffect(() => {    // Fetch all form submissions without filtering
     dispatch(getAllFormSubmissions());
   }, [dispatch]);
   
   // Separate effect for handling success
   useEffect(() => {
     if (success) {
-      console.log("Success detected, refreshing data");
       dispatch(getAllFormSubmissions());
     }
   }, [success, dispatch]);
   
   // Log when formSubmissions change
   useEffect(() => {
-    console.log("Form submissions updated:", formSubmissions);
   }, [formSubmissions]);
   
   const handleStatusUpdate = async (submission: FormSubmission, newStatus: "new" | "contacted" | "completed" | "cancelled") => {
@@ -101,7 +101,6 @@ const FormSubmissionsPage = () => {
   };
   
   const handleRefresh = () => {
-    console.log("Manual refresh triggered");
     dispatch(getAllFormSubmissions());
   };
   

@@ -1,5 +1,9 @@
 "use client";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+
 import React, { useState, useEffect } from "react";
 import {
   Breadcrumb,
@@ -58,7 +62,6 @@ export default function FooterEditorPage() {
   const handleSave = async () => {
     if (editData && editData._id) {
       try {
-        console.log('Saving footer data:', editData);
         const result = await dispatch(updateFooter({
           footerId: editData._id,
           company: editData.company,
@@ -67,7 +70,6 @@ export default function FooterEditorPage() {
           legal: editData.legal,
           copyright: editData.copyright
         }));
-        console.log('Save result:', result);
       } catch (error) {
         console.error('Save error:', error);
       }
@@ -275,7 +277,6 @@ export default function FooterEditorPage() {
           </Button>
           <Button 
             onClick={() => {
-              console.log('Save button clicked!');
               handleSave();
             }} 
             disabled={loading} 

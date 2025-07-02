@@ -30,7 +30,6 @@ function videoAnimTwo() {
 
 		const mm = gsap.matchMedia();
 		mm.add("(min-width: 1400px)", () => {
-			console.log('min-width: 1400px');
 			let tp_hero_2 = gsap.timeline({
 				scrollTrigger: {
 					trigger: ".tp-video-area",

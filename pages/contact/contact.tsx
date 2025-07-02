@@ -1,4 +1,7 @@
 "use client";
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 import { gsap } from "gsap";
 import React from "react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";

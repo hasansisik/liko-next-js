@@ -78,15 +78,9 @@ export const getFooter = createAsyncThunk(
   async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
-      console.log('getFooter - Making request to:', `${server}/footer`);
-      console.log('getFooter - Params:', params);
       
       const { data } = await axios.get(`${server}/footer`, { params });
-      
-      console.log('getFooter - Response data:', data);
-      console.log('getFooter - Footer object:', data.footer);
-      console.log('getFooter - Footer ID:', data.footer?._id);
-      
+
       return data.footer;
     } catch (error: any) {
       console.error('getFooter - Error:', error);
@@ -123,18 +117,12 @@ export const updateFooter = createAsyncThunk(
       const token = localStorage.getItem("accessToken");
       const { footerId, ...updateData } = payload;
       
-      console.log('updateFooter - Payload:', payload);
-      console.log('updateFooter - Token:', token ? 'Present' : 'Missing');
-      console.log('updateFooter - URL:', `${server}/footer/${footerId}`);
-      console.log('updateFooter - Update data:', updateData);
-      
       const { data } = await axios.put(`${server}/footer/${footerId}`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       
-      console.log('updateFooter - Response:', data);
       return data.footer;
     } catch (error: any) {
       console.error('updateFooter - Error:', error);

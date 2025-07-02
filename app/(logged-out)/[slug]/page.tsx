@@ -1,5 +1,9 @@
 "use client";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
@@ -107,15 +111,12 @@ const UnifiedContentPage = () => {
   };
 
   // Find content by slug
-  const findContentBySlug = (slug: string) => {
-    console.log(`Finding content for slug: ${slug}`);
-    
+  const findContentBySlug = (slug: string) => {    
     // Check blog posts
     const blogPost = blogPosts.find(post => 
       post.slug === slug || createSlug(post.title) === slug
     );
     if (blogPost) {
-      console.log(`Found matching blog post: ${blogPost.title}`);
       return { type: 'blog' as const, content: transformBlogPost(blogPost) };
     }
 
@@ -124,9 +125,7 @@ const UnifiedContentPage = () => {
       post.slug === slug || createSlug(post.title) === slug
     );
     if (servicePost) {
-      console.log(`Found matching service post: ${servicePost.title}`);
       const transformedService = transformServicePost(servicePost);
-      console.log("Transformed service post:", transformedService);
       return { type: 'servicePost' as const, content: transformedService };
     }
 
@@ -135,13 +134,10 @@ const UnifiedContentPage = () => {
       createSlug(service.hero?.title || '') === slug
     );
     if (service) {
-      console.log(`Found matching service: ${service.hero?.title}`);
       const transformedService = transformService(service);
-      console.log("Transformed service:", transformedService);
       return { type: 'service' as const, content: transformedService };
     }
 
-    console.log(`No matching content found for slug: ${slug}`);
     return null;
   };
 
