@@ -78,9 +78,8 @@ export const getFooter = createAsyncThunk(
   async (companyId: string | undefined, thunkAPI) => {
     try {
       const params = companyId ? { companyId } : {};
-      
       const { data } = await axios.get(`${server}/footer`, { params });
-
+      
       return data.footer;
     } catch (error: any) {
       console.error('getFooter - Error:', error);

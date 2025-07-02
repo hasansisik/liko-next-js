@@ -1,9 +1,5 @@
 "use client";
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";

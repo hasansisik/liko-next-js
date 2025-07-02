@@ -54,13 +54,14 @@ export const getAllFormSubmissions = createAsyncThunk(
       const token = localStorage.getItem("accessToken");
       
       const url = `${server}/form-submissions`;
-      
+
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-            
+      
+      
       if (!data.formSubmissions || !Array.isArray(data.formSubmissions)) {
         console.error('Invalid form submissions response format:', data);
         return [];

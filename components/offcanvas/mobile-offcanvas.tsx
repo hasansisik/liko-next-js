@@ -84,6 +84,7 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigat
     }
   };
 
+
   return (
     <>
       <div className={`tp-offcanvas-area ${openOffcanvas ? "opened" : ""}`}>

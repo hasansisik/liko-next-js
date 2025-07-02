@@ -1,9 +1,5 @@
 "use client";
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -71,6 +67,7 @@ export default function ServicePostsEditorPage() {
       console.error("Post ID is missing:", post);
       return;
     }
+        // Use window.location for direct navigation as a fallback if router.push doesn't work
     window.location.href = `/dashboard/service-posts/edit/${post._id}`;
   };
 

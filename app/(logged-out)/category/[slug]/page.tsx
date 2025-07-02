@@ -1,8 +1,6 @@
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 import React from "react";
 import { Metadata } from "next";
-import CategoryMain from "@/pages/blog/category";
+import CategoryMain from "@/page-components/blog/category";
 
 export const metadata: Metadata = {
   title: "Liko Dental - Blog Category",

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import ErrorMain from '@/pages/error/error-main'
+import ErrorMain from '@/page-components/error/error-main'
  
 export const metadata: Metadata = {
   title: "Liko - Not Found Page",

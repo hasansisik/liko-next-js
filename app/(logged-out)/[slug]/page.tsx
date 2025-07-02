@@ -1,17 +1,13 @@
 "use client";
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-
-
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getAllBlogPosts } from "@/redux/actions/blogPostActions";
 import { getAllServicePosts } from "@/redux/actions/servicePostActions";
 import { getAllService } from "@/redux/actions/serviceActions";
-import BlogDetailsMain from "@/pages/blog/blog-details";
-import ServiceDetailsMain from "@/pages/service/service-details";
+import BlogDetailsMain from "@/page-components/blog/blog-details";
+import ServiceDetailsMain from "@/page-components/service/service-details";
 import { IBlogDT } from "@/types/blog-d-t";
 import { IServiceDT } from "@/types/service-d-t";
 import { BlogPostData } from "@/redux/actions/blogPostActions";
@@ -111,7 +107,8 @@ const UnifiedContentPage = () => {
   };
 
   // Find content by slug
-  const findContentBySlug = (slug: string) => {    
+  const findContentBySlug = (slug: string) => {
+    
     // Check blog posts
     const blogPost = blogPosts.find(post => 
       post.slug === slug || createSlug(post.title) === slug

@@ -8,11 +8,6 @@ const nextConfig = {
     // This will disable static generation completely
     appDocumentPreloading: false,
   },
-  // SASS configuration to suppress deprecation warnings
-  sassOptions: {
-    silenceDeprecations: ['legacy-js-api', 'import'],
-    quietDeps: true,
-  },
 };
 
 export default nextConfig;

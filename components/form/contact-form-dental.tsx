@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { IContactFormData, ICountry } from "@/types/contact-form-d-t";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getForm } from "@/redux/actions/formActions";
+import { FormData } from "@/redux/actions/formActions";
 import { submitForm } from "@/redux/actions/formSubmissionActions";
 import { toast } from "sonner";
 
@@ -29,8 +30,8 @@ const ContactFormDental = ({
   const [phone, setPhone] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   
-  // Memoize the default form data to prevent recreation on every render
-  const defaultFormData = useMemo(() => ({
+  // Use Redux data if available, otherwise fallback to static data or default
+  const formData = form || staticFormData || {
     title: "Get Free Consultation",
     subtitle: "Expert available",
     responseTime: "Response within 24 hours",
@@ -51,10 +52,7 @@ const ContactFormDental = ({
     submitButtonText: "Get Free Consultation",
     whatsAppText: "Chat on WhatsApp",
     whatsAppLink: "https://wa.me/1234567890"
-  }), []);
-
-  // Use Redux data if available, otherwise fallback to static data or default
-  const formData = form || staticFormData || defaultFormData;
+  };
   
   const defaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
   const [selectedCountry, setSelectedCountry] = useState<ICountry>(defaultCountry);
@@ -68,16 +66,16 @@ const ContactFormDental = ({
 
   // Update selected country when form data changes
   useEffect(() => {
-    if (formData && formData.countries) {
+    if (formData) {
       const newDefaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
       setSelectedCountry(newDefaultCountry);
     }
-  }, [formData.defaultCountry, formData.countries]);
+  }, [formData]);
 
   // Handle form submission success or error
   useEffect(() => {
     if (success && formSubmitted) {
-      toast.success("Form submitted successfully!");
+      toast.success("Form başarıyla gönderildi!");
       setName("");
       setPhone("");
       setFormSubmitted(false);

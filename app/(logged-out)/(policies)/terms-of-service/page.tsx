@@ -1,8 +1,6 @@
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 import React from "react";
 import { Metadata } from "next";
-import TermsOfServiceMain from "@/pages/policies/terms-of-service";
+import TermsOfServiceMain from "@/page-components/policies/terms-of-service";
 
 export const metadata: Metadata = {
   title: "Liko Dental - Terms of Service",

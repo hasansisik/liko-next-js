@@ -1,9 +1,5 @@
 "use client";
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-
-
 import React, { useState, useEffect } from "react";
 import {
   Breadcrumb,
@@ -63,7 +59,7 @@ export default function HeaderEditorPage() {
   const handleSave = async () => {
     if (editData && editData._id) {
       try {
-
+        
         const result = await dispatch(updateHeader({
           headerId: editData._id,
           logo: editData.logo,

@@ -1,8 +1,6 @@
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 import React from "react";
 import { Metadata } from "next";
-import PrivacyPolicyMain from "@/pages/policies/privacy-policy";
+import PrivacyPolicyMain from "@/page-components/policies/privacy-policy";
 
 export const metadata: Metadata = {
   title: "Liko Dental - Privacy Policy",

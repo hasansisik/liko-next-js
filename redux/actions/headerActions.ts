@@ -156,7 +156,7 @@ export const getHeader = createAsyncThunk(
       const params = companyId ? { companyId } : {};
       
       const { data } = await axios.get(`${server}/header`, { params });
-      
+
       return data.header;
     } catch (error: any) {
       console.error('getHeader - Error:', error);
