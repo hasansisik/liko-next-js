@@ -45,8 +45,8 @@ const ServiceDetailsMain = ({ service, slug }: ServiceDetailsMainProps) => {
   const currentService = service || (slug && servicePosts ? 
     servicePosts.find(post => post.slug === slug) : null);
 
-  // Transform service post to IServiceDT format if needed
-  const serviceData = currentService && '_id' in currentService ? {
+  // Use the provided service directly if available
+  const serviceData = service || (currentService && '_id' in currentService ? {
     id: 1,
     title: currentService.title,
     desc: currentService.desc,
@@ -55,7 +55,7 @@ const ServiceDetailsMain = ({ service, slug }: ServiceDetailsMainProps) => {
     features: currentService.tags || [],
     shortDesc: currentService.desc,
     content: currentService.content
-  } as IServiceDT : service_data[0];
+  } as IServiceDT : service_data[0]);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -65,8 +65,15 @@ const ServiceDetailsMain = ({ service, slug }: ServiceDetailsMainProps) => {
     return () => clearTimeout(timer);
   });
 
+  // For debugging
+  useEffect(() => {
+    if (service) {
+      console.log("Service data received:", service);
+    }
+  }, [service]);
+
   // Loading state
-  if (loading) {
+  if (loading && !service) {
     return (
       <Wrapper>
         <HeaderOne transparent={true} color="black"/>
@@ -78,7 +85,7 @@ const ServiceDetailsMain = ({ service, slug }: ServiceDetailsMainProps) => {
   }
 
   // Error state
-  if (error) {
+  if (error && !service) {
     return (
       <Wrapper>
         <HeaderOne transparent={true} color="black"/>

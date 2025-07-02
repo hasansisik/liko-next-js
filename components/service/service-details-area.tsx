@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ContactFormDental from "../form/contact-form-dental";
 import { IServiceDT } from "@/types/service-d-t";
 import { service_data } from "@/data/service-data";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { createSlug } from "@/utils/slug-utils";
 
 // images
 import sv_1 from "@/assets/img/inner-service/sercive-details/sv-details-1.jpg";
@@ -15,6 +18,16 @@ interface ServiceDetailsAreaProps {
 }
 
 export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps) {
+  const { servicePosts } = useSelector((state: RootState) => state.servicePosts);
+  const [allServices, setAllServices] = useState<any[]>([]);
+  
+  // Get all services for sidebar
+  useEffect(() => {
+    if (servicePosts && servicePosts.length > 0) {
+      setAllServices(servicePosts);
+    }
+  }, [servicePosts]);
+  
   // Handle case where service might be undefined during build
   if (!service) {
     return (
@@ -40,6 +53,11 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
 
   // Get other service images for the small thumbnails
   const otherServices = service_data.filter(s => s.id !== service.id);
+  
+  // Create slug for service links
+  const getServiceSlug = (title: string) => {
+    return createSlug(title);
+  };
   
   return (
     <div className="service-details__area service-details__space pt-200 pb-120">
@@ -92,6 +110,8 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
                   data-speed="0.4"
                   src={service.img}
                   alt={service.title}
+                  width={1200}
+                  height={500}
                   style={{ 
                     height: "100%",
                     width: "100%",
@@ -150,6 +170,8 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
                         <Image
                           src={otherServices[0].img}
                           alt={otherServices[0].title}
+                          width={600}
+                          height={400}
                           style={{ height: "auto" }}
                         />
                       </div>
@@ -159,6 +181,8 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
                         <Image
                           src={otherServices[1].img}
                           alt={otherServices[1].title}
+                          width={600}
+                          height={400}
                           style={{ height: "auto" }}
                         />
                       </div>
@@ -171,15 +195,30 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
           <div className="col-xl-5 col-lg-5">
             <div className="service-details__right-wrap fix p-relative">
               <div className="service-details__rotate-text">
-                <span>Our Dental Services</span>
+                <span>Our Services</span>
               </div>
               <div className="service-details__right-category">
-                <Link href="/hollywood-smile">Hollywood Smile</Link>
-                <Link href="/dental-veneers">Dental Veneers</Link>
-                <Link href="/dental-implants">Dental Implants</Link>
-                <Link href="/smile-makeover">Smile Makeover</Link>
-                <Link href="/zirconium-crowns">Zirconium Crowns</Link>
-                <Link href="/e-max-crowns">E-Max Crowns</Link>
+                {allServices && allServices.length > 0 ? (
+                  // Show dynamic services from API
+                  allServices.slice(0, 10).map((serviceItem, index) => (
+                    <Link 
+                      key={index} 
+                      href={`/${getServiceSlug(serviceItem.title)}`}
+                    >
+                      {serviceItem.title}
+                    </Link>
+                  ))
+                ) : (
+                  // Fallback to static services
+                  <>
+                    <Link href="/hollywood-smile">Hollywood Smile</Link>
+                    <Link href="/dental-veneers">Dental Veneers</Link>
+                    <Link href="/dental-implants">Dental Implants</Link>
+                    <Link href="/smile-makeover">Smile Makeover</Link>
+                    <Link href="/zirconium-crowns">Zirconium Crowns</Link>
+                    <Link href="/e-max-crowns">E-Max Crowns</Link>
+                  </>
+                )}
               </div>
               <div className="service-details__right-text-box">
                 <h4>
