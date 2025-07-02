@@ -207,6 +207,9 @@ const FormSubmissionsPage = () => {
                     Country
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Message
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -228,6 +231,9 @@ const FormSubmissionsPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">{submission.countryName}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {submission.message}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {getStatusBadge(submission.status)}
@@ -315,6 +321,12 @@ const FormSubmissionsPage = () => {
                     {selectedSubmission.createdAt && format(new Date(selectedSubmission.createdAt), 'dd.MM.yyyy HH:mm')}
                   </p>
                 </div>
+                {selectedSubmission.message && (
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <p className="text-sm font-medium text-right">Message:</p>
+                    <p className="col-span-3">{selectedSubmission.message}</p>
+                  </div>
+                )}
                 <div className="grid grid-cols-4 items-center gap-4">
                   <label htmlFor="status" className="text-sm font-medium text-right">Status:</label>
                   <select

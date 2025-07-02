@@ -8,6 +8,7 @@ export interface FormSubmission {
   phone: string;
   countryCode: string;
   countryName: string;
+  message?: string;
   status: "new" | "contacted" | "completed" | "cancelled";
   notes: string;
   companyId?: string;
@@ -21,6 +22,7 @@ export interface SubmitFormPayload {
   phone: string;
   countryCode: string;
   countryName: string;
+  message?: string;
   companyId?: string;
 }
 

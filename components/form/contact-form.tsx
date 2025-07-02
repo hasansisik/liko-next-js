@@ -1,9 +1,12 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ErrorMsg from '../error-msg';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { submitForm } from '@/redux/actions/formSubmissionActions';
+import { toast } from 'sonner';
 
 type FormData = {
   name: string;
@@ -32,12 +35,30 @@ type IProps = {
 }
 
 export default function ContactForm({ btnCls = '', formData }: IProps) {
+  const dispatch = useAppDispatch();
+  const { loading, error, success } = useAppSelector((state) => state.formSubmission);
+  const [countryCode, setCountryCode] = useState('+90'); // Default to Turkey
+  const [countryName, setCountryName] = useState('Turkey'); // Default to Turkey
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-  const onSubmit = handleSubmit((data: FormData) => {
-    alert(JSON.stringify(data))
-    reset()
+
+  const onSubmit = handleSubmit(async (data: FormData) => {
+    try {
+      await dispatch(submitForm({
+        name: data.name,
+        phone: data.subject, // Using subject field as phone
+        countryCode,
+        countryName,
+        message: data.message,
+      }));
+      
+      toast.success('Form başarıyla gönderildi');
+      reset();
+    } catch (err) {
+      toast.error('Form gönderilirken bir hata oluştu');
+    }
   });
 
   // Default values if formData is not provided (for backward compatibility)
@@ -69,10 +90,15 @@ export default function ContactForm({ btnCls = '', formData }: IProps) {
         <ErrorMsg msg={errors.message?.message!} />
       </div>
       <div className="cn-contactform-btn">
-        <button className={`tp-btn-black-md ${btnCls} w-100`} type="submit">
-          {labels.buttonText}
+        <button 
+          className={`tp-btn-black-md ${btnCls} w-100`} 
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? 'Gönderiliyor...' : labels.buttonText}
         </button>
       </div>
+      {error && <div className="text-red-500 mt-3">{error}</div>}
     </form>
   );
 }
