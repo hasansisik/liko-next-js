@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { getAllBlogPosts } from '@/redux/actions/blogPostActions';
 import { formatBlogDate } from '@/utils/date-utils';
+import useMobile from "@/hooks/use-mobile";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
@@ -25,6 +26,7 @@ import { blogModernData } from "@/data/blog-modern-data";
 const BlogModernMain = () => {
   const dispatch = useAppDispatch();
   const { blogPosts, loading, error } = useAppSelector((state) => state.blogPosts);
+  const isMobile = useMobile();
   
   useScrollSmooth();
 
@@ -79,22 +81,50 @@ const BlogModernMain = () => {
 
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <main>
+          <main style={{ overflow: 'hidden' }}>
             {/* Loading state */}
             {loading && (
-              <div className="flex justify-center items-center min-h-screen">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                minHeight: isMobile ? '50vh' : '100vh',
+                padding: isMobile ? '40px 0' : '0'
+              }}>
+                <div style={{ 
+                  width: isMobile ? '40px' : '80px', 
+                  height: isMobile ? '40px' : '80px', 
+                  borderRadius: '50%', 
+                  border: '2px solid #f3f3f3', 
+                  borderTop: '2px solid #3498db', 
+                  animation: 'spin 1s linear infinite'
+                }}></div>
               </div>
             )}
 
             {/* Error state */}
             {error && (
-              <div className="flex justify-center items-center min-h-screen">
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                minHeight: isMobile ? '50vh' : '100vh',
+                padding: isMobile ? '40px 20px' : '0'
+              }}>
                 <div className="text-center">
-                  <p className="text-red-600 mb-4">Error loading blog data: {error}</p>
+                  <p style={{ color: '#e74c3c', marginBottom: '1rem' }}>
+                    Error loading blog data: {error}
+                  </p>
                   <button 
                     onClick={() => dispatch(getAllBlogPosts({ published: true, limit: 100 }))}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    style={{ 
+                      padding: '0.5rem 1rem', 
+                      backgroundColor: '#3498db', 
+                      color: 'white', 
+                      border: 'none', 
+                      borderRadius: '0.25rem', 
+                      cursor: 'pointer' 
+                    }}
                   >
                     Retry
                   </button>

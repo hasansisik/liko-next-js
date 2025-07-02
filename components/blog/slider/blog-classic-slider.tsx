@@ -76,12 +76,27 @@ export default function BlogClassicSlider() {
                         </div>
                         <div className="blog-sidebar-title-box">
                           <span className="blog-sidebar-slider-meta">
-                            {item.category} . {item.date}
+                            <Link 
+                              href={`/category/${item.category?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || 'general'}`}
+                              style={{ 
+                                color: '#007bff', 
+                                textDecoration: 'none',
+                                transition: 'color 0.3s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.color = '#0056b3';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.color = '#007bff';
+                              }}
+                            >
+                              {item.category}
+                            </Link> . {item.date}
                           </span>
                           <h4 className="blog-sidebar-slider-title tp-char-animation">
                             {item.title}
                           </h4>
-                          <Link href={`/${createSlug(item.title)}`}
+                          <Link href={`/${item.slug || createSlug(item.title)}`}
                             className="blog-sidebar-slider-link"
                           >
                             Read More

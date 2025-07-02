@@ -117,17 +117,32 @@ export default function BlogClassicArea({setIsVideoOpen,setVideoId}:IProps) {
                     <div className="postbox__content">
                       <div className="postbox__meta">
                         <span>
-                          {item.category} . {item.date}
+                          <Link 
+                            href={`/category/${item.category?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || 'general'}`}
+                            style={{ 
+                              color: '#007bff', 
+                              textDecoration: 'none',
+                              transition: 'color 0.3s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.color = '#0056b3';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = '#007bff';
+                            }}
+                          >
+                            {item.category}
+                          </Link> . {item.date}
                         </span>
                       </div>
                       <h3 className="postbox__title">
-                        <Link href={`/${createSlug(item.title)}`}>{item.title}</Link>
+                        <Link href={`/${item.slug || createSlug(item.title)}`}>{item.title}</Link>
                       </h3>
                       <div className="postbox__text">
                         <p>{item.desc}</p>
                       </div>
                       <div className="postbox__read-more">
-                        <Link href={`/${createSlug(item.title)}`}
+                        <Link href={`/${item.slug || createSlug(item.title)}`}
                           className="tp-btn-border-lg"
                         >
                           read more

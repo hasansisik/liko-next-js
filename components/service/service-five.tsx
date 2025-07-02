@@ -12,7 +12,7 @@ const generateSlug = (title: string) => {
 // service items
 export function ServiceItems({ servicePosts }: { servicePosts?: ServicePostData[] }) {
   // Use service posts if available, otherwise fallback to static data
-  const serviceItems = servicePosts?.length > 0 
+  const serviceItems = servicePosts && servicePosts.length > 0 
     ? servicePosts.slice(0, 3).map(post => ({
         id: post._id,
         title: post.title,

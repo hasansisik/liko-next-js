@@ -7,6 +7,7 @@ import Pagination from "../ui/pagination";
 import { IBlogDT } from "@/types/blog-d-t";
 import BlogItem from "./blog-item/blog-item";
 import { formatBlogDate } from "@/utils/date-utils";
+import useMobile from "@/hooks/use-mobile";
 
 interface BlogModernProps {
   blogPosts?: BlogPostData[];
@@ -14,6 +15,7 @@ interface BlogModernProps {
 
 export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
   const dispatch = useAppDispatch();
+  const isMobile = useMobile();
 
   // Fetch blog posts on component mount if not already loaded and no props provided
   useEffect(() => {
@@ -59,7 +61,10 @@ export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
 
   // Use transformed posts if available, otherwise fallback to static data
   const blog_items = transformedPosts.length > 0 ? transformedPosts as IBlogDT[] : blog_modern;
-  const { currentItems, handlePageClick, pageCount } = usePagination<IBlogDT>(blog_items, 9);
+  
+  // Adjust number of items per page for mobile
+  const itemsPerPage = isMobile ? 6 : 9;
+  const { currentItems, handlePageClick, pageCount } = usePagination<IBlogDT>(blog_items, itemsPerPage);
 
   // Loading state is now determined by whether we have posts
   const loading = blogPosts.length === 0;
@@ -83,8 +88,11 @@ export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
     );
   }
 
+  // Adjust padding for mobile
+  const containerPadding = isMobile ? 'pt-60 pb-40' : 'pt-120 pb-70';
+
   return (
-    <div className="blog-details-realated-area pt-120 pb-70">
+    <div className={`blog-details-realated-area ${containerPadding}`}>
       <div className="container">
         {blog_items.length === 0 ? (
           <div className="row">
@@ -97,12 +105,21 @@ export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
           </div>
         ) : (
           <>
-            <div className="row" style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div className="row" style={{ 
+              display: 'flex', 
+              flexWrap: 'wrap',
+              margin: isMobile ? '0 -10px' : undefined
+            }}>
               {currentItems.map((item) => (
-                <div key={item.id} className="col-xl-4 col-lg-6 col-md-6 mb-50" style={{ 
-                  display: 'flex',
-                  alignItems: 'stretch'
-                }}>
+                <div 
+                  key={item.id} 
+                  className={isMobile ? "col-12 col-sm-6 mb-30" : "col-xl-4 col-lg-6 col-md-6 mb-50"} 
+                  style={{ 
+                    display: 'flex',
+                    alignItems: 'stretch',
+                    padding: isMobile ? '0 10px' : undefined
+                  }}
+                >
                   <BlogItem item={item} />
                 </div>
               ))}
@@ -111,7 +128,7 @@ export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
             {pageCount > 1 && (
               <div className="row">
                 <div className="col-12">
-                  <div className="basic-pagination mt-40 d-flex align-items-center justify-content-center">
+                  <div className={`basic-pagination ${isMobile ? 'mt-20' : 'mt-40'} d-flex align-items-center justify-content-center`}>
                     <nav>
                       <Pagination
                         handlePageClick={handlePageClick}

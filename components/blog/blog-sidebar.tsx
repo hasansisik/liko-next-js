@@ -1,12 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { blog_lists } from "@/data/blog-data";
 import { createSlug } from "@/utils/slug-utils";
 import ContactFormDental from "../form/contact-form-dental";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { getAllBlogPosts } from '@/redux/actions/blogPostActions';
 
 export default function BlogSidebar() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { blogPosts } = useAppSelector((state) => state.blogPosts);
   const rc_posts = [...blog_lists].slice(0, 3);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
+  
+  // Fetch blog posts on component mount if not already loaded
+  useEffect(() => {
+    if (blogPosts.length === 0) {
+      dispatch(getAllBlogPosts({ 
+        published: true,
+        limit: 100
+      }));
+    }
+  }, [dispatch, blogPosts.length]);
+  
+  // Extract unique categories from blog posts
+  useEffect(() => {
+    if (blogPosts.length > 0) {
+      // Get all categories from all posts
+      const allCategories = blogPosts.reduce((acc: string[], post) => {
+        if (post.categories && Array.isArray(post.categories)) {
+          return [...acc, ...post.categories];
+        }
+        return acc;
+      }, []);
+      
+      // Remove duplicates and filter out empty categories
+      const uniqueCategories = [...new Set(allCategories)].filter(Boolean);
+      
+      setCategories(uniqueCategories);
+    }
+  }, [blogPosts]);
+  
+  // Fallback categories if no blog posts are loaded
+  const fallbackCategories = [
+    "Branding",
+    "Lifestyle",
+    "UI/UX Design",
+    "Production",
+    "Dental Care",
+    "Treatments"
+  ];
+  
+  // Use dynamic categories or fallback if none are available
+  const displayCategories = categories.length > 0 ? categories : fallbackCategories;
+  
+  // Handle search form submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/category/search?q=${encodeURIComponent(searchTerm)}`);
+    }
+  };
+
   return (
     <aside className="sidebar__wrapper">
       <div className="sidebar__widget mb-65">
@@ -15,9 +73,14 @@ export default function BlogSidebar() {
         </div>
         <div className="sidebar__widget-content">
           <div className="sidebar__search">
-            <form action="#">
+            <form onSubmit={handleSearch}>
               <div className="sidebar__search-input-2">
-                <input type="text" placeholder="Search here" />
+                <input 
+                  type="text" 
+                  placeholder="Search here" 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
                 <button type="submit">
                   <i className="far fa-search"></i>
                 </button>
@@ -68,18 +131,15 @@ export default function BlogSidebar() {
         <h3 className="sidebar__widget-title">Category</h3>
         <div className="sidebar__widget-content">
           <ul>
-            <li>
-              <Link href="/blog">Branding</Link>
-            </li>
-            <li>
-              <Link href="/blog">Lifestyle</Link>
-            </li>
-            <li>
-              <Link href="/blog">UI/UX Design</Link>
-            </li>
-            <li>
-              <Link href="/blog">Production</Link>
-            </li>
+            {displayCategories.map((category, index) => (
+              <li key={index}>
+                <Link 
+                  href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  {category}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -109,9 +169,9 @@ export default function BlogSidebar() {
                     <span>{item.date}</span>
                   </div>
                   <h3 className="rc__post-title">
-                                    <Link href={`/${createSlug(item.title)}`}>
-                  {item.title}
-                </Link>
+                    <Link href={`/${createSlug(item.title)}`}>
+                      {item.title}
+                    </Link>
                   </h3>
                 </div>
               </div>
@@ -124,12 +184,14 @@ export default function BlogSidebar() {
         <h3 className="sidebar__widget-title">Tags</h3>
         <div className="sidebar__widget-content">
           <div className="tagcloud">
-            <a href="#">Creative</a>
-            <a href="#">Photography</a>
-            <a href="#">Lifestyle</a>
-            <a href="#">Branding</a>
-            <a href="#">Marketing</a>
-            <a href="#">UI/UX Design</a>
+            {displayCategories.map((category, index) => (
+              <Link 
+                key={index} 
+                href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                {category}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
