@@ -207,7 +207,7 @@ export default function BlogDetailsAreaTwo({ blog }: IProps) {
                       are marked *
                     </p>
                     {/* blog reply form */}
-                    <BlogReplyForm />
+                    <BlogReplyForm postId={(blog as any)._id || blog.id?.toString() || ""} />
                     {/* blog reply form */}
                   </div>
                 </div>
