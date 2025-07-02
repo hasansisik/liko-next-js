@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import useMobile from "@/hooks/use-mobile";
+
 interface IServiceHeroData {
   title: string;
   description: string;
@@ -11,6 +13,8 @@ interface ServiceHeroProps {
 }
 
 export default function ServiceHero({ heroData }: ServiceHeroProps) {
+  const isMobile = useMobile();
+  
   return (
     <div className="sv-hero-area sv-hero-ptb">
       <div className="container-fluid" style={{ 
@@ -34,23 +38,24 @@ export default function ServiceHero({ heroData }: ServiceHeroProps) {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="sv-hero-thumb p-relative">
-              <div className="sv-hero-thumb-box">
-                <Image
-                  data-speed=".7"
-                  src={heroData.image}
-                  alt="dental-services-hero"
-                  width={1200}
-                  height={600}
-                  style={{height:"auto", width:"100%", objectFit:"cover"}}
-                />
+        {!isMobile && (
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="sv-hero-thumb p-relative">
+                <div className="sv-hero-thumb-box">
+                  <Image
+                    data-speed=".7"
+                    src={heroData.image}
+                    alt="dental-services-hero"
+                    width={1200}
+                    height={600}
+                    style={{height:"auto", width:"100%", objectFit:"cover"}}
+                  />
+                </div>
               </div>
-
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

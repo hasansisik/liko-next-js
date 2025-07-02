@@ -8,10 +8,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { createSlug } from "@/utils/slug-utils";
 
-// images
-import sv_1 from "@/assets/img/inner-service/sercive-details/sv-details-1.jpg";
-import sv_2 from "@/assets/img/inner-service/sercive-details/sv-details-2.jpg";
-import sv_3 from "@/assets/img/inner-service/sercive-details/sv-details-3.jpg";
 
 interface ServiceDetailsAreaProps {
   service: IServiceDT;
@@ -161,35 +157,6 @@ export default function ServiceDetailsArea({ service }: ServiceDetailsAreaProps)
                 dangerouslySetInnerHTML={{ __html: service.content.htmlContent }}
               />
               
-              {/* Use other service images for small thumbnails */}
-              {otherServices.length >= 2 && (
-                <div className="service-details__sm-thumb-wrap mb-60">
-                  <div className="row">
-                    <div className="col-xl-6 col-lg-6 col-md-6 mb-20">
-                      <div className="service-details__sm-thumb">
-                        <Image
-                          src={otherServices[0].img}
-                          alt={otherServices[0].title}
-                          width={600}
-                          height={400}
-                          style={{ height: "auto" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 mb-20">
-                      <div className="service-details__sm-thumb">
-                        <Image
-                          src={otherServices[1].img}
-                          alt={otherServices[1].title}
-                          width={600}
-                          height={400}
-                          style={{ height: "auto" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
           <div className="col-xl-5 col-lg-5">
