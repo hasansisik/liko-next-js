@@ -50,6 +50,7 @@ const BlogModernMain = () => {
     ...blogModernData,
     posts: blogPosts.map(post => ({
       id: parseInt(post._id?.slice(-6) || "1", 16), // Convert ObjectId to number
+      _id: post._id, // Preserve the original MongoDB _id
       img: post.img,
       title: post.title,
       date: formatBlogDate(post.date || post.createdAt),
@@ -70,7 +71,7 @@ const BlogModernMain = () => {
       isPublished: post.isPublished,
       tags: post.tags,
       slug: post.slug || post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
-    }))
+    } as any))
   } : blogModernData;
 
   return (

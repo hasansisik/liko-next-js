@@ -8,10 +8,21 @@ interface BlogDetailsCommentsProps {
 
 export default function BlogDetailsComments({ blog }: BlogDetailsCommentsProps) {
   const comments = blog.comments || [];
+  // Only show approved comments on frontend
+  const approvedComments = comments.filter(comment => {
+    // If the comment has an isApproved property, only show if it's true
+    // If the comment doesn't have isApproved property (static data), show it
+    const hasApprovalProperty = (comment as any).hasOwnProperty('isApproved');
+    if (hasApprovalProperty) {
+      return (comment as any).isApproved === true;
+    }
+    // For static data without approval system, show the comment
+    return true;
+  });
   
   return (
     <ul>
-      {comments.map((item) => (
+      {approvedComments.map((item) => (
         <li key={item.id}>
           <div className="postbox__comment-box d-flex">
             <div className="postbox__comment-info ">

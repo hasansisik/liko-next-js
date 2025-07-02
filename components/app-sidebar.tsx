@@ -92,6 +92,10 @@ const data = {
           title: "Service Posts",
           url: "/dashboard/service-posts",
         },
+        {
+          title: "Comments",
+          url: "/dashboard/comments",
+        },
        
       ],
     }

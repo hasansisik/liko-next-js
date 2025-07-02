@@ -128,17 +128,17 @@ export default function BlogPostsPage() {
   );
 
   const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return 'Tarih yok';
+    if (!dateString) return 'No date';
     return formatDisplayDate(dateString);
   };
 
   const getStatusBadge = (isPublished?: boolean) => {
     return isPublished ? (
       <Badge variant="default" className="bg-green-500">
-        Yayında
+        Published
       </Badge>
     ) : (
-      <Badge variant="secondary">Taslak</Badge>
+      <Badge variant="secondary">Draft</Badge>
     );
   };
 
@@ -156,7 +156,7 @@ export default function BlogPostsPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Blog Yönetimi</BreadcrumbPage>
+                <BreadcrumbPage>Blog Management</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -166,11 +166,11 @@ export default function BlogPostsPage() {
         <div className="flex items-center gap-2 ml-auto px-4">
           <Button onClick={() => loadBlogPosts()} variant="outline" size="sm">
             <RefreshCw className="w-4 h-4 mr-2" />
-            Yenile
+            Refresh
           </Button>
           <Button onClick={handleCreateNew} size="sm">
             <Plus className="w-4 h-4 mr-2" />
-            Yeni Blog Post
+            New Blog Post
           </Button>
         </div>
       </header>
@@ -181,7 +181,7 @@ export default function BlogPostsPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Toplam Post</CardTitle>
+              <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -191,7 +191,7 @@ export default function BlogPostsPage() {
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Yayında</CardTitle>
+              <CardTitle className="text-sm font-medium">Published</CardTitle>
               <Eye className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -203,7 +203,7 @@ export default function BlogPostsPage() {
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Taslak</CardTitle>
+              <CardTitle className="text-sm font-medium">Draft</CardTitle>
               <Edit className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -215,7 +215,7 @@ export default function BlogPostsPage() {
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Kategoriler</CardTitle>
+              <CardTitle className="text-sm font-medium">Categories</CardTitle>
               <Tag className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -263,18 +263,18 @@ export default function BlogPostsPage() {
               
               <Select value={selectedStatus} onValueChange={setSelectedStatus}>
                 <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder="Durum" />
+                  <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tümü</SelectItem>
-                  <SelectItem value="published">Yayında</SelectItem>
-                  <SelectItem value="draft">Taslak</SelectItem>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="published">Published</SelectItem>
+                  <SelectItem value="draft">Draft</SelectItem>
                 </SelectContent>
               </Select>
               
               <Button onClick={handleSearch}>
                 <Search className="w-4 h-4 mr-2" />
-                Ara
+                Search
               </Button>
             </div>
           </CardContent>
@@ -296,7 +296,7 @@ export default function BlogPostsPage() {
         {/* Blog Posts List */}
         <Card>
           <CardHeader>
-            <CardTitle>Blog Postları</CardTitle>
+            <CardTitle>Blog Posts</CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
@@ -307,15 +307,15 @@ export default function BlogPostsPage() {
               <div className="text-center py-8">
                 <FileText className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
-                  Blog post bulunamadı
+                  No blog posts found
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Yeni bir blog post oluşturarak başlayın.
+                  Get started by creating a new blog post.
                 </p>
                 <div className="mt-6">
                   <Button onClick={handleCreateNew}>
                     <Plus className="w-4 h-4 mr-2" />
-                    Yeni Blog Post
+                    New Blog Post
                   </Button>
                 </div>
               </div>
@@ -368,7 +368,7 @@ export default function BlogPostsPage() {
                         </span>
                         <span className="flex items-center gap-1">
                           <Tag className="w-3 h-3" />
-                          {post.categories?.[0] || 'Kategori yok'}
+                          {post.categories?.[0] || 'No category'}
                         </span>
                         <span className="flex items-center gap-1">
                           <MessageSquare className="w-3 h-3" />
@@ -403,19 +403,19 @@ export default function BlogPostsPage() {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Blog Post Sil</AlertDialogTitle>
+                            <AlertDialogTitle>Delete Blog Post</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Bu blog postunu silmek istediğinizden emin misiniz? Bu
-                              işlem geri alınamaz.
+                              Are you sure you want to delete this blog post? This
+                              action cannot be undone.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>İptal</AlertDialogCancel>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDeletePost(post._id!)}
                               className="bg-red-500 hover:bg-red-600"
                             >
-                              Sil
+                              Delete
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -430,8 +430,8 @@ export default function BlogPostsPage() {
             {pagination && pagination.totalPages > 1 && (
               <div className="flex items-center justify-between px-2 py-4 border-t">
                 <div className="text-sm text-gray-500">
-                  Sayfa {pagination.currentPage} / {pagination.totalPages} (
-                  {pagination.totalPosts} toplam)
+                  Page {pagination.currentPage} / {pagination.totalPages} (
+                  {pagination.totalPosts} total)
                 </div>
                 <div className="flex items-center space-x-2">
                   <Button
@@ -440,7 +440,7 @@ export default function BlogPostsPage() {
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={!pagination.hasPrev}
                   >
-                    Önceki
+                    Previous
                   </Button>
                   <Button
                     variant="outline"
@@ -448,7 +448,7 @@ export default function BlogPostsPage() {
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={!pagination.hasNext}
                   >
-                    Sonraki
+                    Next
                   </Button>
                 </div>
               </div>

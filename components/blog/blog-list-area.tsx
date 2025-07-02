@@ -17,6 +17,7 @@ export default function BlogListArea({ blogPosts }: BlogListAreaProps) {
   const blog_items: IBlogDT[] = blogPosts && blogPosts.length > 0 
     ? blogPosts.map(post => ({
         id: parseInt(post._id?.slice(-6) || "1", 16),
+        _id: post._id, // Preserve the original MongoDB _id
         img: post.img || "/assets/img/blog/default-blog.jpg",
         title: post.title,
         date: formatBlogDate(post.date || post.createdAt),
@@ -37,7 +38,7 @@ export default function BlogListArea({ blogPosts }: BlogListAreaProps) {
         images: post.images,
         isPublished: post.isPublished,
         tags: post.tags
-      }))
+      } as any))
     : blog_lists;
     
   const { currentItems, handlePageClick, pageCount } = usePagination(blog_items, 4);

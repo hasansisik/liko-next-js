@@ -30,6 +30,7 @@ export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
   // Transform blog posts to match IBlogDT interface
   const transformedPosts = blogPosts.map(post => ({
     id: parseInt(post._id?.slice(-6) || "1", 16),
+    _id: post._id, // Preserve the original MongoDB _id
     img: post.img,
     title: post.title,
     date: formatBlogDate(post.date || post.createdAt),
@@ -57,7 +58,7 @@ export default function BlogModern({ blogPosts = [] }: BlogModernProps) {
     isPublished: post.isPublished,
     tags: post.tags,
     slug: post.slug || post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
-  }));
+  } as any));
 
   // Use transformed posts if available, otherwise fallback to static data
   const blog_items = transformedPosts.length > 0 ? transformedPosts as IBlogDT[] : blog_modern;

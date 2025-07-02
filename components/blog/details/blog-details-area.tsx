@@ -1,8 +1,5 @@
 import React from "react";
-import Image from "next/image";
 import BlogSidebar from "../blog-sidebar";
-import { QuoteThree, Share, Tag } from "@/components/svg";
-import BlogDetailsAuthor from "./blog-details-author";
 import BlogDetailsNavigation from "./blog-details-navigation";
 import BlogDetailsComments from "./blog-details-comments";
 import BlogReplyForm from "@/components/form/blog-reply-form";
@@ -13,6 +10,17 @@ type IProps = {
 };
 
 export default function BlogDetailsArea({ blog }: IProps) {
+  // Helper function to count approved comments
+  const getApprovedCommentsCount = (comments: any[]) => {
+    return comments.filter(comment => {
+      const hasApprovalProperty = (comment as any).hasOwnProperty('isApproved');
+      if (hasApprovalProperty) {
+        return (comment as any).isApproved === true;
+      }
+      return true; // Static data comments
+    }).length;
+  };
+
   // Handle case where blog might be undefined during build
   if (!blog) {
     return (
@@ -74,7 +82,10 @@ export default function BlogDetailsArea({ blog }: IProps) {
 
               <div className="postbox__comment mb-100">
                 <h3 className="postbox__comment-title">
-                  {blog.commentCount || 0} Comment{(blog.commentCount || 0) !== 1 ? 's' : ''}
+                  {(() => {
+                    const approvedCount = getApprovedCommentsCount(blog.comments || []);
+                    return `${approvedCount} Comment${approvedCount !== 1 ? 's' : ''}`;
+                  })()}
                 </h3>
                 {/* blog details comments */}
                 <BlogDetailsComments blog={blog} />
@@ -89,7 +100,7 @@ export default function BlogDetailsArea({ blog }: IProps) {
                 </p>
 
                 {/* blog reply form */}
-                <BlogReplyForm />
+                <BlogReplyForm postId={(blog as any)._id || blog.id?.toString() || ""} />
                 {/* blog reply form */}
               </div>
             </div>

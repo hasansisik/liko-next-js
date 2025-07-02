@@ -36,6 +36,7 @@ const UnifiedContentPage = () => {
   // Transform BlogPost to IBlogDT
   const transformBlogPost = (post: BlogPostData): IBlogDT => ({
     id: parseInt(post._id?.slice(-6) || "1", 16),
+    _id: post._id, // Preserve the original MongoDB _id
     img: post.img as any,
     title: post.title,
     date: formatBlogDate(post.date || post.createdAt),
@@ -48,7 +49,12 @@ const UnifiedContentPage = () => {
       name: comment.name,
       avatar: comment.avatar || "/assets/img/inner-blog/blog-details/avatar/avatar-3.jpg",
       date: comment.date,
-      comment: comment.comment
+      comment: comment.comment,
+      // Preserve approval status and other properties
+      isApproved: (comment as any).isApproved,
+      isGuest: (comment as any).isGuest,
+      email: (comment as any).email,
+      _id: (comment as any)._id
     })) || [],
     content: post.content,
     video: post.video,
@@ -59,7 +65,7 @@ const UnifiedContentPage = () => {
     blogQuoteTwo: post.blogQuoteTwo,
     blogHeroSlider: post.blogHeroSlider,
     images: post.images as any
-  });
+  } as any);
 
   // Transform ServicePost to IServiceDT
   const transformServicePost = (post: ServicePostData): IServiceDT => ({

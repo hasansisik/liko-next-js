@@ -41,9 +41,12 @@ export interface BlogPostData {
 export interface BlogComment {
   _id?: string;
   name: string;
+  email: string;
   avatar?: string;
   date: string;
   comment: string;
+  isApproved?: boolean;
+  isGuest?: boolean;
 }
 
 export interface CreateBlogPostPayload {
@@ -205,10 +208,12 @@ export const addComment = createAsyncThunk(
   "blogPosts/addComment",
   async ({ postId, comment }: { postId: string; comment: any }, thunkAPI) => {
     try {
+      console.log('Sending comment request:', { postId, comment });
       const { data } = await axios.post(`${server}/blog-posts/${postId}/comments`, comment);
       return { postId, comment: data.comment };
     } catch (error: any) {
-      const message = error.response?.data?.message || 'Yorum eklenemedi';
+      console.error('Comment submission error:', error.response?.data || error.message);
+      const message = error.response?.data?.message || 'Comment could not be added';
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -223,6 +228,71 @@ export const getBlogCategories = createAsyncThunk(
       return data.categories;
     } catch (error: any) {
       const message = error.response?.data?.message || 'Kategoriler alınamadı';
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get all comments for admin
+export const getAllComments = createAsyncThunk(
+  "blogPosts/getAllComments",
+  async (params: { status?: string; page?: number; limit?: number } = {}, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const queryParams = new URLSearchParams();
+      if (params.status) queryParams.append('status', params.status);
+      if (params.page) queryParams.append('page', params.page.toString());
+      if (params.limit) queryParams.append('limit', params.limit.toString());
+
+      const { data } = await axios.get(`${server}/blog-posts/comments?${queryParams}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return {
+        comments: data.comments,
+        pagination: data.pagination
+      };
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Yorumlar alınamadı';
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Approve comment
+export const approveComment = createAsyncThunk(
+  "blogPosts/approveComment",
+  async ({ postId, commentId }: { postId: string; commentId: string }, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const { data } = await axios.put(`${server}/blog-posts/${postId}/comments/${commentId}/approve`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return { postId, commentId, comment: data.comment };
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Yorum onaylanamadı';
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Delete comment
+export const deleteComment = createAsyncThunk(
+  "blogPosts/deleteComment",
+  async ({ postId, commentId }: { postId: string; commentId: string }, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`${server}/blog-posts/${postId}/comments/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return { postId, commentId };
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Yorum silinemedi';
       return thunkAPI.rejectWithValue(message);
     }
   }

@@ -6,6 +6,9 @@ import {
   updateBlogPost,
   deleteBlogPost,
   addComment,
+  getAllComments,
+  approveComment,
+  deleteComment,
   getBlogCategories,
   BlogPostData
 } from "../actions/blogPostActions";
@@ -15,6 +18,14 @@ interface BlogPostState {
   blogPosts: BlogPostData[];
   selectedBlogPost: BlogPostData | null;
   categories: CategoryData[];
+  comments: any[];
+  commentsPagination: {
+    currentPage: number;
+    totalPages: number;
+    totalComments: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  } | null;
   pagination: {
     currentPage: number;
     totalPages: number;
@@ -32,6 +43,8 @@ const initialState: BlogPostState = {
   blogPosts: [],
   selectedBlogPost: null,
   categories: [],
+  comments: [],
+  commentsPagination: null,
   pagination: null,
   loading: false,
   error: null,
@@ -82,7 +95,7 @@ export const blogPostReducer = createReducer(initialState, (builder) => {
       state.blogPosts.unshift(action.payload);
       state.selectedBlogPost = action.payload;
       state.success = true;
-      state.message = "Blog post başarıyla oluşturuldu";
+      state.message = "Blog post created successfully";
       state.error = null;
     })
     .addCase(createBlogPost.rejected, (state, action) => {
@@ -105,7 +118,7 @@ export const blogPostReducer = createReducer(initialState, (builder) => {
       }
       state.selectedBlogPost = action.payload;
       state.success = true;
-      state.message = "Blog post başarıyla güncellendi";
+      state.message = "Blog post updated successfully";
       state.error = null;
     })
     .addCase(updateBlogPost.rejected, (state, action) => {
@@ -127,7 +140,7 @@ export const blogPostReducer = createReducer(initialState, (builder) => {
         state.selectedBlogPost = null;
       }
       state.success = true;
-      state.message = "Blog post başarıyla silindi";
+      state.message = "Blog post deleted successfully";
       state.error = null;
     })
     .addCase(deleteBlogPost.rejected, (state, action) => {
@@ -143,29 +156,10 @@ export const blogPostReducer = createReducer(initialState, (builder) => {
     })
     .addCase(addComment.fulfilled, (state, action) => {
       state.loading = false;
-      const { postId, comment } = action.payload;
-      
-      // Update selected blog post if it's the same
-      if (state.selectedBlogPost?._id === postId) {
-        if (!state.selectedBlogPost.comments) {
-          state.selectedBlogPost.comments = [];
-        }
-        state.selectedBlogPost.comments.push(comment);
-        state.selectedBlogPost.commentCount = state.selectedBlogPost.comments.length;
-      }
-      
-      // Update in blog posts list
-      const postIndex = state.blogPosts.findIndex(post => post._id === postId);
-      if (postIndex !== -1) {
-        if (!state.blogPosts[postIndex].comments) {
-          state.blogPosts[postIndex].comments = [];
-        }
-        state.blogPosts[postIndex].comments!.push(comment);
-        state.blogPosts[postIndex].commentCount = state.blogPosts[postIndex].comments!.length;
-      }
-      
+      // Don't add comment to state since it needs approval
+      // Just show success message
       state.success = true;
-      state.message = "Yorum başarıyla eklendi";
+      state.message = "Comment submitted successfully. It will appear after approval.";
       state.error = null;
     })
     .addCase(addComment.rejected, (state, action) => {
@@ -184,6 +178,67 @@ export const blogPostReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(getBlogCategories.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    })
+    
+    // Get All Comments
+    .addCase(getAllComments.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(getAllComments.fulfilled, (state, action) => {
+      state.loading = false;
+      state.comments = action.payload.comments;
+      state.commentsPagination = action.payload.pagination;
+      state.error = null;
+    })
+    .addCase(getAllComments.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    })
+    
+    // Approve Comment
+    .addCase(approveComment.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(approveComment.fulfilled, (state, action) => {
+      state.loading = false;
+      const { postId, commentId } = action.payload;
+      
+      // Update in comments list
+      const commentIndex = state.comments.findIndex(c => c.comment._id === commentId);
+      if (commentIndex !== -1) {
+        state.comments[commentIndex].comment.isApproved = true;
+      }
+      
+      state.success = true;
+      state.message = "Comment approved";
+      state.error = null;
+    })
+    .addCase(approveComment.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    })
+    
+    // Delete Comment
+    .addCase(deleteComment.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(deleteComment.fulfilled, (state, action) => {
+      state.loading = false;
+      const { commentId } = action.payload;
+      
+      // Remove from comments list
+      state.comments = state.comments.filter(c => c.comment._id !== commentId);
+      
+      state.success = true;
+      state.message = "Comment deleted";
+      state.error = null;
+    })
+    .addCase(deleteComment.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });
