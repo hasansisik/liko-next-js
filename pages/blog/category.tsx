@@ -139,95 +139,14 @@ const CategoryMain: React.FC<CategoryMainProps> = ({ categorySlug }) => {
                         {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'} found in this category
                       </p>
                     </div>
+                    
                   </div>
+                  
                 </div>
+                
               </div>
             </div>
 
-            {/* Category Info Section */}
-            {!loading && !error && (
-              <div className="container" style={{ 
-                marginTop: isMobile ? '30px' : '40px', 
-                marginBottom: isMobile ? '20px' : '20px' 
-              }}>
-                <div className="row">
-                  <div className="col-xl-12">
-                    <div className="text-center py-4 border-bottom" style={{ 
-                      padding: isMobile ? '20px 0' : undefined 
-                    }}>
-                      <h3 className="mb-2" style={{ 
-                        fontSize: isMobile ? '18px' : '24px',
-                        marginBottom: isMobile ? '15px' : '8px' 
-                      }}>
-                        &ldquo;{categoryName}&rdquo; Kategorisi
-                      </h3>
-                      <p className="text-muted mb-0" style={{ 
-                        fontSize: isMobile ? '14px' : '16px',
-                        lineHeight: isMobile ? '1.5' : 'inherit'
-                      }}>
-                        Bu kategoride toplam <strong>{filteredPosts.length} makale</strong> bulunmaktadır.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Loading state */}
-            {loading && (
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #f3f3f3', borderTop: '2px solid #3498db', animation: 'spin 1s linear infinite' }}></div>
-              </div>
-            )}
-
-            {/* Error state */}
-            {error && (
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-                <div className="text-center">
-                  <p style={{ color: '#e74c3c', marginBottom: '1rem' }}>Error loading blog posts: {error}</p>
-                  <button 
-                    onClick={() => dispatch(getAllBlogPosts({ published: true, limit: 100 }))}
-                    style={{ padding: '0.5rem 1rem', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}
-                  >
-                    Retry
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* No posts found */}
-            {!loading && !error && filteredPosts.length === 0 && (
-              <div className="container" style={{ padding: '5rem 0' }}>
-                <div className="text-center">
-                  <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>No Posts Found</h2>
-                  <p style={{ color: '#666', marginBottom: '2rem' }}>
-                    Sorry, we couldn&apos;t find any posts in the &ldquo;{categoryName}&rdquo; category.
-                  </p>
-                  <Link 
-                    href="/blog" 
-                    style={{ 
-                      display: 'inline-flex', 
-                      alignItems: 'center', 
-                      padding: '0.75rem 1.5rem', 
-                      backgroundColor: '#3498db', 
-                      color: 'white', 
-                      borderRadius: '0.5rem', 
-                      textDecoration: 'none',
-                      transition: 'background-color 0.3s'
-                    }}
-                  >
-                    Back to All Posts
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {/* Blog list area with filtered posts */}
-            {!loading && !error && filteredPosts.length > 0 && (
-              <div style={{ marginTop: '20px' }}>
-                <BlogListArea blogPosts={filteredPosts} />
-              </div>
-            )}
 
           </main>
 

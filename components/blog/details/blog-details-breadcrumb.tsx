@@ -38,6 +38,11 @@ export default function BlogDetailsBreadcrumb({ blog }: IProps) {
     );
   }
 
+  // Function to create a category slug
+  const createCategorySlug = (category: string) => {
+    return category?.toLowerCase().replace(/\s+/g, '-') || '';
+  };
+
   return (
     <div className="blog-details-area">
       <div
@@ -105,9 +110,25 @@ export default function BlogDetailsBreadcrumb({ blog }: IProps) {
                 <span className="blog-details-meta" style={{
                   color: '#999',
                   fontSize: '14px',
-                  fontWeight: '500'
+                  fontWeight: '500',
+                  display: 'block',
+                  marginBottom: '5px'
                 }}>
-                  {blog.category} <i style={{ color: '#666' }}>. {blog.date}</i>
+                  {blog.category && (
+                    <Link 
+                      href={`/category/${createCategorySlug(blog.category)}`}
+                      style={{
+                        color: '#999',
+                        textDecoration: 'none',
+                        transition: 'color 0.3s ease',
+                        cursor: 'pointer'
+                      }}
+                      className="category-link"
+                    >
+                      {blog.category}
+                    </Link>
+                  )}
+                  <i style={{ color: '#666', margin: '0 5px' }}>. {blog.date}</i>
                 </span>
                 <h1 className="blog-details-title tp-char-animation" style={{
                   color: '#fff',

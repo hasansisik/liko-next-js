@@ -12,9 +12,9 @@ export default function BlogSidebar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { blogPosts } = useAppSelector((state) => state.blogPosts);
-  const rc_posts = [...blog_lists].slice(0, 3);
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
+  const [recentPosts, setRecentPosts] = useState<any[]>([]);
   
   // Fetch blog posts on component mount if not already loaded
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function BlogSidebar() {
     }
   }, [dispatch, blogPosts.length]);
   
-  // Extract unique categories from blog posts
+  // Extract unique categories and recent posts from blog posts
   useEffect(() => {
     if (blogPosts.length > 0) {
       // Get all categories from all posts
@@ -39,8 +39,18 @@ export default function BlogSidebar() {
       
       // Remove duplicates and filter out empty categories
       const uniqueCategories = [...new Set(allCategories)].filter(Boolean);
-      
       setCategories(uniqueCategories);
+      
+      // Get recent posts (sort by date and take the first 3)
+      const sortedPosts = [...blogPosts]
+        .sort((a, b) => {
+          const dateA = new Date(a.createdAt || 0).getTime();
+          const dateB = new Date(b.createdAt || 0).getTime();
+          return dateB - dateA; // Sort in descending order (newest first)
+        })
+        .slice(0, 3); // Take only the first 3 posts
+      
+      setRecentPosts(sortedPosts);
     }
   }, [blogPosts]);
   
@@ -63,6 +73,17 @@ export default function BlogSidebar() {
     if (searchTerm.trim()) {
       router.push(`/category/search?q=${encodeURIComponent(searchTerm)}`);
     }
+  };
+
+  // Format date to display in a readable format
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   };
 
   return (
@@ -128,60 +149,75 @@ export default function BlogSidebar() {
       </div>
 
       <div className="sidebar__widget mb-65">
-        <h3 className="sidebar__widget-title">Category</h3>
-        <div className="sidebar__widget-content">
-          <ul>
-            {displayCategories.map((category, index) => (
-              <li key={index}>
-                <Link 
-                  href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-                >
-                  {category}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="sidebar__widget mb-65">
         <h3 className="sidebar__widget-title">Recent Post</h3>
         <div className="sidebar__widget-content">
           <div className="sidebar__post rc__post">
-            {rc_posts.map((item) => (
-              <div
-                key={item.id}
-                className="rc__post mb-30 d-flex align-items-center"
-              >
-                <div className="rc__post-thumb mr-20">
-                  <Link href={`/${createSlug(item.title)}`}>
-                    <Image
-                      src={item.img!}
-                      alt="blog-img"
-                      width={100}
-                      height={100}
-                      style={{ objectFit: "cover" }}
-                    />
-                  </Link>
-                </div>
-                <div className="rc__post-content">
-                  <div className="rc__meta d-flex align-items-center">
-                    <span>{item.date}</span>
-                  </div>
-                  <h3 className="rc__post-title">
-                    <Link href={`/${createSlug(item.title)}`}>
-                      {item.title}
+            {recentPosts.length > 0 ? (
+              recentPosts.map((post) => (
+                <div
+                  key={post._id}
+                  className="rc__post mb-30 d-flex align-items-center"
+                >
+                  <div className="rc__post-thumb mr-20">
+                    <Link href={`/${post.slug || createSlug(post.title)}`}>
+                      <Image
+                        src={post.img || post.thumbnail || "/assets/img/blog/blog-1.jpg"}
+                        alt={post.title}
+                        width={100}
+                        height={100}
+                        style={{ objectFit: "cover" }}
+                      />
                     </Link>
-                  </h3>
+                  </div>
+                  <div className="rc__post-content">
+                    <div className="rc__meta d-flex align-items-center">
+                      <span>{formatDate(post.createdAt)}</span>
+                    </div>
+                    <h3 className="rc__post-title">
+                      <Link href={`/${post.slug || createSlug(post.title)}`}>
+                        {post.title}
+                      </Link>
+                    </h3>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              // Fallback to static posts if no dynamic posts are available
+              blog_lists.slice(0, 3).map((item) => (
+                <div
+                  key={item.id}
+                  className="rc__post mb-30 d-flex align-items-center"
+                >
+                  <div className="rc__post-thumb mr-20">
+                    <Link href={`/${createSlug(item.title)}`}>
+                      <Image
+                        src={item.img!}
+                        alt="blog-img"
+                        width={100}
+                        height={100}
+                        style={{ objectFit: "cover" }}
+                      />
+                    </Link>
+                  </div>
+                  <div className="rc__post-content">
+                    <div className="rc__meta d-flex align-items-center">
+                      <span>{item.date}</span>
+                    </div>
+                    <h3 className="rc__post-title">
+                      <Link href={`/${createSlug(item.title)}`}>
+                        {item.title}
+                      </Link>
+                    </h3>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
 
       <div className="sidebar__widget mb-65">
-        <h3 className="sidebar__widget-title">Tags</h3>
+        <h3 className="sidebar__widget-title">Category</h3>
         <div className="sidebar__widget-content">
           <div className="tagcloud">
             {displayCategories.map((category, index) => (
@@ -196,22 +232,7 @@ export default function BlogSidebar() {
         </div>
       </div>
 
-      <div className="sidebar__widget mb-65">
-        <h3 className="sidebar__widget-title">Follow Us</h3>
-        <div className="sidebar__widget-content">
-          <div className="sidebar__social">
-            <a href="#">
-              <i className="fa-brands fa-facebook"></i>
-            </a>
-            <a href="#">
-              <i className="fa-brands fa-twitter"></i>
-            </a>
-            <a href="#">
-              <i className="fa-brands fa-linkedin-in"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+
     </aside>
   );
 }
