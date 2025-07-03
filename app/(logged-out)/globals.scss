@@ -3,6 +3,108 @@
 @import "swiper/css/bundle"; 
 @import '../../public/assets/scss/main.scss';
 
+/* Mobile Offcanvas Fixes */
+@media (max-width: 991px) {
+  .tp-offcanvas-area {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    z-index: 99999 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .tp-offcanvas-area.opened {
+    transform: translateX(0) !important;
+  }
+
+  .tp-offcanvas-wrapper {
+    position: relative !important;
+    z-index: 1 !important;
+    min-height: 100vh !important;
+  }
+
+  .tp-main-menu-content {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .tp-main-menu-content ul {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .tp-main-menu-content ul li {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .tp-submenu {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .tp-mega-menu {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  /* Fix for disappearing menu on scroll */
+  body.tp-offcanvas-opened {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+  }
+}
+
+/* Video Component Mobile Fixes */
+@media (max-width: 767px) {
+  .tp-hero-bottom-img-wrap {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px !important;
+  }
+
+  .tp-hero-bottom-img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px !important;
+  }
+
+  .tp-hero-bottom-img video {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px !important;
+    object-fit: cover !important;
+  }
+}
+
+/* Hero Banner Mobile Fixes */
+@media (max-width: 991px) {
+  .tp-hero-2-area {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .tp-hero-2-wrapper {
+    position: relative !important;
+    min-height: 100vh !important;
+  }
+
+  .tp-hero-2-content-wrap {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 90% !important;
+    z-index: 5 !important;
+  }
+}
+
 /* Service Details Styles */
 .service-details__content {
   h4.service-details-title {

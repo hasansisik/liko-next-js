@@ -1,7 +1,6 @@
 "use client";
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
@@ -28,8 +27,6 @@ const BlogModernMain = () => {
   const { blogPosts, loading, error } = useAppSelector((state) => state.blogPosts);
   const isMobile = useMobile();
   
-  useScrollSmooth();
-
   // Fetch blog data on component mount
   useEffect(() => {
     dispatch(getAllBlogPosts({ 

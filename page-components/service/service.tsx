@@ -2,7 +2,6 @@
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -31,8 +30,6 @@ const ServiceMain = () => {
   const { service, loading: serviceLoading, error: serviceError } = useSelector((state: RootState) => state.service);
   const { servicePosts, loading: servicePostsLoading, error: servicePostsError } = useSelector((state: RootState) => state.servicePosts);
   
-  useScrollSmooth();
-
   // Fetch service data on component mount
   useEffect(() => {
     dispatch(getService() as any);

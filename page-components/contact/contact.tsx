@@ -1,7 +1,6 @@
 "use client";
 import { gsap } from "gsap";
 import React from "react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
@@ -23,8 +22,6 @@ const ContactMain = () => {
   const dispatch = useAppDispatch();
   const { contact, loading, error } = useAppSelector((state) => state.contact);
   
-  useScrollSmooth();
-
   // Fetch contact data on component mount
   React.useEffect(() => {
     dispatch(getContact());

@@ -2,7 +2,6 @@
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -18,7 +17,6 @@ import FooterTwo from "@/layouts/footers/footer-two";
 import { charAnimation } from "@/utils/title-animation";
 
 const CookiePolicyMain = () => {
-  useScrollSmooth();
   const dispatch = useDispatch<AppDispatch>();
   const { policy, loading } = useSelector((state: RootState) => state.policy);
 

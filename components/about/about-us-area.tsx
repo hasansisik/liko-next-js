@@ -21,7 +21,13 @@ export default function AboutUsArea({ aboutData }: AboutUsAreaProps) {
         <div id="about-info" className="row mt-200">
           <div className="col-xxl-9">
             <div className="ab-about-content p-relative">
-              <span>
+              <span style={{
+                fontSize: 'clamp(14px, 3vw, 18px)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                marginBottom: '20px'
+              }}>
                 <Hand />
                 {aboutData.welcomeText}
               </span>
@@ -73,6 +79,65 @@ export default function AboutUsArea({ aboutData }: AboutUsAreaProps) {
           </div>
         </div>
       </div>
+      
+      {/* Mobile-specific CSS for Welcome text */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .ab-about-area {
+            padding-bottom: 40px !important;
+          }
+          
+          .mt-200 {
+            margin-top: 60px !important;
+          }
+          
+          .ab-about-content {
+            margin-bottom: 30px !important;
+          }
+          
+          .ab-about-content span {
+            font-size: 14px !important;
+            margin-bottom: 15px !important;
+          }
+          
+          .ab-about-content span svg {
+            width: 16px !important;
+            height: 16px !important;
+          }
+          
+          .ab-about-content p {
+            margin-bottom: 20px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .ab-about-area {
+            padding-bottom: 30px !important;
+          }
+          
+          .mt-200 {
+            margin-top: 40px !important;
+          }
+          
+          .ab-about-content {
+            margin-bottom: 20px !important;
+          }
+          
+          .ab-about-content span {
+            font-size: 12px !important;
+            margin-bottom: 10px !important;
+          }
+          
+          .ab-about-content span svg {
+            width: 14px !important;
+            height: 14px !important;
+          }
+          
+          .ab-about-content p {
+            margin-bottom: 15px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

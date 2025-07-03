@@ -2,9 +2,8 @@
 import { gsap } from "gsap";
 import React from "react";
 import { useGSAP } from "@gsap/react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
-import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+import { ScrollTrigger, SplitText } from "@/plugins";
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";
@@ -27,7 +26,7 @@ const AboutUsMain = () => {
   const dispatch = useAppDispatch();
   const { about, loading, error } = useAppSelector((state) => state.about);
   
-  useScrollSmooth();
+  // Removed useScrollSmooth hook
 
   // Fetch about data on component mount
   React.useEffect(() => {
@@ -90,21 +89,18 @@ const AboutUsMain = () => {
       <HeaderOne transparent={true} color="white"/>
       {/* header area end */}
 
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
-          <main>
-            {/* about hero */}
-            <AboutUsHero heroData={about.hero} />
+      {/* Removed smooth wrapper divs */}
+      <main>
+        {/* about hero */}
+        <AboutUsHero heroData={about.hero} />
 
-            <AboutUsArea aboutData={about.aboutInfo} />
-            {/* about area */}
-          </main>
+        <AboutUsArea aboutData={about.aboutInfo} />
+        {/* about area */}
+      </main>
 
-          {/* footer area */}
-          <FooterTwo footerData={footerData} />
-          {/* footer area */}
-        </div>
-      </div>
+      {/* footer area */}
+      <FooterTwo footerData={footerData} />
+      {/* footer area */}
     </Wrapper>
   );
 };

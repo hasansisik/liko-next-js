@@ -2,7 +2,6 @@
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -19,7 +18,6 @@ import PolicyContent from "@/components/policy/policy-content";
 import { charAnimation } from "@/utils/title-animation";
 
 const PrivacyPolicyMain = () => {
-  useScrollSmooth();
   const dispatch = useDispatch<AppDispatch>();
   const { policy, loading } = useSelector((state: RootState) => state.policy);
 

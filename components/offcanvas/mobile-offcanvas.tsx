@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Behance, CloseTwo, Dribble, InstagramTwo, Youtube } from "../svg";
@@ -15,6 +15,29 @@ type IProps = {
 };
 
 export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigationData, mobileData}: IProps) {
+  // Handle body scroll locking
+  useEffect(() => {
+    if (openOffcanvas) {
+      document.body.classList.add('tp-offcanvas-opened');
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.classList.remove('tp-offcanvas-opened');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('tp-offcanvas-opened');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [openOffcanvas]);
+
   // Default values for fallback
   const defaultOffcanvas = {
     logo: {
@@ -84,6 +107,9 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigat
     }
   };
 
+  const handleClose = () => {
+    setOpenOffcanvas(false);
+  };
 
   return (
     <>
@@ -101,71 +127,64 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas, navigat
               </Link>
             </div>
             <div className="tp-offcanvas-close">
-              <button
+              <button 
+                onClick={handleClose}
                 className="tp-offcanvas-close-btn"
-                onClick={() => setOpenOffcanvas(false)}
+                type="button"
               >
                 <CloseTwo />
               </button>
             </div>
           </div>
-          <div className="tp-offcanvas-main">
-            <div className="tp-main-menu-mobile d-xl-none">
-              <MobileMenus navigationData={navigationData} />
-            </div>
-
-            <div className="tp-offcanvas-contact">
-              <h3 className="tp-offcanvas-title sm">{offcanvasData.information.title}</h3>
-
-              <ul>
-                <li>
-                  <a href={`tel:${offcanvasData.information.phone.number}`}>
-                    {offcanvasData.information.phone.text}
+          <div className="tp-main-menu-mobile">
+            <MobileMenus navigationData={navigationData} />
+          </div>
+          <div className="tp-offcanvas-content">
+            <h4 className="tp-offcanvas-title">{offcanvasData.information.title}</h4>
+          </div>
+          <div className="tp-offcanvas-contact">
+            <ul>
+              <li>
+                <a href={`tel:${offcanvasData.information.phone.number}`}>
+                  {offcanvasData.information.phone.text}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${offcanvasData.information.email.address}`}>
+                  {offcanvasData.information.email.text}
+                </a>
+              </li>
+              <li>
+                {offcanvasData.information.address.link ? (
+                  <a href={offcanvasData.information.address.link}>
+                    {offcanvasData.information.address.text}
+                  </a>
+                ) : (
+                  <span>{offcanvasData.information.address.text}</span>
+                )}
+              </li>
+            </ul>
+          </div>
+          <div className="tp-offcanvas-social">
+            <h4 className="tp-offcanvas-title sm">{offcanvasData.socialMedia.title}</h4>
+            <ul>
+              {offcanvasData.socialMedia.links.map((social, index) => (
+                <li key={`social-${index}-${social.platform}`}>
+                  <a href={social.url} target="_blank" rel="noopener noreferrer">
+                    {social.icon === "InstagramTwo" && <InstagramTwo />}
+                    {social.icon === "Youtube" && <Youtube />}
+                    {social.icon === "Behance" && <Behance />}
+                    {social.icon === "Dribble" && <Dribble />}
                   </a>
                 </li>
-                <li>
-                  <a href={`mailto:${offcanvasData.information.email.address}`}>
-                    {offcanvasData.information.email.text}
-                  </a>
-                </li>
-                <li>
-                  {offcanvasData.information.address.link ? (
-                    <a href={offcanvasData.information.address.link}>
-                      {offcanvasData.information.address.text}
-                    </a>
-                  ) : (
-                    <span>{offcanvasData.information.address.text}</span>
-                  )}
-                </li>
-              </ul>
-            </div>
-            <div className="tp-offcanvas-social">
-              <h3 className="tp-offcanvas-title sm">{offcanvasData.socialMedia.title}</h3>
-              <ul>
-                {offcanvasData.socialMedia.links.map((social, index) => {
-                  // Icon mapping
-                  const IconComponent = social.icon === 'InstagramTwo' ? InstagramTwo :
-                                      social.icon === 'Youtube' ? Youtube :
-                                      social.icon === 'Behance' ? Behance :
-                                      social.icon === 'Dribble' ? Dribble :
-                                      InstagramTwo; // default fallback
-                  
-                  return (
-                    <li key={index}>
-                      <a href={social.url} target="_blank" rel="noopener noreferrer">
-                        <IconComponent />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
-
-      <div
-        onClick={() => setOpenOffcanvas(false)}
+      {/* overlay */}
+      <div 
+        onClick={handleClose}
         className={`body-overlay ${openOffcanvas ? "opened" : ""}`}
       ></div>
     </>

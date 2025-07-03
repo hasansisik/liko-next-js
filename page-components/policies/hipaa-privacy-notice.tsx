@@ -2,7 +2,6 @@
 import { gsap } from "gsap";
 import React from "react";
 import { useGSAP } from "@gsap/react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
@@ -17,8 +16,6 @@ import { hipaaPrivacyNoticeData } from "@/data/policy-data";
 import { charAnimation } from "@/utils/title-animation";
 
 const HipaaPrivacyNoticeMain = () => {
-  useScrollSmooth();
-
   useGSAP(() => {
     const timer = setTimeout(() => {
       charAnimation();

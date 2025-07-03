@@ -1,7 +1,6 @@
 "use client";
 import { gsap } from "gsap";
 import React, { useEffect, useState } from "react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
@@ -12,9 +11,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";
-import HeaderEleven from "@/layouts/headers/header-eleven";
 import BlogListArea from "@/components/blog/blog-list-area";
-import BigText from "@/components/big-text";
 import FooterTwo from "@/layouts/footers/footer-two";
 // animation
 import { charAnimation, zoomAnimation } from "@/utils/title-animation";
@@ -31,8 +28,6 @@ const CategoryMain: React.FC<CategoryMainProps> = ({ categorySlug }) => {
   const [categoryName, setCategoryName] = useState<string>("");
   const isMobile = useMobile();
   
-  useScrollSmooth();
-
   // Fetch blog posts on component mount
   useEffect(() => {
     dispatch(getAllBlogPosts({ 

@@ -2,18 +2,16 @@
 import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { getHome } from '@/redux/actions/homeActions';
 import { getAllServicePosts } from '@/redux/actions/servicePostActions';
 import {
-  ScrollSmoother,
   ScrollTrigger,
   SplitText,
   cursorAnimation,
 } from "@/plugins";
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, SplitText);
+gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";
@@ -49,8 +47,6 @@ const HomeMain = () => {
   const { home, loading, error } = useSelector((state: RootState) => state.home);
   const { servicePosts, loading: servicePostsLoading } = useSelector((state: RootState) => state.servicePosts);
   
-  useScrollSmooth();
-
   // Fetch home data and service posts on component mount
   useEffect(() => {
     dispatch(getHome() as any);
@@ -144,20 +140,16 @@ const HomeMain = () => {
         <div id="ball"></div>
       </div>
       <HeaderOne transparent={true} />
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
-          <main>
-            <HeroBannerTwo heroData={currentHomeData.heroBanner} />
-            <ServiceOne serviceData={currentHomeData.serviceSection} servicePosts={servicePosts} />
-            <AboutOne aboutData={currentHomeData.aboutSection} />
-            <TeamOne teamData={currentHomeData.teamSection} />
-            <VideOne videoData={currentHomeData.videoSection} />
-            <FaqAreaTwo faqData={currentHomeData.faqSection} />
-            <BlogOne />
-          </main>
-          <FooterTwo />
-        </div>
-      </div>
+      <main>
+        <HeroBannerTwo heroData={currentHomeData.heroBanner} />
+        <ServiceOne serviceData={currentHomeData.serviceSection} servicePosts={servicePosts} />
+        <AboutOne aboutData={currentHomeData.aboutSection} />
+        <TeamOne teamData={currentHomeData.teamSection} />
+        <VideOne videoData={currentHomeData.videoSection} />
+        <FaqAreaTwo faqData={currentHomeData.faqSection} />
+        <BlogOne />
+      </main>
+      <FooterTwo />
     </Wrapper>
   );
 };

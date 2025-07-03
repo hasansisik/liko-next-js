@@ -1,7 +1,6 @@
 "use client";
 import { gsap } from "gsap";
 import React from "react";
-import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
@@ -17,7 +16,6 @@ import FooterTwo from "@/layouts/footers/footer-two";
 import { charAnimation, zoomAnimation } from "@/utils/title-animation";
 
 const BlogListMain = () => {
-  useScrollSmooth();
 
   useGSAP(() => {
     const timer = setTimeout(() => {

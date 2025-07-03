@@ -30,7 +30,10 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
         <div className="row" style={{ margin: '0' }}>
           <div className="col-xl-12" style={{ padding: '0' }}>
             <div className="tp-hero-2-wrapper-main">
-              <div className="tp-hero-2-wrapper d-flex align-items-center p-relative" style={{ minHeight: '100vh' }}>
+              <div className="tp-hero-2-wrapper d-flex align-items-center p-relative" style={{ 
+                minHeight: '100vh',
+                position: 'relative'
+              }}>
                 <div className="tp-hero-2-bg tp-gsap-bg tp-hero-bg-single" style={{
                   position: 'absolute',
                   top: '0',
@@ -53,10 +56,13 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
                     <source src={heroData.videoSrc} type="video/mp4" />
                   </video>
                 </div>
+                
+                {/* Desktop Content */}
                 <div className="tp-hero-2-content-wrap p-relative d-none d-lg-block" style={{
                   maxWidth: '80%',
-                  paddingLeft: 'clamp(20px, 5vw, 0px)',
-                  paddingRight: 'clamp(20px, 5vw, 0px)'
+                  paddingLeft: 'clamp(20px, 5vw, 80px)',
+                  paddingRight: 'clamp(20px, 5vw, 80px)',
+                  zIndex: 5
                 }}>
                   <div className="tp-hero-2-title-box" style={{
                     margin: '0',
@@ -68,7 +74,7 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
                       color: 'white',
                       fontSize: 'clamp(40px, 8vw, 80px)',
                       fontWeight: 'bold',
-                      lineHeight: '1.8'
+                      lineHeight: '1.2'
                     }}>
                       {heroData.desktopTitle}
                     </h2>
@@ -92,27 +98,28 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
                 {/* Mobile Content */}
                 <div className="tp-hero-2-content-wrap p-relative d-lg-none" style={{
                   width: '100%',
-                  padding: '20px clamp(20px, 5vw, 40px)',
-                  textAlign: 'left',
+                  padding: '20px',
+                  textAlign: 'center',
                   position: 'absolute',
                   top: '50%',
-                  left: '0',
-                  transform: 'translateY(-50%)',
-                  zIndex: 5
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 5,
+                  maxWidth: '90%'
                 }}>
                   <div className="tp-hero-2-title-box" style={{
-                    margin: '0',
+                    margin: '0 0 20px 0',
                     padding: '0'
                   }}>
                     <h1 style={{
-                      fontSize: 'clamp(24px, 6vw, 40px)',
+                      fontSize: 'clamp(28px, 7vw, 44px)',
                       fontWeight: 'bold',
                       color: 'white',
-                      margin: '0 0 clamp(15px, 4vw, 20px) 0',
+                      margin: '0 0 15px 0',
                       padding: '0',
                       textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                      lineHeight: '1.3',
-                      textAlign: 'left'
+                      lineHeight: '1.2',
+                      textAlign: 'center'
                     }}>
                       {heroData.mobileTitle}
                     </h1>
@@ -123,24 +130,24 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
                   }}>
                     <p style={{
                       color: 'white',
-                      fontSize: 'clamp(14px, 3.5vw, 18px)',
+                      fontSize: 'clamp(16px, 4vw, 20px)',
                       textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
                       maxWidth: '100%',
                       margin: '0',
                       padding: '0',
-                      lineHeight: '1.5',
+                      lineHeight: '1.4',
                       fontWeight: '400',
-                      textAlign: 'left'
+                      textAlign: 'center'
                     }}>
                       {heroData.description}
                     </p>
                   </div>
                 </div>
                 
-                {/* Contact Form */}
+                {/* Contact Form - Desktop */}
                 <div className="tp-hero-2-form-wrap d-none d-lg-block" style={{
                   position: 'absolute',
-                  right: 'clamp(20px, 5vw, 200px)',
+                  right: 'clamp(20px, 5vw, 80px)',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   zIndex: 10
@@ -159,23 +166,24 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
         
         {/* Mobile Contact Form */}
         <div className="row d-lg-none" style={{ 
-          margin: '0', 
-          position: 'relative',
-          marginTop: 'clamp(-200px, -25vh, -150px)',
+          margin: '0',
+          padding: '20px',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
           zIndex: 10
         }}>
-          <div className="col-12" style={{ padding: 'clamp(15px, 5vw, 20px) clamp(20px, 5vw, 40px)' }}>
+          <div className="col-12" style={{ 
+            padding: '20px',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
             <ContactFormDental 
               style={{
-                maxWidth: 'min(90vw, 500px)',
-                margin: '0 auto'
+                width: '100%',
+                maxWidth: '500px'
               }}
             />
           </div>
         </div>
-        
-        {/* Mobile Bottom Spacing */}
-        <div className="d-lg-none" style={{ height: '50px' }}></div>
       </div>
     </div>
   );
