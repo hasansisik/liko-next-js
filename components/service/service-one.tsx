@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { service_data } from "@/data/service-data";
@@ -26,6 +26,25 @@ const generateSlug = (title: string) => {
 const ServiceOne = ({ serviceData, servicePosts }: ServiceOneProps) => {
   // If servicePosts is not provided as a prop, get it from Redux
   const { servicePosts: reduxServicePosts } = useAppSelector((state) => state.servicePosts);
+  
+  // State to track if we're on mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if we're on mobile when component mounts and when window resizes
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Check initially
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
   
   // Use provided servicePosts or get from Redux
   const serviceItems = servicePosts || reduxServicePosts;
@@ -82,23 +101,28 @@ const ServiceOne = ({ serviceData, servicePosts }: ServiceOneProps) => {
               {displayServices.map((s, i) => (
                 <div
                   key={s.id}
-                  className="tp-service-item d-flex align-items-center mb-25 tp_fade_bottom"
+                  className={`tp-service-item d-flex ${isMobile ? 'flex-column' : 'align-items-center'} mb-25 tp_fade_bottom`}
+                  style={{ gap: isMobile ? '20px' : '25px' }}
                 >
-                  <div className="tp-service-icon">
+                  <div className="tp-service-icon" style={{ 
+                    width: isMobile ? "100%" : "200px", 
+                    height: isMobile ? "250px" : "200px",
+                    marginBottom: isMobile ? "0" : "0"
+                  }}>
                     <Image 
                       src={s.img} 
                       alt={s.title} 
                       width={200}
                       height={200}
                       style={{ 
-                        height: "200px", 
-                        width: "200px",
+                        width: "100%",
+                        height: "100%",
                         objectFit: "cover",
                         borderRadius: "8px"
                       }} 
                     />
                   </div>
-                  <div className="tp-service-content">
+                  <div className="tp-service-content" style={{ paddingLeft: isMobile ? '0' : '10px' }}>
                     <h4 className="tp-service-title-sm order-0">
                       <Link href={`/${generateSlug(s.title)}`}>{s.title}</Link>
                     </h4>
