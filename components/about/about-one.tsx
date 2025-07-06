@@ -1,5 +1,5 @@
 'use client';
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 interface IAboutSectionItem {
@@ -28,13 +28,30 @@ const imgStyle:CSSProperties = {
 };
 
 const AboutOne = ({ aboutData }: AboutOneProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if we're on mobile when component mounts and when window resizes
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Check initially
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   return (
-    <div className="tp-about-2-area pt-125 pb-200">
+    <div className={`tp-about-2-area pt-100 ${isMobile ? 'pb-0' : 'pb-100'}`}>
       <div className="container container-1480">
         <div className="row justify-content-center">
           <div className="col-xxl-8 col-xl-10">
-            <div className="tp-about-2-title-box tp-btn-trigger tp-btn-bounce mb-70 text-start text-xl-center">
+            <div className={`tp-about-2-title-box tp-btn-trigger tp-btn-bounce ${isMobile ? 'mb-40' : 'mb-70'} text-start text-xl-center`}>
               <h2 className="tp-about-2-section-title">
                 {aboutData.mainTitle}
               </h2>
@@ -43,7 +60,7 @@ const AboutOne = ({ aboutData }: AboutOneProps) => {
         </div>
         
         {aboutData.items.map((item, index) => (
-          <div key={item.id} className="row align-items-center mb-5">
+          <div key={item.id} className={`row align-items-center ${index < aboutData.items.length - 1 ? (isMobile ? 'mb-3' : 'mb-5') : ''}`}>
             {item.imagePosition === 'left' ? (
               <>
                 <div className="col-xl-6 col-lg-6 col-md-6 col-12 order-1">
@@ -56,7 +73,7 @@ const AboutOne = ({ aboutData }: AboutOneProps) => {
                 <div className="col-xl-6 col-lg-6 col-12 order-2">
                   <div className="tp-about-2-content ps-xl-4">
                     <span>{item.title}</span>
-                    <p className="mb-30">
+                    <p className={isMobile ? 'mb-15' : 'mb-30'}>
                       {item.description}
                     </p>
                   </div>
@@ -67,7 +84,7 @@ const AboutOne = ({ aboutData }: AboutOneProps) => {
                 <div className="col-xl-6 col-lg-6 col-12 order-2 order-lg-1">
                   <div className="tp-about-2-content mb-4 mb-lg-0 pe-xl-4">
                     <span>{item.title}</span>
-                    <p className="mb-30">
+                    <p className={isMobile ? 'mb-15' : 'mb-30'}>
                       {item.description}
                     </p>
                   </div>

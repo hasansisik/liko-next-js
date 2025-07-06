@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -53,9 +53,26 @@ const TeamOne = ({ spacing = "pt-20", teamData }: IProps) => {
   const [showModal, setShowModal] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState<string>("");
   const [mounted, setMounted] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   React.useEffect(() => {
     setMounted(true);
+  }, []);
+  
+  // Check if we're on mobile when component mounts and when window resizes
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Check initially
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
   
   function handleImageClick(imageSrc: string) {
@@ -67,9 +84,14 @@ const TeamOne = ({ spacing = "pt-20", teamData }: IProps) => {
   if (!teamData?.teamMembers) {
     return null;
   }
+  
+  // Determine the spacing class based on mobile status
+  const spacingClass = isMobile ? "pt-0" : (teamData.spacing || spacing);
+  const bottomSpacing = isMobile ? "pb-50" : "pb-100";
+  
   return (
     <>
-      <div className={`tp-team-area ${teamData.spacing || spacing} pb-120 fix`}>
+      <div className={`tp-team-area ${spacingClass} ${bottomSpacing} fix`} style={isMobile ? { marginTop: '-20px' } : {}}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-xl-12">
