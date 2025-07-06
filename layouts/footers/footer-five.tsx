@@ -4,7 +4,7 @@ import { UpArrow } from "@/components/svg";
 export default function FooterFive() {
   return (
     <footer>
-      <div className="tp-footer-5-area black-bg pt-120 pb-120">
+      <div className="tp-footer-5-area black-bg pt-90 pb-0">
         <div className="container">
           <div className="row">
             <div className="col-xl-12">
@@ -54,13 +54,13 @@ export default function FooterFive() {
             </div>
             <div className="col-xl-6 col-lg-6 col-md-7">
               <div className="tp-copyright-2-social text-start text-sm-center text-xl-center">
-                <a className="mb-10" href="#">
+                <a href="#">
                   Linkedin
                 </a>
-                <a className="mb-10" href="#">
+                <a href="#">
                   Twitter
                 </a>
-                <a className="mb-10" href="#">
+                <a href="#">
                   Instagram
                 </a>
               </div>

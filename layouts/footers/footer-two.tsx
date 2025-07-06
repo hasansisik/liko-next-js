@@ -13,7 +13,7 @@ type IProps = {
   footerData?: IFooterData;
 };
 
-export default function FooterTwo({ whiteFooter = false, topCls='footer-top', footerData: staticData }: IProps) {
+export default function FooterTwo({ whiteFooter = false, topCls='', footerData: staticData }: IProps) {
   // Redux
   const dispatch = useAppDispatch();
   const { footer, loading } = useAppSelector((state) => state.footer);
@@ -61,15 +61,15 @@ export default function FooterTwo({ whiteFooter = false, topCls='footer-top', fo
     dispatch(getFooter());
   }, [dispatch]);
   return (
-    <footer className={`${topCls}`}>
+    <footer>
       <div
-        className={`tp-footer-2-area pt-100 pb-20 ${
+        className={`tp-footer-2-area pt-90 mt-50 ${
           whiteFooter ? "tp-footer-white" : "black-bg"
         }`}
       >
         <div className="container container-1480">
           <div className="row">
-            <div className="col-xl-3 col-lg-4 col-md-6 mb-50">
+            <div className="col-xl-3 col-lg-4 col-md-6">
               <div className="tp-footer-2-widget footer-col-2-1">
                 {!whiteFooter && (
                   <div className="tp-footer-2-widget-logo">
@@ -95,7 +95,7 @@ export default function FooterTwo({ whiteFooter = false, topCls='footer-top', fo
                 </div>
               </div>
             </div>
-            <div className="col-xl-3 col-lg-5 col-md-6 mb-50">
+            <div className="col-xl-3 col-lg-5 col-md-6">
               <div className="tp-footer-2-widget footer-col-2-3">
                 <h4 className="tp-footer-2-widget-title">{data.office.title}</h4>
                 <div className="tp-footer-2-contact-item">
@@ -120,7 +120,7 @@ export default function FooterTwo({ whiteFooter = false, topCls='footer-top', fo
                 </div>
               </div>
             </div>
-            <div className="col-xl-2 col-lg-3 col-md-6 mb-50">
+            <div className="col-xl-2 col-lg-3 col-md-6">
               <div className="tp-footer-2-widget footer-col-2-2">
                 <div className="tp-footer-2-widget-menu">
                   <h4 className="tp-footer-2-widget-title">{data.sitemap.title}</h4>
@@ -132,7 +132,7 @@ export default function FooterTwo({ whiteFooter = false, topCls='footer-top', fo
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-5 col-md-6 mb-50">
+            <div className="col-xl-4 col-lg-5 col-md-6">
               <div className="tp-footer-2-widget footer-col-2-4">
                 <div className="tp-footer-2-widget-menu">
                   <h4 className="tp-footer-2-widget-title">{data.legal.title}</h4>
@@ -165,14 +165,13 @@ export default function FooterTwo({ whiteFooter = false, topCls='footer-top', fo
             <div className="col-xl-8 col-lg-7">
               <div className="tp-copyright-2-social text-center text-lg-end">
                 {data.copyright.socialLinks.map((link, index) => (
-                  <a key={index} className="mb-10" href={link.url}>{link.text}</a>
+                  <a key={index} href={link.url}>{link.text}</a>
                 ))}
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <!-- footer area end --> */}
     </footer>
   );
 }

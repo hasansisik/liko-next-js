@@ -9,11 +9,11 @@ import social_data from "@/data/social-data";
 export default function FooterSix() {
   return (
     <footer>
-      <div className="tp-footer-6-area black-bg pt-100">
+      <div className="tp-footer-6-area black-bg pt-90">
         <div className="container container-1300">
           <div className="tp-footer-6-widget-wrap">
             <div className="row">
-              <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-60">
+              <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                 <div className="tp-footer-6-widget footer-col-6-1">
                   <div className="tp-footer-6-logo">
                     <Link href="/">
@@ -54,7 +54,7 @@ export default function FooterSix() {
                   </div>
                 </div>
               </div>
-              <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-60">
+              <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                 <div className="tp-footer-6-widget footer-col-6-2">
                   <h4 className="tp-footer-6-widget-title">Category</h4>
                   <div className="tp-footer-6-list">
@@ -69,7 +69,7 @@ export default function FooterSix() {
                   </div>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-4 col-md-6 col-sm-4 mb-60">
+              <div className="col-xl-2 col-lg-4 col-md-6 col-sm-4">
                 <div className="tp-footer-6-widget footer-col-6-3">
                   <h4 className="tp-footer-6-widget-title">My Account</h4>
                   <div className="tp-footer-6-list">
@@ -84,7 +84,7 @@ export default function FooterSix() {
                   </div>
                 </div>
               </div>
-              <div className="col-xl-4 col-lg-5 col-md-6 col-sm-8 mb-60">
+              <div className="col-xl-4 col-lg-5 col-md-6 col-sm-8">
                 <div className="tp-footer-6-widget footer-col-6-4">
                   <h4 className="tp-footer-6-widget-title">Subcribe.</h4>
                   <div className="tp-footer-6-input-box">

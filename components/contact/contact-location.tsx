@@ -10,7 +10,7 @@ const ContactLocation = ({ contactInfoData }: ContactLocationProps) => {
   return (
     <div className="cn-contact-info-area ">
       <div className="container container-1840">
-        <div className="cn-contact-info-bg black-bg">
+        <div className="cn-contact-info-bg black-bg rounded-5">
           {contactInfoData.locations.map((item) => (
             <div key={item.id} className="cn-contact-info-item">
               <div className="row">
