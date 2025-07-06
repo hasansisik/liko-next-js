@@ -37,11 +37,6 @@ const VideOne = ({ videoData }: VideoOneProps) => {
           </video>
         </div>
       </div>
-      <div className="tp-brand-area">
-        <div className="tp-brand-brd-top tp-brand-ptb">
-          {/* Brand area spacing simulation */}
-        </div>
-      </div>
     </>
   );
 };

@@ -23,7 +23,7 @@ import TeamOne from "@/components/team/team-one";
 
 
 // animation
-import { videoAnimOne } from "@/utils/video-anim";
+// import { videoAnimOne } from "@/utils/video-anim";
 import { teamMarqueAnim } from "@/utils/scroll-marque";
 import { hoverBtn } from "@/utils/hover-btn";
 import { footerTwoAnimation } from "@/utils/footer-anim";
@@ -79,7 +79,8 @@ const HomeMain = () => {
         // Clear any existing ScrollTriggers
         ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
         
-        videoAnimOne();
+        // Removed videoAnimOne() to fix video stuttering during scroll
+        
         // portfolio image wrap
         gsap.timeline({
           scrollTrigger: {

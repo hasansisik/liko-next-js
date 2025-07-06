@@ -21,7 +21,7 @@ interface FaqAreaTwoProps {
 
 export default function FaqAreaTwo({ faqData }: FaqAreaTwoProps) {
   return (
-    <div className="tp-service-2-area tp-service-2-pt pb-150">
+    <div className="tp-service-2-area pb-100" style={{ marginTop: '20px' }}>
       <div className="container">
         <div className="row align-items-start" style={{ minHeight: 'auto' }}>
           <div className="col-xl-4 col-lg-5">
