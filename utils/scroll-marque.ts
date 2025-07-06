@@ -2,25 +2,36 @@ import { gsap } from "gsap";
 import $ from "jquery";
 
 function teamMarqueAnim() {
-  const teamItem = document.querySelector(".tp-team-item");
-  if (teamItem) {
-    gsap.set(".tp-team-item.marque", {
-      x: "25%",
-    });
-
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: ".tp-team-area ",
-          start: "-1000 10%",
-          end: "bottom 20%",
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      })
-      .to(".tp-team-item.marque ", {
-        x: "-100%",
+  // Check if the team area exists
+  const teamArea = document.querySelector(".tp-team-area");
+  
+  if (teamArea) {
+    // Find all team items with marque class
+    const teamItems = document.querySelectorAll(".tp-team-item.marque");
+    
+    if (teamItems.length > 0) {
+      // Set initial position
+      gsap.set(".tp-team-item.marque", {
+        x: "0%",
       });
+
+      // Create scrolling animation
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".tp-team-area",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        })
+        .to(".tp-team-item.marque", {
+          x: "-10%",
+          ease: "none",
+          duration: 2,
+        });
+    }
   }
 }
 

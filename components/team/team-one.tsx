@@ -7,11 +7,22 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import { SwiperOptions } from "swiper/types";
 import TeamItem from "./team-item";
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/free-mode';
+
+// Define slider settings with autoplay always enabled
 const slider_setting: SwiperOptions = {
   slidesPerView: 6,
   loop: true,
-  autoplay: false,
+  autoplay: {
+    delay: 0, // Set to 0 for continuous movement
+    disableOnInteraction: false,
+  },
+  speed: 5000, // Slow speed for continuous movement
   spaceBetween: 30,
+  allowTouchMove: true, // Allow manual interaction
   breakpoints: {
     "1400": {
       slidesPerView: 6,
@@ -54,10 +65,68 @@ const TeamOne = ({ spacing = "pt-20", teamData }: IProps) => {
   const [selectedImage, setSelectedImage] = React.useState<string>("");
   const [mounted, setMounted] = React.useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const swiperRef = React.useRef<any>(null);
   
   React.useEffect(() => {
     setMounted(true);
+    
+    // Add custom CSS to ensure autoplay works properly
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .tp-team-slider-active .swiper-wrapper {
+        transition-timing-function: linear !important;
+      }
+      .tp-team-slider-wrapper {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      /* Fallback animation for browsers where Swiper autoplay might not work */
+      @keyframes slideAnimation {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      
+      .tp-team-slider-active.animate-fallback .swiper-wrapper {
+        animation: slideAnimation 20s linear infinite;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      if (style.parentNode) {
+        document.head.removeChild(style);
+      }
+    };
   }, []);
+  
+  // Initialize Swiper after component mount
+  React.useEffect(() => {
+    if (mounted && swiperRef.current && swiperRef.current.swiper) {
+      // Force enable autoplay
+      swiperRef.current.swiper.autoplay.start();
+      
+      // Set the correct speed and mode for continuous scrolling
+      if (swiperRef.current.swiper.params.autoplay && typeof swiperRef.current.swiper.params.autoplay === 'object') {
+        swiperRef.current.swiper.params.autoplay.delay = 0;
+      }
+      swiperRef.current.swiper.params.speed = 5000;
+      swiperRef.current.swiper.params.loop = true;
+      swiperRef.current.swiper.update();
+      
+      // Add fallback animation class after a short delay
+      setTimeout(() => {
+        const swiperElement = document.querySelector('.tp-team-slider-active');
+        if (swiperElement) {
+          swiperElement.classList.add('animate-fallback');
+        }
+      }, 1000);
+    }
+  }, [mounted]);
   
   // Check if we're on mobile when component mounts and when window resizes
   useEffect(() => {
@@ -86,8 +155,14 @@ const TeamOne = ({ spacing = "pt-20", teamData }: IProps) => {
   }
   
   // Determine the spacing class based on mobile status
-  const spacingClass = isMobile ? "pt-0" : (teamData.spacing || spacing);
+  const spacingClass = isMobile ? "pt-60" : (teamData.spacing || spacing);
   const bottomSpacing = isMobile ? "pb-50" : "pb-100";
+  
+  // Always ensure we have enough slides for loop mode
+  // If not enough slides, duplicate them multiple times
+  let teamMembers = [...teamData.teamMembers];
+  // Duplicate slides multiple times to ensure smooth continuous scrolling
+  teamMembers = [...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers];
   
   return (
     <>
@@ -95,14 +170,27 @@ const TeamOne = ({ spacing = "pt-20", teamData }: IProps) => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-xl-12">
-              <div className="tp-team-slider-wrapper">
+              <div className="tp-team-slider-wrapper" style={{ overflow: 'hidden' }}>
                 <Swiper
                   {...slider_setting}
                   modules={[Autoplay, FreeMode]}
                   className="swiper-container tp-team-slider-active"
+                  ref={swiperRef}
+                  onSwiper={(swiper) => {
+                    // Ensure autoplay is enabled with correct settings
+                    if (swiper.autoplay) {
+                      if (swiper.params.autoplay && typeof swiper.params.autoplay === 'object') {
+                        swiper.params.autoplay.delay = 0;
+                      }
+                      swiper.params.speed = 5000;
+                      swiper.params.loop = true;
+                      swiper.autoplay.start();
+                      swiper.update();
+                    }
+                  }}
                 >
-                  {teamData.teamMembers.map((member) => (
-                    <SwiperSlide key={member.id}>
+                  {teamMembers.map((member, index) => (
+                    <SwiperSlide key={`${member.id}-${index}`}>
                       <div className="tp-team-item" onClick={() => handleImageClick(member.img)}>
                         <div className="tp-team-thumb">
                           <Image

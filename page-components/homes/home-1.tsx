@@ -81,16 +81,22 @@ const HomeMain = () => {
         
         // Removed videoAnimOne() to fix video stuttering during scroll
         
-        // portfolio image wrap
-        gsap.timeline({
-          scrollTrigger: {
-             trigger: ".tp-project-full-img-wrap",
-             start: "top 65",
-             end: "bottom 0%",
-             pin: ".tp-project-full-img",
-             pinSpacing: false,
-          }
-        });
+        // portfolio image wrap - check if elements exist first
+        const projectImgWrap = document.querySelector(".tp-project-full-img-wrap");
+        const projectImg = document.querySelector(".tp-project-full-img");
+        
+        if (projectImgWrap && projectImg) {
+          gsap.timeline({
+            scrollTrigger: {
+               trigger: ".tp-project-full-img-wrap",
+               start: "top 65",
+               end: "bottom 0%",
+               pin: ".tp-project-full-img",
+               pinSpacing: false,
+            }
+          });
+        }
+        
         // team marquee
         teamMarqueAnim();
         hoverBtn();

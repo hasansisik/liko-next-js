@@ -68,9 +68,12 @@ const ContactFormDental = ({
   useEffect(() => {
     if (formData) {
       const newDefaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
-      setSelectedCountry(newDefaultCountry);
+      // Only update if the country code has changed to prevent infinite loop
+      if (newDefaultCountry.code !== selectedCountry.code) {
+        setSelectedCountry(newDefaultCountry);
+      }
     }
-  }, [formData]);
+  }, [formData, selectedCountry.code]);
 
   // Handle form submission success or error
   useEffect(() => {
