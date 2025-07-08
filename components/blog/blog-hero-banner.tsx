@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { IBlogHeroData } from "../../types/blog-modern-d-t";
 import useMobile from "@/hooks/use-mobile";
 
@@ -9,6 +9,14 @@ interface BlogHeroBannerProps {
 
 const BlogHeroBanner = ({ heroData }: BlogHeroBannerProps) => {
   const isMobile = useMobile();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Force video reload when videoSrc changes
+  useEffect(() => {
+    if (videoRef.current && heroData.videoSrc) {
+      videoRef.current.load(); // Force reload the video
+    }
+  }, [heroData.videoSrc]);
   
   return (
     <div className="tp-hero-2-area" style={{ 
@@ -36,6 +44,8 @@ const BlogHeroBanner = ({ heroData }: BlogHeroBannerProps) => {
                   zIndex: -1
                 }}>
                   <video 
+                    ref={videoRef}
+                    key={heroData.videoSrc} // Force re-render when video source changes
                     loop={true} 
                     muted={true} 
                     autoPlay={true} 
@@ -45,8 +55,15 @@ const BlogHeroBanner = ({ heroData }: BlogHeroBannerProps) => {
                       height: '100%',
                       objectFit: 'cover'
                     }}
+                    onError={(e) => {
+                      console.error('Blog hero video load error:', e);
+                    }}
+                    onLoadStart={() => {
+                      console.log('Blog hero video loading started:', heroData.videoSrc);
+                    }}
                   >
                     <source src={heroData.videoSrc} type="video/mp4" />
+                    Your browser does not support the video tag.
                   </video>
                 </div>
                 

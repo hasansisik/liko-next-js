@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Leaf } from "../svg";
 import ContactFormDental from "../form/contact-form-dental";
@@ -16,6 +16,15 @@ interface HeroBannerTwoProps {
 }
 
 const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Force video reload when videoSrc changes
+  useEffect(() => {
+    if (videoRef.current && heroData.videoSrc) {
+      videoRef.current.load(); // Force reload the video
+    }
+  }, [heroData.videoSrc]);
+
   return (
     <div className="tp-hero-2-area" style={{ 
       paddingTop: '0', 
@@ -43,6 +52,8 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
                   zIndex: -1
                 }}>
                   <video 
+                    ref={videoRef}
+                    key={heroData.videoSrc} // Force re-render when video source changes
                     loop={true} 
                     muted={true} 
                     autoPlay={true} 
@@ -52,8 +63,15 @@ const HeroBannerTwo = ({ heroData }: HeroBannerTwoProps) => {
                       height: '100%',
                       objectFit: 'cover'
                     }}
+                    onError={(e) => {
+                      console.error('Hero video load error:', e);
+                    }}
+                    onLoadStart={() => {
+                      console.log('Hero video loading started:', heroData.videoSrc);
+                    }}
                   >
                     <source src={heroData.videoSrc} type="video/mp4" />
+                    Your browser does not support the video tag.
                   </video>
                 </div>
                 

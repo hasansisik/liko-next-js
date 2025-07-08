@@ -19,7 +19,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Save, Eye, Edit3, Video, Users, Info, HelpCircle, Settings, Play } from "lucide-react"
+import { ImageUpload } from "@/components/ui/image-upload"
+import { Save, Eye, Edit3, Video, Users, Info, HelpCircle, Settings, Play, Image as ImageIcon } from "lucide-react"
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { getHome, updateHome } from "@/redux/actions/homeActions";
@@ -430,7 +431,7 @@ export default function HomeEditorPage() {
                       </div>
                       <div className="max-h-64 overflow-y-auto space-y-2">
                         {editData.aboutSection.items.map((item, index) => (
-                          <div key={item.id} className="border rounded p-2 space-y-2">
+                          <div key={item.id} className="border rounded p-3 space-y-3">
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-medium">Item {index + 1}</span>
                               <Button size="sm" variant="destructive" onClick={() => removeAboutItem(item.id)}>
@@ -448,11 +449,14 @@ export default function HomeEditorPage() {
                               onChange={(e) => updateAboutItem(item.id, 'description', e.target.value)}
                               rows={2}
                             />
-                            <Input
-                              placeholder="Image URL"
-                              value={item.image}
-                              onChange={(e) => updateAboutItem(item.id, 'image', e.target.value)}
-                            />
+                            <div>
+                              <label className="text-xs font-medium mb-2 block">Image</label>
+                              <ImageUpload
+                                value={item.image}
+                                onChange={(url) => updateAboutItem(item.id, 'image', url as string)}
+                                placeholder="Select or upload image"
+                              />
+                            </div>
                             <select
                               value={item.imagePosition}
                               onChange={(e) => updateAboutItem(item.id, 'imagePosition', e.target.value)}
@@ -494,18 +498,21 @@ export default function HomeEditorPage() {
                       </div>
                       <div className="max-h-64 overflow-y-auto space-y-2">
                         {editData.teamSection.teamMembers.map((member, index) => (
-                          <div key={member.id} className="border rounded p-2 space-y-2">
+                          <div key={member.id} className="border rounded p-3 space-y-3">
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-medium">Member {index + 1}</span>
                               <Button size="sm" variant="destructive" onClick={() => removeTeamMember(member.id)}>
                                 Remove
                               </Button>
                             </div>
-                            <Input
-                              placeholder="Image URL"
-                              value={member.img}
-                              onChange={(e) => updateTeamMember(member.id, 'img', e.target.value)}
-                            />
+                            <div>
+                              <label className="text-xs font-medium mb-2 block">Image</label>
+                              <ImageUpload
+                                value={member.img}
+                                onChange={(url) => updateTeamMember(member.id, 'img', url as string)}
+                                placeholder="Select or upload team member image"
+                              />
+                            </div>
                           </div>
                         ))}
                       </div>

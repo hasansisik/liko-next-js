@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface IVideoSectionData {
   videoSrc: string;
@@ -10,6 +10,14 @@ interface VideoOneProps {
 }
 
 const VideOne = ({ videoData }: VideoOneProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Force video reload when videoSrc changes
+  useEffect(() => {
+    if (videoRef.current && videoData.videoSrc) {
+      videoRef.current.load(); // Force reload the video
+    }
+  }, [videoData.videoSrc]);
   
   return (
     <>
@@ -22,6 +30,8 @@ const VideOne = ({ videoData }: VideoOneProps) => {
           overflow: 'hidden'
         }}>
           <video 
+            ref={videoRef}
+            key={videoData.videoSrc} // Force re-render when video source changes
             loop={true} 
             muted={true} 
             autoPlay={true} 
@@ -32,8 +42,15 @@ const VideOne = ({ videoData }: VideoOneProps) => {
               objectFit: 'cover',
               minHeight: '300px'
             }}
+            onError={(e) => {
+              console.error('Video section load error:', e);
+            }}
+            onLoadStart={() => {
+              console.log('Video section loading started:', videoData.videoSrc);
+            }}
           >
             <source src={videoData.videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { getAllBlogPosts } from '@/redux/actions/blogPostActions';
+import { getBlog } from '@/redux/actions/blogActions';
 import { formatBlogDate } from '@/utils/date-utils';
 import useMobile from "@/hooks/use-mobile";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
@@ -24,11 +25,13 @@ import { blogModernData } from "@/data/blog-modern-data";
 
 const BlogModernMain = () => {
   const dispatch = useAppDispatch();
-  const { blogPosts, loading, error } = useAppSelector((state) => state.blogPosts);
+  const { blogPosts, loading: blogPostsLoading, error: blogPostsError } = useAppSelector((state) => state.blogPosts);
+  const { blog, loading: blogLoading, error: blogError } = useAppSelector((state) => state.blog);
   const isMobile = useMobile();
   
-  // Fetch blog data on component mount
+  // Fetch blog data and blog posts on component mount
   useEffect(() => {
+    dispatch(getBlog(undefined)); // Get blog data for hero and big text
     dispatch(getAllBlogPosts({ 
       published: true, // Only get published posts for public view
       limit: 100 // Get more posts to ensure we have enough data
@@ -42,8 +45,35 @@ const BlogModernMain = () => {
     return () => clearTimeout(timer);
   });
 
-  // Use blog posts data if available, otherwise fallback to static data
-  const currentBlogData = blogPosts.length > 0 ? {
+  // Use blog data from model if available, otherwise fallback to static data
+  const currentBlogData = blog ? {
+    hero: blog.hero,
+    bigText: blog.bigText,
+    posts: blogPosts.map(post => ({
+      id: parseInt(post._id?.slice(-6) || "1", 16), // Convert ObjectId to number
+      _id: post._id, // Preserve the original MongoDB _id
+      img: post.img,
+      title: post.title,
+      date: formatBlogDate(post.date || post.createdAt),
+      category: post.categories?.[0] || 'General',
+      author: post.author || 'Admin',
+      desc: post.desc,
+      commentCount: post.commentCount || 0,
+      comments: post.comments || [],
+      content: post.content,
+      video: post.video,
+      videoId: post.videoId,
+      blogQuote: post.blogQuote,
+      imgSlider: post.imgSlider,
+      blogQuoteTwo: post.blogQuoteTwo,
+      blogHeroSlider: post.blogHeroSlider,
+      images: post.images,
+      avatar: post.avatar,
+      isPublished: post.isPublished,
+      tags: post.tags,
+      slug: post.slug || post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
+    } as any))
+  } : {
     ...blogModernData,
     posts: blogPosts.map(post => ({
       id: parseInt(post._id?.slice(-6) || "1", 16), // Convert ObjectId to number
@@ -69,7 +99,11 @@ const BlogModernMain = () => {
       tags: post.tags,
       slug: post.slug || post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
     } as any))
-  } : blogModernData;
+  };
+
+  // Determine loading and error states
+  const loading = blogLoading || blogPostsLoading;
+  const error = blogError || blogPostsError;
 
   return (
     <Wrapper>
@@ -114,7 +148,10 @@ const BlogModernMain = () => {
                     Error loading blog data: {error}
                   </p>
                   <button 
-                    onClick={() => dispatch(getAllBlogPosts({ published: true, limit: 100 }))}
+                    onClick={() => {
+                      dispatch(getBlog(undefined));
+                      dispatch(getAllBlogPosts({ published: true, limit: 100 }));
+                    }}
                     style={{ 
                       padding: '0.5rem 1rem', 
                       backgroundColor: '#3498db', 
