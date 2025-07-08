@@ -47,11 +47,23 @@ export default function AboutEditorPage() {
 
   const handleSave = async () => {
     if (editData && editData._id) {
-      await dispatch(updateAbout({
-        aboutId: editData._id,
-        hero: editData.hero,
-        aboutInfo: editData.aboutInfo
-      }));
+      try {
+        const result = await dispatch(updateAbout({
+          aboutId: editData._id,
+          hero: editData.hero,
+          aboutInfo: editData.aboutInfo
+        }));
+        
+        if (result.type.endsWith('/fulfilled')) {
+          // Success
+        } else if (result.type.endsWith('/rejected')) {
+          console.error('Save failed:', result.payload);
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+      }
+    } else {
+      console.error('No edit data or ID available for saving');
     }
   };
 

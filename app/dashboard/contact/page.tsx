@@ -47,12 +47,24 @@ export default function ContactEditorPage() {
 
   const handleSave = async () => {
     if (editData && editData._id) {
-      await dispatch(updateContact({
-        contactId: editData._id,
-        hero: editData.hero,
-        contactForm: editData.contactForm,
-        contactInfo: editData.contactInfo
-      }));
+      try {
+        const result = await dispatch(updateContact({
+          contactId: editData._id,
+          hero: editData.hero,
+          contactForm: editData.contactForm,
+          contactInfo: editData.contactInfo
+        }));
+        
+        if (result.type.endsWith('/fulfilled')) {
+          // Success
+        } else if (result.type.endsWith('/rejected')) {
+          console.error('Save failed:', result.payload);
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+      }
+    } else {
+      console.error('No edit data or ID available for saving');
     }
   };
 
