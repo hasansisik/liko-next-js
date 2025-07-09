@@ -10,8 +10,15 @@ export default function BlogItemTwo({ item }: { item: IBlogDT }) {
   
   return (
     <div className="tp-blog-item tp_fade_bottom">
-      <div className="tp-blog-thumb fix p-relative">
-        <Image src={item.img!} alt="blog-img" style={{ height: "auto" }} />
+      <div className="tp-blog-thumb fix p-relative" style={{ height: "250px", overflow: "hidden" }}>
+        <Image 
+          src={item.img!} 
+          alt="blog-img" 
+          fill
+          style={{ 
+            objectFit: "cover"
+          }} 
+        />
         <div className="tp-blog-meta">
           <span>{item.date}</span>
         </div>
