@@ -39,9 +39,6 @@ import FaqAreaTwo from "@/components/faq/faq-area-2";
 import BlogOne from "@/components/blog/blog-one";
 import FooterTwo from "@/layouts/footers/footer-two";
 
-// fallback data import
-import { home1Data } from "@/data/home-1-data";
-
 const HomeMain = () => {
   const dispatch = useDispatch();
   const { home, loading, error } = useSelector((state: RootState) => state.home);
@@ -69,12 +66,9 @@ const HomeMain = () => {
     }
   }, []);
 
-  // Use Redux data if available, otherwise fallback to static data
-  const currentHomeData = home || home1Data;
-
   useGSAP(() => {
-    // Only initialize animations if we have data (either from Redux or fallback)
-    if (currentHomeData) {
+    // Only initialize animations if we have home data from Redux
+    if (home && !loading) {
       const timer = setTimeout(() => {
         // Clear any existing ScrollTriggers
         ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
@@ -112,10 +106,10 @@ const HomeMain = () => {
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [currentHomeData]); // Add dependency to re-run when data changes
+  }, [home, loading]); // Re-run when home data changes or loading state changes
 
-  // Show loading only if we don't have any data (not even fallback)
-  if (loading && !currentHomeData) {
+  // Show loading state
+  if (loading || !home) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
@@ -123,8 +117,8 @@ const HomeMain = () => {
     );
   }
 
-  // Show error only if we don't have fallback data
-  if (error && !currentHomeData) {
+  // Show error state
+  if (error) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="text-center">
@@ -148,12 +142,12 @@ const HomeMain = () => {
       </div>
       <HeaderOne transparent={true} />
       <main>
-        <HeroBannerTwo heroData={currentHomeData.heroBanner} />
-        <ServiceOne serviceData={currentHomeData.serviceSection} servicePosts={servicePosts} />
-        <AboutOne aboutData={currentHomeData.aboutSection} />
-        <TeamOne teamData={currentHomeData.teamSection} />
-        <VideOne videoData={currentHomeData.videoSection} />
-        <FaqAreaTwo faqData={currentHomeData.faqSection} />
+        <HeroBannerTwo heroData={home.heroBanner} />
+        <ServiceOne serviceData={home.serviceSection} servicePosts={servicePosts} />
+        <AboutOne aboutData={home.aboutSection} />
+        <TeamOne teamData={home.teamSection} />
+        <VideOne videoData={home.videoSection} />
+        <FaqAreaTwo faqData={home.faqSection} />
         <BlogOne />
       </main>
       <FooterTwo />

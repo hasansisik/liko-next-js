@@ -14,6 +14,7 @@ import { BlogPostData } from "@/redux/actions/blogPostActions";
 import { ServicePostData } from "@/redux/actions/servicePostActions";
 import { ServiceData } from "@/redux/actions/serviceActions";
 import { formatBlogDate } from "@/utils/date-utils";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const UnifiedContentPage = () => {
   const params = useParams();
@@ -210,9 +211,33 @@ const UnifiedContentPage = () => {
 
   // Render appropriate component based on content type
   if (content.type === 'blog') {
-    return <BlogDetailsMain blog={content.content} />;
+    return (
+      <>
+        <SEOMetadata 
+          pageName="blog" 
+          fallback={{
+            title: `Liko - ${content.content.title}`,
+            description: content.content.desc || "Read our blog post",
+            keywords: ["blog", "article", content.content.category, content.content.title]
+          }}
+        />
+        <BlogDetailsMain blog={content.content} />
+      </>
+    );
   } else if (content.type === 'servicePost' || content.type === 'service') {
-    return <ServiceDetailsMain service={content.content} />;
+    return (
+      <>
+        <SEOMetadata 
+          pageName="services" 
+          fallback={{
+            title: `Liko - ${content.content.title}`,
+            description: content.content.desc || "Learn about our service",
+            keywords: ["service", content.content.category, content.content.title]
+          }}
+        />
+        <ServiceDetailsMain service={content.content} />
+      </>
+    );
   } else {
     // This case should never happen due to our type system, but TypeScript requires it
     return null;

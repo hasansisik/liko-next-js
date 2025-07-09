@@ -1,14 +1,22 @@
-import React from "react";
-import { Metadata } from "next";
-import BlogModernMain from "@/page-components/blog/blog-modern";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Liko - Blog Modern page",
-};
+import React from "react";
+import BlogModernMain from "@/page-components/blog/blog-modern";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const BlogModernPage = () => {
   return (
-    <BlogModernMain/>
+    <>
+      <SEOMetadata 
+        pageName="blog" 
+        fallback={{
+          title: "Liko - Blog",
+          description: "Read our latest blog posts and insights",
+          keywords: ["blog", "articles", "insights", "news"]
+        }}
+      />
+      <BlogModernMain/>
+    </>
   );
 };
 

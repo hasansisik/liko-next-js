@@ -1,15 +1,22 @@
-import React from "react";
-import { Metadata } from "next";
-import CookiePolicyMain from "@/page-components/policies/cookie-policy";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Liko Dental - Cookie Policy",
-  description: "Cookie Policy for Liko Dental Practice - How we use cookies on our website"
-};
+import React from "react";
+import CookiePolicyMain from "@/page-components/policies/cookie-policy";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const CookiePolicyPage = () => {
   return (
-    <CookiePolicyMain/>
+    <>
+      <SEOMetadata 
+        pageName="cookie-policy" 
+        fallback={{
+          title: "Liko - Cookie Policy",
+          description: "Cookie Policy - How we use cookies on our website",
+          keywords: ["cookie", "policy", "website", "tracking"]
+        }}
+      />
+      <CookiePolicyMain/>
+    </>
   );
 };
 

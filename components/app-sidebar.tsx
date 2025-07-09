@@ -5,6 +5,7 @@ import {
   BookOpen,
   Bot,
   SquareTerminal,
+  Search,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -95,6 +96,19 @@ const data = {
         {
           title: "Comments",
           url: "/dashboard/comments",
+        },
+       
+      ],
+    },
+    {
+      title: "SEO Management",
+      url: "#",
+      icon: Search,
+      isActive: true,
+      items: [
+        {
+          title: "SEO Settings",
+          url: "/dashboard/seo",
         },
        
       ],

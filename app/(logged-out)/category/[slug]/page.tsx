@@ -1,21 +1,26 @@
+"use client";
+
 import React from "react";
-import { Metadata } from "next";
+import { useParams } from "next/navigation";
 import CategoryMain from "@/page-components/blog/category";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
-export const metadata: Metadata = {
-  title: "Liko Dental - Blog Category",
-  description: "Browse blog posts by category - Liko Dental Practice"
-};
-
-interface CategoryPageProps {
-  params: Promise<{ slug: string }>;
-}
-
-const CategoryPage = async ({ params }: CategoryPageProps) => {
-  const { slug } = await params;
+const CategoryPage = () => {
+  const params = useParams();
+  const slug = params.slug as string;
   
   return (
-    <CategoryMain categorySlug={slug} />
+    <>
+      <SEOMetadata 
+        pageName="blog" 
+        fallback={{
+          title: `Liko - Blog Category: ${slug}`,
+          description: `Browse blog posts in the ${slug} category`,
+          keywords: ["blog", "category", slug, "articles"]
+        }}
+      />
+      <CategoryMain categorySlug={slug} />
+    </>
   );
 };
 

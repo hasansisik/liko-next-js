@@ -1,15 +1,22 @@
-import React from "react";
-import { Metadata } from "next";
-import PrivacyPolicyMain from "@/page-components/policies/privacy-policy";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Liko Dental - Privacy Policy",
-  description: "Privacy Policy for Liko Dental Practice - How we protect and handle your personal information"
-};
+import React from "react";
+import PrivacyPolicyMain from "@/page-components/policies/privacy-policy";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const PrivacyPolicyPage = () => {
   return (
-    <PrivacyPolicyMain/>
+    <>
+      <SEOMetadata 
+        pageName="privacy-policy" 
+        fallback={{
+          title: "Liko - Privacy Policy",
+          description: "Privacy Policy - How we protect and handle your personal information",
+          keywords: ["privacy", "policy", "data protection", "personal information"]
+        }}
+      />
+      <PrivacyPolicyMain/>
+    </>
   );
 };
 

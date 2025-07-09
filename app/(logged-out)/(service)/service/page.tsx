@@ -1,14 +1,22 @@
-import React from "react";
-import { Metadata } from "next";
-import ServiceMain from "@/page-components/service/service";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Liko - Service page",
-};
+import React from "react";
+import ServiceMain from "@/page-components/service/service";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const ServicePage = () => {
   return (
-    <ServiceMain/>
+    <>
+      <SEOMetadata 
+        pageName="services" 
+        fallback={{
+          title: "Liko - Our Services",
+          description: "Explore our creative agency services and solutions",
+          keywords: ["services", "creative", "solutions", "agency"]
+        }}
+      />
+      <ServiceMain/>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import footerReducer from "./reducers/footerReducer";
 import formReducer from "./reducers/formReducer";
 import formSubmissionReducer from "./reducers/formSubmissionReducer";
 import policyReducer from "./reducers/policyReducer";
+import seoReducer from "./reducers/seoReducer";
 
 
 export const store = configureStore({
@@ -32,6 +33,7 @@ export const store = configureStore({
     form: formReducer,
     formSubmission: formSubmissionReducer,
     policy: policyReducer,
+    seo: seoReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>

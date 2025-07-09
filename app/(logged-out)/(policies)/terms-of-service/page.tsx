@@ -1,15 +1,22 @@
-import React from "react";
-import { Metadata } from "next";
-import TermsOfServiceMain from "@/page-components/policies/terms-of-service";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Liko Dental - Terms of Service",
-  description: "Terms of Service for Liko Dental Practice - Our terms and conditions for using our services"
-};
+import React from "react";
+import TermsOfServiceMain from "@/page-components/policies/terms-of-service";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const TermsOfServicePage = () => {
   return (
-    <TermsOfServiceMain/>
+    <>
+      <SEOMetadata 
+        pageName="terms-of-service" 
+        fallback={{
+          title: "Liko - Terms of Service",
+          description: "Terms of Service - Our terms and conditions for using our services",
+          keywords: ["terms", "service", "conditions", "agreement"]
+        }}
+      />
+      <TermsOfServiceMain/>
+    </>
   );
 };
 

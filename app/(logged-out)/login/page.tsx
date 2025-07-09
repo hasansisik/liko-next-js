@@ -1,14 +1,22 @@
-import React from "react";
-import { Metadata } from "next";
-import LoginMain from "@/page-components/login/login-main";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Liko - Login page",
-};
+import React from "react";
+import LoginMain from "@/page-components/login/login-main";
+import SEOMetadata from "@/components/seo/seo-metadata";
 
 const LoginPage = () => {
   return (
-    <LoginMain/>
+    <>
+      <SEOMetadata 
+        pageName="login" 
+        fallback={{
+          title: "Liko - Login",
+          description: "Login to your account",
+          keywords: ["login", "account", "authentication", "access"]
+        }}
+      />
+      <LoginMain/>
+    </>
   );
 };
 
