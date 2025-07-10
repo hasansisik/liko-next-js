@@ -29,33 +29,7 @@ const ContactFormDental = ({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
-  
-  // Use Redux data if available, otherwise fallback to static data or default
-  const formData = form || staticFormData || {
-    title: "Get Free Consultation",
-    subtitle: "Expert available",
-    responseTime: "Response within 24 hours",
-    showWhatsApp: true,
-    placeholders: {
-      name: "Your Name",
-      phone: "Phone Number",
-      countrySearch: "Search country..."
-    },
-    countries: [
-      { code: "US", name: "United States", phone: "+1", flag: "🇺🇸" },
-      { code: "TR", name: "Turkey", phone: "+90", flag: "🇹🇷" },
-      { code: "GB", name: "United Kingdom", phone: "+44", flag: "🇬🇧" },
-      { code: "DE", name: "Germany", phone: "+49", flag: "🇩🇪" },
-      { code: "FR", name: "France", phone: "+33", flag: "🇫🇷" }
-    ],
-    defaultCountry: "US",
-    submitButtonText: "Get Free Consultation",
-    whatsAppText: "Chat on WhatsApp",
-    whatsAppLink: "https://wa.me/1234567890"
-  };
-  
-  const defaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
-  const [selectedCountry, setSelectedCountry] = useState<ICountry>(defaultCountry);
+  const [selectedCountry, setSelectedCountry] = useState<ICountry | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -64,16 +38,13 @@ const ContactFormDental = ({
     dispatch(getForm());
   }, [dispatch]);
 
-  // Update selected country when form data changes
+  // Set default country when form data is loaded
   useEffect(() => {
-    if (formData) {
-      const newDefaultCountry = formData.countries.find(country => country.code === formData.defaultCountry) || formData.countries[0];
-      // Only update if the country code has changed to prevent infinite loop
-      if (newDefaultCountry.code !== selectedCountry.code) {
-        setSelectedCountry(newDefaultCountry);
-      }
+    if (form && form.countries && form.countries.length > 0 && !selectedCountry) {
+      const defaultCountry = form.countries.find(country => country.code === form.defaultCountry) || form.countries[0];
+      setSelectedCountry(defaultCountry);
     }
-  }, [formData, selectedCountry.code]);
+  }, [form, selectedCountry]);
 
   // Handle form submission success or error
   useEffect(() => {
@@ -90,7 +61,28 @@ const ContactFormDental = ({
     }
   }, [success, error, formSubmitted]);
 
-  const filteredCountries = formData.countries.filter(country =>
+  // Show loading state
+  if (loading || !form || !selectedCountry) {
+    return (
+      <div className={`tp-dental-form-box ${className}`} style={{
+        background: 'white',
+        padding: '25px',
+        borderRadius: '10px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+        width: '100%',
+        maxWidth: '500px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '300px',
+        ...style
+      }}>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  const filteredCountries = form.countries.filter(country =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     country.phone.includes(searchTerm)
   );
@@ -136,7 +128,7 @@ const ContactFormDental = ({
           marginBottom: '10px',
           color: '#333',
           textAlign: 'center'
-        }}>{formData.title}</h3>
+        }}>{form.title}</h3>
         <div className="tp-dental-form-status" style={{
           display: 'flex',
           alignItems: 'center',
@@ -154,21 +146,21 @@ const ContactFormDental = ({
             color: '#4CAF50',
             fontSize: '14px',
             fontWeight: '500'
-          }}>{formData.subtitle}</span>
+          }}>{form.subtitle}</span>
         </div>
         <p className="tp-dental-form-response" style={{
           fontSize: '12px',
           color: '#666',
           margin: '0',
           textAlign: 'center'
-        }}>{formData.responseTime}</p>
+        }}>{form.responseTime}</p>
       </div>
       
       <form className="tp-dental-form" onSubmit={handleSubmit}>
         <div className="tp-dental-form-input" style={{ marginBottom: '15px' }}>
           <input 
             type="text" 
-            placeholder={formData.placeholders.name} 
+            placeholder={form.placeholders.name} 
             required 
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -233,7 +225,7 @@ const ContactFormDental = ({
               <div style={{ padding: '10px' }}>
                 <input
                   type="text"
-                  placeholder={formData.placeholders.countrySearch}
+                  placeholder={form.placeholders.countrySearch}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   style={{
@@ -277,7 +269,7 @@ const ContactFormDental = ({
           
           <input 
             type="tel" 
-            placeholder={formData.placeholders.phone} 
+            placeholder={form.placeholders.phone} 
             required 
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -309,7 +301,7 @@ const ContactFormDental = ({
             fontSize: '16px',
             fontWeight: '500',
             cursor: submissionLoading ? 'not-allowed' : 'pointer',
-            marginBottom: formData.showWhatsApp ? '15px' : '0',
+            marginBottom: form.showWhatsApp ? '15px' : '0',
             transition: 'background-color 0.3s ease',
             display: 'flex',
             alignItems: 'center',
@@ -318,12 +310,12 @@ const ContactFormDental = ({
           onMouseEnter={(e) => !submissionLoading && ((e.target as HTMLButtonElement).style.backgroundColor = '#333')}
           onMouseLeave={(e) => !submissionLoading && ((e.target as HTMLButtonElement).style.backgroundColor = '#000')}
         >
-          {submissionLoading ? 'Gönderiliyor...' : formData.submitButtonText} 
+          {submissionLoading ? 'Gönderiliyor...' : form.submitButtonText} 
           {!submissionLoading && <ArrowRight size={16} style={{ marginLeft: '8px' }} />}
         </button>
       
-        {formData.showWhatsApp && (
-          <Link href={formData.whatsAppLink} className="tp-dental-whatsapp-btn" style={{
+        {form.showWhatsApp && (
+          <Link href={form.whatsAppLink} className="tp-dental-whatsapp-btn" style={{
             display: 'block',
             width: '100%',
             padding: '12px',
@@ -339,7 +331,7 @@ const ContactFormDental = ({
           onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = '#1da851'}
           onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = '#25D366'}
           >
-            {formData.whatsAppText}
+            {form.whatsAppText}
           </Link>
         )}
       </form>
