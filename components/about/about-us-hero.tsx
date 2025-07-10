@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { scroller } from "react-scroll";
 import { ScrollDown } from "../svg";
 import { IAboutUsHeroData } from "@/types/about-us-d-t";
@@ -8,6 +8,18 @@ interface AboutUsHeroProps {
 }
 
 export default function AboutUsHero({ heroData }: AboutUsHeroProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    if (heroData.backgroundImage) {
+      const img = new Image();
+      img.onload = () => setImageLoaded(true);
+      img.onerror = () => setImageError(true);
+      img.src = heroData.backgroundImage;
+    }
+  }, [heroData.backgroundImage]);
+
   const scrollTo = () => {
     scroller.scrollTo('about-info', {
       duration: 800,
@@ -15,14 +27,40 @@ export default function AboutUsHero({ heroData }: AboutUsHeroProps) {
       smooth: 'easeInOutQuart',
     });
   };
+
+  // Show loading state until image is loaded
+  if (!imageLoaded && !imageError) {
+    return (
+      <div
+        className="ab-inner-hero-area ab-inner-hero-bg p-relative"
+        style={{
+          backgroundColor: 'transparent',
+          paddingTop: '200px',
+          paddingBottom: '45px',
+          minHeight: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      </div>
+    );
+  }
   
   return (
     <div
       className="ab-inner-hero-area ab-inner-hero-bg p-relative"
       style={{
-        backgroundImage: `url(${heroData.backgroundImage})`,
+        backgroundImage: imageLoaded ? `url(${heroData.backgroundImage})` : 'none',
+        backgroundColor: imageError ? '#333' : 'transparent',
         paddingTop: '200px',
-        paddingBottom: '45px'
+        paddingBottom: '45px',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        opacity: imageLoaded ? 1 : 0,
+        transition: 'opacity 0.3s ease-in-out'
       }}
     >
       <div className="breadcurmb-site d-none">
